@@ -1,0 +1,50 @@
+name: Post to Facebook on Release
+
+on:
+  workflow_run:
+    workflows:
+      - Create Release
+    types:
+      - completed
+
+jobs:
+  post-to-facebook:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Get Release Information
+        id: get_release_info
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const release = await github.rest.repos.getReleaseByTag({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag: context.payload.workflow_run.head_branch
+            })
+            return release.data.body
+      - name: Publish to Facebook
+        env:
+          FACEBOOK_ACCESS_TOKEN: ${{ secrets.FACEBOOK_ACCESS_TOKEN }}
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+          RELEASE_BODY: ${{ steps.get_release_info.outputs.result }}
+          TAG_NAME: ${{ github.event.workflow_run.head_branch }}
+        run: |
+          curl -i -X POST \
+          "https://graph.facebook.com/v22.0/${{ env.FACEBOOK_PAGE_ID }}/feed" \
+          -F "message=🚀 ${{ github.repository }} ${{ env.TAG_NAME }} just released! 🎉 (https://github.com/${{ github.repository }}/releases/tag/${{ env.TAG_NAME }})" \
+          -F "access_token=${{ env.FACEBOOK_ACCESS_TOKEN }}"

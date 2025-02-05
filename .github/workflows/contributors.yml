@@ -1,0 +1,25 @@
+name: Generate contributors
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'
+  pull_request:
+    types: [ opened, synchronize, edited ]
+  push:
+    branches:
+      - master
+      - main
+      - develop
+      - feature/**
+      - release/**
+      - test/**
+      - bugfix/**
+
+jobs:
+  generate-contributors:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate contributors
+        uses: gouef/create-contributors-action@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

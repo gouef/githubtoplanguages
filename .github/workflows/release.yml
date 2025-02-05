@@ -1,0 +1,29 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Tag name for the release'
+        required: true
+        default: 'v1.0.0'
+      release_type:
+        description: 'Release type (stable, beta, rc)'
+        required: true
+        default: 'stable'
+
+jobs:
+  call-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Create release
+        uses: gouef/release-action@main
+        with:
+          branch: ${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

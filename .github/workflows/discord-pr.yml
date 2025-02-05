@@ -1,0 +1,27 @@
+name: Discord Pull Request Notification
+
+on:
+  pull_request:
+    types: [opened, reopened, closed]
+
+jobs:
+  notify-discord:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send notification to Discord
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL_PR }}
+        run: |
+          if [ "${{ github.event.pull_request.merged }}" == "true" ]; then
+            STATUS="🎉 Pull Request Merged"
+          else
+            STATUS="${{ github.event.action == 'opened' && '🔀 **New Pull Request**' || '❌ **Pull Request Closed**' }}"
+          fi
+          TITLE="${{ github.event.pull_request.title }}"
+          URL="${{ github.event.pull_request.html_url }}"
+          AUTHOR="${{ github.actor }}"
+          
+          curl -H "Content-Type: application/json" \
+            -X POST \
+            -d "{\"username\": \"GitHub Bot\", \"content\": \"${STATUS} by **${AUTHOR}**: **${TITLE}**\n🔗 ${URL}\"}" \
+            "$DISCORD_WEBHOOK"

@@ -1,0 +1,65 @@
+name: Tweet on Release
+
+on:
+  workflow_run:
+    workflows:
+      - Create Release
+    types:
+      - completed
+
+jobs:
+  tweet:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Get Release Information
+        id: get_release_info
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const release = await github.rest.repos.getReleaseByTag({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag: context.payload.workflow_run.head_branch
+            })
+            return release.data.body
+      - name: Install dependencies
+        run: pip install tweepy
+      - name: Send tweet
+        env:
+          TWITTER_CONSUMER_API_KEY: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
+          TWITTER_CONSUMER_API_SECRET: ${{ secrets.TWITTER_CONSUMER_API_SECRET }}
+          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+          RELEASE_BODY: ${{ steps.get_release_info.outputs.result }}
+          TAG_NAME: ${{ github.event.workflow_run.head_branch }}
+        run: |
+          python - <<EOF
+          import tweepy
+          import os
+
+          client = tweepy.Client(
+              consumer_key=os.getenv("TWITTER_CONSUMER_API_KEY"),
+              consumer_secret=os.getenv("TWITTER_CONSUMER_API_SECRET"),
+              access_token=os.getenv("TWITTER_ACCESS_TOKEN"),
+              access_token_secret=os.getenv("TWITTER_ACCESS_TOKEN_SECRET")
+          )
+
+          tweet_text = f"🚀 New version of {os.getenv('GITHUB_REPOSITORY')} {os.getenv('TAG_NAME')} just released! 🎉\n\n{os.getenv('GITHUB_SERVER_URL')}/{os.getenv('GITHUB_REPOSITORY')}/releases/latest"
+
+          response = client.create_tweet(text=tweet_text)
+          print(f"Tweet odeslán: {response}")
+          EOF

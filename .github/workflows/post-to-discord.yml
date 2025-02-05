@@ -1,0 +1,54 @@
+name: Notify Discord on New Release
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  notify-discord:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Get Release Information
+        id: get_release_info
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const release = await github.rest.repos.getReleaseByTag({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag: context.payload.workflow_run.head_branch
+            })
+            return release.data.body
+      - name: Send notification to Discord
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          REPO: ${{ github.repository }}
+          TAG: ${{ github.ref_name }}
+          AUTHOR: ${{ github.actor }}
+          RELEASE_BODY: ${{ steps.get_release_info.outputs.result }}
+          TAG_NAME: ${{ github.event.workflow_run.head_branch }}
+        run: |
+          curl -H "Content-Type: application/json" \
+               -X POST \
+               -d '{
+                 "username": "GitHub Actions",
+                 "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+                 "embeds": [{
+                   "title": "New release of ${{ github.repository }}: '${{ github.ref_name }}'",
+                   "url": "https://github.com/'${{ github.repository }}'/releases/tag/'${{ github.ref_name }}'",
+                   "description": "🚀 ${{ github.repository }} ${{ github.ref_name }} just released! 🎉",
+                   "color": 5814783
+                 }]
+               }' \
+               $DISCORD_WEBHOOK_URL

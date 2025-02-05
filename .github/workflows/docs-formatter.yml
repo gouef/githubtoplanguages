@@ -1,0 +1,44 @@
+name: Format Documentation
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  push:
+  workflow_dispatch:
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: |
+          npm install markdown-table-formatter -g
+          markdown-table-formatter ./*.md
+          markdown-table-formatter ./**/*.md
+          markdown-table-formatter ./docs/*.md
+          markdown-table-formatter ./docs/**/*.md
+      - name: Commit and push changes
+        run: |
+          if git diff --quiet ./; then
+            echo "Žádné změny, nic k commitování."
+          else
+            git add .
+            git commit -m "[Fix] markdown format"
+            git pull --rebase
+            git push origin HEAD:main
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

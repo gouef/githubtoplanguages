@@ -1,0 +1,27 @@
+name: Commit Lint
+
+on:
+  workflow_call:
+    inputs:
+      branch:
+        required: false
+        type: string
+        default: "main"
+  pull_request:
+    types: [opened, synchronize, edited]
+  push:
+    branches:
+      - master
+      - main
+      - develop
+      - feature/**
+      - release/**
+      - test/**
+      - bugfix/**
+
+jobs:
+  lint-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Commit lint
+        uses: gouef/commit-lint-action@main

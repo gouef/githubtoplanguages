@@ -1,0 +1,23 @@
+name: Update Github wiki
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  update-wiki:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Update wiki
+        uses: gouef/github-wiki-sync-repository-action@main
+        with:
+          dir: "docs/"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
