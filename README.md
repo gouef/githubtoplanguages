@@ -1,19 +1,19 @@
 <img align=right width="168" src="docs/gouef_logo.png">
 
-# github-lib-template
+# github-top-language
 Github template for new libraries
 
-[![Static Badge](https://img.shields.io/badge/Github-gouef%2Fgithub--lib--template-blue?style=for-the-badge&logo=github&link=github.com%2Fgouef%2Fgithub-lib-template)](https://github.com/gouef/github-lib-template)
+[![Static Badge](https://img.shields.io/badge/Github-gouef%2Fgithub--top--language-blue?style=for-the-badge&logo=github&link=github.com%2Fgouef%2Fgithub-top-language)](https://github.com/gouef/github-top-language)
 
-[![GoDoc](https://pkg.go.dev/badge/github.com/gouef/github-lib-template.svg)](https://pkg.go.dev/github.com/gouef/github-lib-template)
-[![GitHub stars](https://img.shields.io/github/stars/gouef/github-lib-template?style=social)](https://github.com/gouef/github-lib-template/stargazers)
-[![Go Report Card](https://goreportcard.com/badge/github.com/gouef/github-lib-template)](https://goreportcard.com/report/github.com/gouef/github-lib-template)
-[![codecov](https://codecov.io/github/gouef/github-lib-template/branch/main/graph/badge.svg?token=YUG8EMH6Q8)](https://codecov.io/github/gouef/github-lib-template)
+[![GoDoc](https://pkg.go.dev/badge/github.com/gouef/github-top-language.svg)](https://pkg.go.dev/github.com/gouef/github-top-language)
+[![GitHub stars](https://img.shields.io/github/stars/gouef/github-top-language?style=social)](https://github.com/gouef/github-top-language/stargazers)
+[![Go Report Card](https://goreportcard.com/badge/github.com/gouef/github-top-language)](https://goreportcard.com/report/github.com/gouef/github-top-language)
+[![codecov](https://codecov.io/github/gouef/github-top-language/branch/main/graph/badge.svg?token=YUG8EMH6Q8)](https://codecov.io/github/gouef/github-top-language)
 
 ## Versions
-![Stable Version](https://img.shields.io/github/v/release/gouef/github-lib-template?label=Stable&labelColor=green)
-![GitHub Release](https://img.shields.io/github/v/release/gouef/github-lib-template?label=RC&include_prereleases&filter=*rc*&logoSize=diago)
-![GitHub Release](https://img.shields.io/github/v/release/gouef/github-lib-template?label=Beta&include_prereleases&filter=*beta*&logoSize=diago)
+![Stable Version](https://img.shields.io/github/v/release/gouef/github-top-language?label=Stable&labelColor=green)
+![GitHub Release](https://img.shields.io/github/v/release/gouef/github-top-language?label=RC&include_prereleases&filter=*rc*&logoSize=diago)
+![GitHub Release](https://img.shields.io/github/v/release/gouef/github-top-language?label=Beta&include_prereleases&filter=*beta*&logoSize=diago)
 
 
 ## Introduction
