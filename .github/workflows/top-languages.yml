@@ -34,6 +34,8 @@ on:
 jobs:
   build-and-run:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Run custom action
         uses: gouef/githubtoplanguages@main

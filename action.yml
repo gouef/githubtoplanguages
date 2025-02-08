@@ -52,8 +52,16 @@ runs:
         go-version: "1.23"
 
     - name: Build the Go binary
-      run: go build -o app .
+      run: |
+        git clone https://github.com/gouef/githubtoplanguages.git
+        cd githubtoplanguages
+        make install
+        go build -o app .
+        cp app ./../app
+        cd ..
       shell: bash
+      env:
+        GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
     - name: Run the Go binary
       run: |
         args=""
@@ -63,14 +71,16 @@ runs:
         [ -n "${{ inputs.ignoredReposFlag }}" ] && args="$args -ignore-repos=${{ inputs.ignoredReposFlag }}"
         
         ./app $args -token=${{ env.GITHUB_TOKEN }}
+        rm -R githubtoplanguages
+        rm app
       shell: bash
       env:
         GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
 
     - name: Commit and push changes
       run: |
-        ls
-        if git diff --quiet ./; then
+        git add ./toplanguages.svg
+        if git diff --cached --quiet; then
           echo "Žádné změny, nic k commitování."
         else
           git add .
