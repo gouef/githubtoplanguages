@@ -2,8 +2,20 @@ name: Create Top Languages
 
 on:
   push:
+    botName: 'Jan Galek'
+    botEmail: 'ghome.cz@gmail.com'
+    user: 'JanGalek'
+    limit: 6
+    ignoredOrgsFlag: 'wowmua'
+    ignoredReposFlag: 'wowmua/Maps'
   schedule:
     - cron: '0 */2 * * *'
+      botName: 'Jan Galek'
+      botEmail: 'ghome.cz@gmail.com'
+      user: 'JanGalek'
+      limit: 6
+      ignoredOrgsFlag: 'wowmua'
+      ignoredReposFlag: 'wowmua/Maps'
   workflow_dispatch:
     botName:
       required: false
