@@ -5,6 +5,15 @@ branding:
   color: purple
 
 inputs:
+  botName:
+    required: false
+    default: "Jan Galek"
+    description: "Set bot name for contributors"
+
+  botEmail:
+    required: false
+    default: "ghome.cz@gmail.com"
+    description: "Set bot email address for contributors"
   user:
     required: true
     description: "Github UserName"
@@ -31,6 +40,11 @@ runs:
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
+    - name: Set up Git
+      run: |
+        git config --global user.name "${{ inputs.botName }}"
+        git config --global user.email "${{ inputs.botEmail }}"
+      shell: bash
 
     - name: Set up Go
       uses: actions/setup-go@v5
@@ -42,6 +56,19 @@ runs:
       shell: bash
     - name: Run the Go binary
       run: ./app -user=${{ inputs.user }} -limit=${{ inputs.limit }} -ignore-orgs=${{ inputs.ignoredOrgsFlag }} -ignore-repos=${{ inputs.ignoredReposFlag }}
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+
+    - name: Commit and push changes
+      run: |
+        if git diff --quiet ./; then
+          echo "Žádné změny, nic k commitování."
+        else
+          git add .
+          git commit -m "${{ inputs.commitMessageBot }}"
+          git push origin HEAD:${{ github.event.repository.default_branch }}
+        fi
       shell: bash
       env:
         GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
