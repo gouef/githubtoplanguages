@@ -1,7 +1,7 @@
 <img align=right width="168" src="docs/gouef_logo.png">
 
 # githubtoplanguages
-Github template for new libraries
+Generate your Top languages of Github
 
 [![Static Badge](https://img.shields.io/badge/Github-gouef%2Fgithubtoplanguages-blue?style=for-the-badge&logo=github&link=github.com%2Fgouef%2Fgithubtoplanguages)](https://github.com/gouef/githubtoplanguages)
 
@@ -16,14 +16,52 @@ Github template for new libraries
 ![GitHub Release](https://img.shields.io/github/v/release/gouef/githubtoplanguages?label=Beta&include_prereleases&filter=*beta*&logoSize=diago)
 
 
-## Introduction
+## Example
 
-This is template repository for new libraries
+![Github Top Languages](https://raw.githubusercontent.com/gouef/githubtoplanguages/refs/heads/main/toplanguages.svg)
 
-## Important
+```markdown
+![Github Top Languages](https://raw.githubusercontent.com/gouef/githubtoplanguages/refs/heads/main/toplanguages.svg)
+```
 
-- Edit go.mod and rename to your package module
-- Uncomment .github/workflows/tests.yml
+### Action
+
+```yaml
+name: Create Top Languages
+
+on:
+  push:
+  schedule:
+    - cron: '0 */2 * * *'
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run custom action
+        uses: gouef/githubtoplanguages@main
+        with:
+          botName: "Jan Galek"
+          botEmail: "ghome.cz@gmail.com"
+          user: "JanGalek"
+          limit: 6
+          ignoredOrgsFlag: "wowmua"
+          ignoredReposFlag: "wowmua/Maps"
+        env:
+          GITHUB_TOKEN: ${{ secrets.USER_GITHUB_TOKEN }}
+```
+
+## Action inputs
+
+| Input                       | Default             | Required | Description                                  |
+|-----------------------------|---------------------|----------|----------------------------------------------|
+| `botName`                   | `Jan Galek`    | `false`  | Set bot name for contributors        |
+| `botEmail`                  | `ghome.cz@gmail.com` | `false`  | Set bot email address for contributors       |
+| `user` | ``                  | `true`   | Github UserName       |
+| `limit`          | `6`                 | `true`   | Limit of languages             |
+| `ignoredOrgsFlag`                 | ``   | `true`   | Comma-separated list of ignored organizations  |
+| `ignoredReposFlag`                 | ``   | `true`   | Comma-separated list of ignored repositories  |
+
 
 ## Contributing
 
