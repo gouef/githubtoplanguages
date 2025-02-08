@@ -1,7 +1,7 @@
 name: Generate Github top languages
 description: Generate Github top languages (within your organizations)
 branding:
-  icon: github
+  icon: bar-chart
   color: purple
 
 inputs:
