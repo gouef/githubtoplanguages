@@ -2,20 +2,8 @@ name: Create Top Languages
 
 on:
   push:
-    botName: 'Jan Galek'
-    botEmail: 'ghome.cz@gmail.com'
-    user: 'JanGalek'
-    limit: 6
-    ignoredOrgsFlag: 'wowmua'
-    ignoredReposFlag: 'wowmua/Maps'
   schedule:
     - cron: '0 */2 * * *'
-      botName: 'Jan Galek'
-      botEmail: 'ghome.cz@gmail.com'
-      user: 'JanGalek'
-      limit: 6
-      ignoredOrgsFlag: 'wowmua'
-      ignoredReposFlag: 'wowmua/Maps'
   workflow_dispatch:
     botName:
       required: false
@@ -50,11 +38,11 @@ jobs:
       - name: Run custom action
         uses: gouef/githubtoplanguages@main
         with:
-          botName: ${{ inputs.botName }}
-          botEmail: ${{ inputs.botEmail }}
-          user: ${{ inputs.user }}
-          limit: ${{ inputs.limit }}
-          ignoredOrgsFlag: ${{ inputs.ignoredOrgsFlag }}
-          ignoredReposFlag: ${{ inputs.ignoredReposFlag }}
+          botName: "Jan Galek"
+          botEmail: "ghome.cz@gmail.com"
+          user: "JanGalek"
+          limit: 6
+          ignoredOrgsFlag: "wowmua"
+          ignoredReposFlag: "wowmua/Maps"
         env:
           GITHUB_TOKEN: ${{ secrets.USER_GITHUB_TOKEN }}
