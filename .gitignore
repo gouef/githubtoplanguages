@@ -5,6 +5,7 @@
 /vendor
 /coverage.txt
 /coverage.*
+/toplanguages.svg
 # Binaries for programs and plugins
 *.exe
 *.exe~

@@ -71,25 +71,17 @@ func FetchUser(loginName, token string, ignored ...string) (*Result, error) {
 		return nil, err
 	}
 
-	/*var resultOrganization = &ResultOrganizations{
-		List:      map[string][]string{},
-		Languages: make(map[string]int),
-	}*/
-
 	var result2 = &Result{}
 
 	for _, r := range result.Data.Viewer.Repositories.Edges {
-
 		if utils.InArray(r.Node.Name, ignored) {
 			continue
 		}
-		//resultOrganization.List[r.Node.NameWithOwner] = append(resultOrganization.List[r.Node.NameWithOwner], r.Node.NameWithOwner)
 		resultRepository := &ResultRepository{Name: r.Node.NameWithOwner}
 
 		var languages []*ResultLanguage
 		for _, l := range r.Node.Languages.Edges {
-			//resultOrganization.Languages[l.Node.Name] += l.Size
-			languages = append(languages, &ResultLanguage{Name: l.Node.Name, Size: l.Size})
+			languages = append(languages, &ResultLanguage{Name: l.Node.Name, Size: l.Size, Color: l.Node.Color})
 		}
 		resultRepository.Languages = languages
 
@@ -97,5 +89,4 @@ func FetchUser(loginName, token string, ignored ...string) (*Result, error) {
 	}
 
 	return result2, nil
-	//return resultOrganization, nil
 }

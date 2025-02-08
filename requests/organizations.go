@@ -124,11 +124,6 @@ func FetchOrganizations(loginName, token string, ignored ...string) (*Result, er
 		return nil, err
 	}
 
-	/*var resultOrganization = &ResultOrganizations{
-		List:      map[string][]string{},
-		Languages: make(map[string]int),
-	}*/
-
 	var result2 = &Result{}
 
 	for _, org := range result.Data.Viewer.Organizations.Nodes {
@@ -141,13 +136,10 @@ func FetchOrganizations(loginName, token string, ignored ...string) (*Result, er
 					continue
 				}
 				resultRepository := &ResultRepository{Name: r.Node.NameWithOwner, Organization: r.Node.Name}
-				//result2.Repositories = append(result2.Repositories, &ResultRepository{Languages: })
-				//resultOrganization.List[login] = append(resultOrganization.List[login], r.Node.NameWithOwner)
 
 				var languages []*ResultLanguage
 				for _, l := range r.Node.Languages.Edges {
-					//resultOrganization.Languages[l.Node.Name] += l.Size
-					languages = append(languages, &ResultLanguage{Name: l.Node.Name, Size: l.Size})
+					languages = append(languages, &ResultLanguage{Name: l.Node.Name, Size: l.Size, Color: l.Node.Color})
 				}
 				resultRepository.Languages = languages
 
@@ -157,5 +149,4 @@ func FetchOrganizations(loginName, token string, ignored ...string) (*Result, er
 	}
 
 	return result2, nil
-	//return resultOrganization, nil
 }

@@ -11,6 +11,7 @@ type ResultRepository struct {
 }
 
 type ResultLanguage struct {
-	Name string
-	Size int
+	Name  string
+	Color string
+	Size  int
 }

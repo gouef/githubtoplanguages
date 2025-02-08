@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gouef/githubtoplanguages/requests"
 	"github.com/gouef/utils"
 	"github.com/joho/godotenv"
@@ -10,139 +9,6 @@ import (
 	"sort"
 	"strconv"
 )
-
-/*
-var queryType = graphql.NewObject(
-	graphql.ObjectConfig{
-		Name: "Query",
-		Fields: graphql.Fields{
-			"repositories": &graphql.Field{
-				Type: graphql.NewList(repositoryType),
-			},
-		},
-	},
-)*/
-/*
-var repositoryType = graphql.NewObject(
-	graphql.ObjectConfig{
-		Name: "Repository",
-		Fields: graphql.Fields{
-			"name":      &graphql.Field{Type: graphql.String},
-			"fullName":  &graphql.Field{Type: graphql.String},
-			"languages": &graphql.Field{Type: graphql.NewList(languageType)},
-		},
-	},
-)*/
-/*
-var languageType = graphql.NewObject(
-	graphql.ObjectConfig{
-		Name: "Language",
-		Fields: graphql.Fields{
-			"name": &graphql.Field{Type: graphql.String},
-			"size": &graphql.Field{Type: graphql.Int},
-		},
-	},
-)*/
-/*
-type GraphQLResponse struct {
-	Data struct {
-		Viewer struct {
-			Repositories struct {
-				Nodes    []organizations.Repository `json:"nodes"`
-				PageInfo toplanguages.PageInfo      `json:"pageInfo"`
-			} `json:"repositories"`
-			Organizations struct {
-				Nodes []struct {
-					Login        string `json:"login"`
-					Repositories struct {
-						Nodes    []organizations.Repository `json:"nodes"`
-						PageInfo toplanguages.PageInfo      `json:"pageInfo"`
-					} `json:"repositories"`
-				} `json:"nodes"`
-				PageInfo toplanguages.PageInfo `json:"pageInfo"`
-			} `json:"organizations"`
-		} `json:"viewer"`
-	} `json:"data"`
-}
-*/
-/*
-func fetchRepositories(token string, query string) (*GraphQLResponse, error) {
-	payload := struct {
-		Query string `json:"query"`
-	}{
-		Query: query,
-	}
-
-	payloadJSON, err := json.Marshal(payload)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("POST", githubGraphQLAPI, bytes.NewBuffer(payloadJSON)) // Use bytes.NewBuffer
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Set("Authorization", "Bearer "+token)
-	req.Header.Set("Content-Type", "application/json") // Important: Set Content-Type header
-
-	httpClient := &http.Client{}
-	resp, err := httpClient.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		bodyBytes, _ := ioutil.ReadAll(resp.Body) // Read the error body
-		return nil, fmt.Errorf("GitHub API returned non-200 status: %d, Body: %s", resp.StatusCode, string(bodyBytes))
-	}
-
-	var result GraphQLResponse
-	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
-		return nil, err
-	}
-
-	return &result, nil
-}*/
-/*
-func fetchAllRepositories(token string) ([]Repository, map[string]int, error) {
-	var repositories []Repository
-	languageStats := make(map[string]int)
-
-	query := `{
-		viewer {
-			repositories(first: 100, isFork: false) {
-				nodes {
-					name
-					nameWithOwner
-					languages(first: 10) {
-						edges {
-							node { name }
-							size
-						}
-					}
-				}
-				pageInfo { hasNextPage endCursor }
-			}
-		}
-	}`
-
-	response, err := fetchRepositories(token, query)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	repositories = append(repositories, response.Data.Viewer.Repositories.Nodes...)
-
-	for _, repo := range repositories {
-		for _, edge := range repo.Languages.Edges {
-			languageStats[edge.Node.Name] += edge.Size
-		}
-	}
-
-	return repositories, languageStats, nil
-}*/
 
 func main() {
 	if err := godotenv.Load(); err != nil {
@@ -180,12 +46,14 @@ func main() {
 
 	var repositories []string
 	languages := make(map[string]int)
+	colors := make(map[string]string)
 
 	for _, repoList := range result.Repositories {
 		repositories = append(repositories, repoList.Name)
 
 		for _, lang := range repoList.Languages {
 			languages[lang.Name] += lang.Size
+			colors[lang.Name] = lang.Color
 		}
 	}
 
@@ -204,26 +72,28 @@ func main() {
 
 		for _, lang := range repoList.Languages {
 			languages[lang.Name] += lang.Size
+			colors[lang.Name] = lang.Color
 		}
 	}
 
-	languages, languagesPercentage := sortLanguages(languages, limit)
+	resultLanguages := sortLanguages(languages, limit)
 
-	//languagesPercentage := make(map[string]float64)
-
-	for percentage, lang := range languagesPercentage {
-		fmt.Printf("%s: %.2f\n", lang, percentage)
+	for _, lang := range resultLanguages {
+		lang.Color = colors[lang.Name]
 	}
 
-	/*
-		for lang, size := range languages {
-			languagesPercentage[lang] = (float64(size) / float64(languagesSize)) * 100
-			fmt.Printf("%s: %.2f\n", lang, languagesPercentage[lang])
-		}*/
+	generateSvg(resultLanguages)
 
 }
 
-func sortLanguages(languages map[string]int, limit int) (map[string]int, map[float64]string) {
+type Language struct {
+	Name       string
+	Color      string
+	Size       int
+	Percentage float64
+}
+
+func sortLanguages(languages map[string]int, limit int) []*Language {
 	type kv struct {
 		Key   string
 		Value int
@@ -244,36 +114,20 @@ func sortLanguages(languages map[string]int, limit int) (map[string]int, map[flo
 
 	sortedMap := make(map[string]int, limit)
 
-	languagesPercentage := make(map[string]float64)
 	var languagesSize int
 	for i := 0; i < limit; i++ {
 		sortedMap[sorted[i].Key] = sorted[i].Value
 		languagesSize += sorted[i].Value
 	}
+	result := make([]*Language, 0)
 
 	for key, size := range sortedMap {
-		languagesPercentage[key] = (float64(size) / float64(languagesSize)) * 100
+		result = append(result, &Language{Name: key, Size: size, Percentage: (float64(size) / float64(languagesSize)) * 100})
 	}
 
-	type kvp struct {
-		Key   string
-		Value float64
-	}
-
-	var sortedp []kvp
-	for k, v := range languagesPercentage {
-		sortedp = append(sortedp, kvp{k, v})
-	}
-
-	sort.Slice(sortedp, func(i, j int) bool {
-		return sortedp[i].Value > sortedp[j].Value
+	sort.Slice(result, func(i, j int) bool {
+		return result[i].Percentage > result[j].Percentage
 	})
 
-	sortedpMap := make(map[float64]string, limit)
-
-	for i := 0; i < limit; i++ {
-		sortedpMap[sortedp[i].Value] = sortedp[i].Key
-	}
-
-	return sortedMap, sortedpMap
+	return result
 }
