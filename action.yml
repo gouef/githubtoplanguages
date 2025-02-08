@@ -62,7 +62,7 @@ runs:
         [ -n "${{ inputs.ignoredOrgsFlag }}" ] && args="$args -ignore-orgs=${{ inputs.ignoredOrgsFlag }}"
         [ -n "${{ inputs.ignoredReposFlag }}" ] && args="$args -ignore-repos=${{ inputs.ignoredReposFlag }}"
         
-        ./app $args
+        ./app $args -token=${{ env.GITHUB_TOKEN }}
       shell: bash
       env:
         GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
