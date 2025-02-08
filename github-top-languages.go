@@ -7,6 +7,8 @@ import (
 	"github.com/joho/godotenv"
 	"log"
 	"os"
+	"sort"
+	"strconv"
 )
 
 /*
@@ -155,40 +157,123 @@ func main() {
 		log.Fatal("GITHUB_USERNAME is not set")
 	}
 
-	result, err := requests.FetchOrganizations(user, token)
+	ignoredOrganizationsEnv := os.Getenv("GITHUB_IGNORE_ORGANIZATIONS")
+	ignoredRepositoriesEnv := os.Getenv("GITHUB_IGNORE_REPOS")
+
+	ignoredOrganizations := utils.Explode(",", ignoredOrganizationsEnv)
+	ignoredRepositories := utils.Explode(",", ignoredRepositoriesEnv)
+	ignored := ignoredOrganizations
+	ignored = append(ignored, ignoredRepositories...)
+
+	limitEnv := os.Getenv("GITHUB_TOP_LIMIT")
+	limit := 10
+
+	if limitEnv != "" {
+		limit, _ = strconv.Atoi(limitEnv)
+	}
+
+	result, err := requests.FetchOrganizations(user, token, ignored...)
 
 	if err != nil {
 		log.Fatalf("Failed to fetch organizations: %v", err)
 	}
 
 	var repositories []string
-	var languages map[string]int
+	languages := make(map[string]int)
 
-	for _, repoList := range result.List {
-		repositories = append(repositories, repoList...)
+	for _, repoList := range result.Repositories {
+		repositories = append(repositories, repoList.Name)
+
+		for _, lang := range repoList.Languages {
+			languages[lang.Name] += lang.Size
+		}
 	}
 
-	for lang, size := range result.Languages {
-		languages[lang] = size
-	}
-
-	result, err = requests.FetchUser(user, token)
+	result, err = requests.FetchUser(user, token, ignored...)
 
 	if err != nil {
 		log.Fatalf("Failed to fetch user: %v", err)
 	}
 
-	for _, repoList := range result.List {
-		repositories = append(repositories, repoList...)
+	for _, repoList := range result.Repositories {
+		if utils.InArray(repoList.Name, repositories) {
+			continue
+		}
+
+		repositories = append(repositories, repoList.Name)
+
+		for _, lang := range repoList.Languages {
+			languages[lang.Name] += lang.Size
+		}
 	}
 
-	for lang, size := range result.Languages {
-		fmt.Printf("%s: %d\n", lang, size)
+	languages, languagesPercentage := sortLanguages(languages, limit)
+
+	//languagesPercentage := make(map[string]float64)
+
+	for percentage, lang := range languagesPercentage {
+		fmt.Printf("%s: %.2f\n", lang, percentage)
 	}
 
-	for _, repo := range repositories {
-		fmt.Printf("%s\n", repo)
+	/*
+		for lang, size := range languages {
+			languagesPercentage[lang] = (float64(size) / float64(languagesSize)) * 100
+			fmt.Printf("%s: %.2f\n", lang, languagesPercentage[lang])
+		}*/
+
+}
+
+func sortLanguages(languages map[string]int, limit int) (map[string]int, map[float64]string) {
+	type kv struct {
+		Key   string
+		Value int
 	}
 
-	//Calc()
+	var sorted []kv
+	for k, v := range languages {
+		sorted = append(sorted, kv{k, v})
+	}
+
+	sort.Slice(sorted, func(i, j int) bool {
+		return sorted[i].Value > sorted[j].Value
+	})
+
+	if limit > len(sorted) {
+		limit = len(sorted)
+	}
+
+	sortedMap := make(map[string]int, limit)
+
+	languagesPercentage := make(map[string]float64)
+	var languagesSize int
+	for i := 0; i < limit; i++ {
+		sortedMap[sorted[i].Key] = sorted[i].Value
+		languagesSize += sorted[i].Value
+	}
+
+	for key, size := range sortedMap {
+		languagesPercentage[key] = (float64(size) / float64(languagesSize)) * 100
+	}
+
+	type kvp struct {
+		Key   string
+		Value float64
+	}
+
+	var sortedp []kvp
+	for k, v := range languagesPercentage {
+		sortedp = append(sortedp, kvp{k, v})
+	}
+
+	sort.Slice(sortedp, func(i, j int) bool {
+		return sortedp[i].Value > sortedp[j].Value
+	})
+
+	sortedpMap := make(map[float64]string, limit)
+
+	for i := 0; i < limit; i++ {
+		sortedpMap[sortedp[i].Value] = sortedp[i].Key
+	}
+
+	return sortedMap, sortedpMap
 }

@@ -3,6 +3,7 @@ package requests
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gouef/utils"
 	"io"
 	"net/http"
 )
@@ -20,17 +21,18 @@ type ViewerUser struct {
 	PageInfo     PageInfo     `json:"pageInfo"`
 }
 
-func FetchUser(loginName, token string) (*ResultOrganizations, error) {
+func FetchUser(loginName, token string, ignored ...string) (*Result, error) {
 	query := `query {
 		  viewer {
-			repositories(first: 100, isFork: false) {
+			repositories(first: 100, isFork: false, affiliations: OWNER, ownerAffiliations: OWNER) {
 			  edges {
 				node {
+				  name
 				  nameWithOwner
 				  primaryLanguage {
 					name
 				  }
-				  languages(first: 5, after: null) {
+				  languages(first: 3, after: null) {
 					edges {
 					  node {
 						name
@@ -69,18 +71,31 @@ func FetchUser(loginName, token string) (*ResultOrganizations, error) {
 		return nil, err
 	}
 
-	var resultOrganization = &ResultOrganizations{
+	/*var resultOrganization = &ResultOrganizations{
 		List:      map[string][]string{},
 		Languages: make(map[string]int),
-	}
+	}*/
+
+	var result2 = &Result{}
 
 	for _, r := range result.Data.Viewer.Repositories.Edges {
-		resultOrganization.List[r.Node.NameWithOwner] = append(resultOrganization.List[r.Node.NameWithOwner], r.Node.NameWithOwner)
 
-		for _, l := range r.Node.Languages.Edges {
-			resultOrganization.Languages[l.Node.Name] += l.Size
+		if utils.InArray(r.Node.Name, ignored) {
+			continue
 		}
+		//resultOrganization.List[r.Node.NameWithOwner] = append(resultOrganization.List[r.Node.NameWithOwner], r.Node.NameWithOwner)
+		resultRepository := &ResultRepository{Name: r.Node.NameWithOwner}
+
+		var languages []*ResultLanguage
+		for _, l := range r.Node.Languages.Edges {
+			//resultOrganization.Languages[l.Node.Name] += l.Size
+			languages = append(languages, &ResultLanguage{Name: l.Node.Name, Size: l.Size})
+		}
+		resultRepository.Languages = languages
+
+		result2.Repositories = append(result2.Repositories, resultRepository)
 	}
 
-	return resultOrganization, nil
+	return result2, nil
+	//return resultOrganization, nil
 }

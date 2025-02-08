@@ -3,6 +3,7 @@ package requests
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gouef/utils"
 	"io"
 	"net/http"
 )
@@ -39,13 +40,14 @@ type RepositoryEdge struct {
 }
 
 type RepositoryNode struct {
+	Name            string          `json:"name"`
 	NameWithOwner   string          `json:"nameWithOwner"`
 	PrimaryLanguage PrimaryLanguage `json:"primaryLanguage"`
 	Languages       Languages       `json:"languages"`
 }
 
 type PrimaryLanguage struct {
-	Name string `json:"name"`
+	Name string `json:"Name"`
 }
 
 type Languages struct {
@@ -54,10 +56,10 @@ type Languages struct {
 
 type LanguageEdge struct {
 	Node LanguageNode `json:"node"`
-	Size int          `json:"size"`
+	Size int          `json:"Size"`
 }
 type LanguageNode struct {
-	Name  string `json:"name"`
+	Name  string `json:"Name"`
 	Color string `json:"color"`
 }
 
@@ -66,21 +68,22 @@ type ResultOrganizations struct {
 	Languages map[string]int
 }
 
-func FetchOrganizations(loginName, token string) (*ResultOrganizations, error) {
+func FetchOrganizations(loginName, token string, ignored ...string) (*Result, error) {
 	query := `query {
 	  viewer {
 		organizations(first: 100, after: null) {
 		  nodes {
 			login
 			viewerCanAdminister
-			repositories(first: 100, after: null, isFork: false, affiliations: OWNER) {
+			repositories(first: 100, after: null, isFork: false, affiliations: OWNER, ownerAffiliations: OWNER) {
 				edges {
 					node {
+						name
 						nameWithOwner
 						primaryLanguage {
 							name
 						}
-						languages(first: 5, after: null) {
+						languages(first: 2, after: null) {
 							edges {
 								node {
 									name
@@ -121,23 +124,38 @@ func FetchOrganizations(loginName, token string) (*ResultOrganizations, error) {
 		return nil, err
 	}
 
-	var resultOrganization = &ResultOrganizations{
+	/*var resultOrganization = &ResultOrganizations{
 		List:      map[string][]string{},
 		Languages: make(map[string]int),
-	}
+	}*/
+
+	var result2 = &Result{}
 
 	for _, org := range result.Data.Viewer.Organizations.Nodes {
-		login := org.Login
+		if utils.InArray(org.Login, ignored) {
+			continue
+		}
 		if org.CanAdminister {
 			for _, r := range org.Repositories.Edges {
-				resultOrganization.List[login] = append(resultOrganization.List[login], r.Node.NameWithOwner)
-
-				for _, l := range r.Node.Languages.Edges {
-					resultOrganization.Languages[l.Node.Name] += l.Size
+				if utils.InArray(r.Node.Name, ignored) {
+					continue
 				}
+				resultRepository := &ResultRepository{Name: r.Node.NameWithOwner, Organization: r.Node.Name}
+				//result2.Repositories = append(result2.Repositories, &ResultRepository{Languages: })
+				//resultOrganization.List[login] = append(resultOrganization.List[login], r.Node.NameWithOwner)
+
+				var languages []*ResultLanguage
+				for _, l := range r.Node.Languages.Edges {
+					//resultOrganization.Languages[l.Node.Name] += l.Size
+					languages = append(languages, &ResultLanguage{Name: l.Node.Name, Size: l.Size})
+				}
+				resultRepository.Languages = languages
+
+				result2.Repositories = append(result2.Repositories, resultRepository)
 			}
 		}
 	}
 
-	return resultOrganization, nil
+	return result2, nil
+	//return resultOrganization, nil
 }
