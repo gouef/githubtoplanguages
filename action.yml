@@ -74,7 +74,7 @@ runs:
           echo "Žádné změny, nic k commitování."
         else
           git add .
-          git commit -m "${{ inputs.commitMessageBot }}"
+          git commit -m "[Update] Generate github top language"
           git push origin HEAD:${{ github.event.repository.default_branch }}
         fi
       shell: bash
