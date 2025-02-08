@@ -1,0 +1,47 @@
+name: Create Top Languages
+
+on:
+  schedule:
+    - cron: '0 */2 * * *'
+  workflow_dispatch:
+    botName:
+      required: false
+      default: "Jan Galek"
+      description: "Set bot name for contributors"
+
+    botEmail:
+      required: false
+      default: "ghome.cz@gmail.com"
+      description: "Set bot email address for contributors"
+    user:
+      required: true
+      default: "JanGalek"
+      description: "Github UserName"
+    limit:
+      required: true
+      default: 6
+      description: "Limit of languages"
+    ignoredOrgsFlag:
+      required: true
+      default: "wowmua"
+      description: "Comma-separated list of ignored organizations"
+    ignoredReposFlag:
+      required: true
+      default: "wowmua/Maps"
+      description: "Comma-separated list of ignored repositories"
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run custom action
+        uses: gouef/githubtoplanguages@main
+        with:
+          botName: ${{ inputs.botName }}
+          botEmail: ${{ inputs.botEmail }}
+          user: ${{ inputs.user }}
+          limit: ${{ inputs.limit }}
+          ignoredOrgsFlag: ${{ inputs.ignoredOrgsFlag }}
+          ignoredReposFlag: ${{ inputs.ignoredReposFlag }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.USER_GITHUB_TOKEN }}
