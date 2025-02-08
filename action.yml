@@ -69,6 +69,7 @@ runs:
 
     - name: Commit and push changes
       run: |
+        ls
         if git diff --quiet ./; then
           echo "Žádné změny, nic k commitování."
         else
