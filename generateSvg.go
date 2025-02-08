@@ -59,7 +59,11 @@ func generateSvg(languages []*Language) {
 		x += size
 	}
 
-	languageSvg.Height += offsetL
+	if offsetL > offsetR {
+		languageSvg.Height += offsetL
+	} else {
+		languageSvg.Height += offsetR
+	}
 	content := SvgTemplate
 	tp := template.New("svg")
 	tpl, err := tp.Parse(content)
@@ -76,11 +80,11 @@ func generateSvg(languages []*Language) {
 
 	result := builder.String()
 
-	file, err := os.OpenFile("./toplanguages.svg", os.O_CREATE|os.O_WRONLY, 0644)
+	file, err := os.OpenFile("./toplanguages.svg", os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
 	if err != nil {
 		log.Fatalf("Failed to generate svg: %v", err)
 	}
-
+	defer file.Close()
 	if _, err := file.WriteString(result); err != nil {
 		log.Fatalf("failed to write log entry: %w", err)
 	}

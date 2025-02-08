@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"github.com/gouef/githubtoplanguages/requests"
 	"github.com/gouef/utils"
 	"github.com/joho/godotenv"
@@ -8,31 +9,43 @@ import (
 	"os"
 	"sort"
 	"strconv"
+	"strings"
 )
 
 func main() {
-	if err := godotenv.Load(); err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
+	godotenv.Load()
+
+	tokenFlag := flag.String("token", "", "Github API token")
+	userFlag := flag.String("user", "", "Github username")
+	limitFlag := flag.Int("limit", 6, "Limit of languages")
+	ignoredOrgsFlag := flag.String("ignore-orgs", "", "Comma-separated list of ignored organizations")
+	ignoredReposFlag := flag.String("ignore-repos", "", "Comma-separated list of ignored repositories")
+	flag.Parse()
+
+	token := *tokenFlag
+	if token == "" {
+		token = os.Getenv("GITHUB_TOKEN")
 	}
-	token := os.Getenv("GITHUB_TOKEN")
+
 	if token == "" {
 		log.Fatal("GITHUB_TOKEN is not set")
 	}
-	user := os.Getenv("GITHUB_USERNAME")
+
+	user := *userFlag
+	if user == "" {
+		user = os.Getenv("GITHUB_USERNAME")
+	}
+
 	if user == "" {
 		log.Fatal("GITHUB_USERNAME is not set")
 	}
 
-	ignoredOrganizationsEnv := os.Getenv("GITHUB_IGNORE_ORGANIZATIONS")
-	ignoredRepositoriesEnv := os.Getenv("GITHUB_IGNORE_REPOS")
-
-	ignoredOrganizations := utils.Explode(",", ignoredOrganizationsEnv)
-	ignoredRepositories := utils.Explode(",", ignoredRepositoriesEnv)
-	ignored := ignoredOrganizations
-	ignored = append(ignored, ignoredRepositories...)
+	ignoredOrganizations := explode(",", getPriorityValue(*ignoredOrgsFlag, "GITHUB_IGNORE_ORGANIZATIONS"))
+	ignoredRepositories := explode(",", getPriorityValue(*ignoredReposFlag, "GITHUB_IGNORE_REPOS"))
+	ignored := append(ignoredOrganizations, ignoredRepositories...)
 
 	limitEnv := os.Getenv("GITHUB_TOP_LIMIT")
-	limit := 10
+	limit := *limitFlag
 
 	if limitEnv != "" {
 		limit, _ = strconv.Atoi(limitEnv)
@@ -130,4 +143,26 @@ func sortLanguages(languages map[string]int, limit int) []*Language {
 	})
 
 	return result
+}
+
+func getPriorityValue(flagValue, envKey string) string {
+	if flagValue != "" {
+		return flagValue
+	}
+	return os.Getenv(envKey)
+}
+
+func explode(delimiter, str string) []string {
+	if str == "" {
+		return []string{}
+	}
+	parts := strings.Split(str, delimiter)
+	var cleaned []string
+	for _, part := range parts {
+		trimmed := strings.TrimSpace(part)
+		if trimmed != "" {
+			cleaned = append(cleaned, trimmed)
+		}
+	}
+	return cleaned
 }
