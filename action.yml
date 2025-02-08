@@ -55,7 +55,14 @@ runs:
       run: go build -o app .
       shell: bash
     - name: Run the Go binary
-      run: ./app -user=${{ inputs.user }} -limit=${{ inputs.limit }} -ignore-orgs=${{ inputs.ignoredOrgsFlag }} -ignore-repos=${{ inputs.ignoredReposFlag }}
+      run: |
+        args=""
+        [ -n "${{ inputs.user }}" ] && args="$args -user=${{ inputs.user }}"
+        [ -n "${{ inputs.limit }}" ] && args="$args -limit=${{ inputs.limit }}"
+        [ -n "${{ inputs.ignoredOrgsFlag }}" ] && args="$args -ignore-orgs=${{ inputs.ignoredOrgsFlag }}"
+        [ -n "${{ inputs.ignoredReposFlag }}" ] && args="$args -ignore-repos=${{ inputs.ignoredReposFlag }}"
+        
+        ./app $args
       shell: bash
       env:
         GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
