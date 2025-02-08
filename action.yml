@@ -1,0 +1,47 @@
+name: Generate Github top languages
+description: Generate Github top languages (within your organizations)
+branding:
+  icon: github
+  color: purple
+
+inputs:
+  user:
+    required: true
+    description: "Github UserName"
+  limit:
+    required: true
+    default: 6
+    description: "Limit of languages"
+  ignoredOrgsFlag:
+    required: true
+    default: ""
+    description: "Comma-separated list of ignored organizations"
+  ignoredReposFlag:
+    required: true
+    default: ""
+    description: "Comma-separated list of ignored repositories"
+
+env:
+  GITHUB_TOKEN: "As provided by Github Actions"
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: "1.23"
+
+    - name: Build the Go binary
+      run: go build -o app .
+      shell: bash
+    - name: Run the Go binary
+      run: ./app -user=${{ inputs.user }} -limit=${{ inputs.limit }} -ignore-orgs=${{ inputs.ignoredOrgsFlag }} -ignore-repos=${{ inputs.ignoredReposFlag }}
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
