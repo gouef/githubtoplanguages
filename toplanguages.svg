@@ -83,17 +83,17 @@
                 <rect x="0" y="0" width="250" height="8" fill="white" rx="5"/>
             </mask>
             
-                <rect mask="url(#rect-mask)" x="0" y="0" width="110.34769625219847" height="8" fill="#00ADD8"/>
+                <rect mask="url(#rect-mask)" x="0" y="0" width="110.35601941924105" height="8" fill="#00ADD8"/>
             
-                <rect mask="url(#rect-mask)" x="110.34769625219847" y="0" width="84.41998935232" height="8" fill="#4F5D95"/>
+                <rect mask="url(#rect-mask)" x="110.35601941924105" y="0" width="84.41495798760741" height="8" fill="#4F5D95"/>
             
-                <rect mask="url(#rect-mask)" x="194.76768560451848" y="0" width="23.78832129323852" height="8" fill="#384d54"/>
+                <rect mask="url(#rect-mask)" x="194.77097740684846" y="0" width="23.786903528071228" height="8" fill="#384d54"/>
             
-                <rect mask="url(#rect-mask)" x="218.556006897757" y="0" width="13.638172841950647" height="8" fill="#e34c26"/>
+                <rect mask="url(#rect-mask)" x="218.5578809349197" y="0" width="13.637360017617123" height="8" fill="#e34c26"/>
             
-                <rect mask="url(#rect-mask)" x="232.19417973970764" y="0" width="13.564427050764381" height="8" fill="#89e051"/>
+                <rect mask="url(#rect-mask)" x="232.1952409525368" y="0" width="13.563618621621785" height="8" fill="#89e051"/>
             
-                <rect mask="url(#rect-mask)" x="245.75860679047202" y="0" width="4.241393209527956" height="8" fill="#3178c6"/>
+                <rect mask="url(#rect-mask)" x="245.75885957415858" y="0" width="4.24114042584141" height="8" fill="#3178c6"/>
             
 
             <g transform="translate(0, 25)">
@@ -121,7 +121,7 @@
                             <g class="stagger" style="animation-delay: 750ms">
                                 <circle cx="5" cy="6" r="5" fill="#384d54" />
                                 <text x="15" y="10" class='lang-name'>
-                                    Dockerfile 9.52%
+                                    Dockerfile 9.51%
                                 </text>
                             </g>
                         </g>
@@ -133,7 +133,7 @@
                             <g class="stagger" style="animation-delay: 450ms">
                                 <circle cx="5" cy="6" r="5" fill="#e34c26" />
                                 <text x="15" y="10" class='lang-name'>
-                                    HTML 5.46%
+                                    HTML 5.45%
                                 </text>
                             </g>
                         </g>
