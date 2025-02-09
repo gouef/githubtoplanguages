@@ -15,7 +15,7 @@ import (
 func main() {
 	godotenv.Load()
 
-	tokenFlag := flag.String("token", "", "Github API token")
+	tokenFlag := flag.String("gh-token", "", "Github API token")
 	userFlag := flag.String("user", "", "Github username")
 	limitFlag := flag.Int("limit", 6, "Limit of languages")
 	outputFlag := flag.String("output", "", "Name of file (without .svg")

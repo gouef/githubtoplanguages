@@ -70,7 +70,7 @@ runs:
         [ -n "${{ inputs.ignoredOrgsFlag }}" ] && args="$args -ignore-orgs=${{ inputs.ignoredOrgsFlag }}"
         [ -n "${{ inputs.ignoredReposFlag }}" ] && args="$args -ignore-repos=${{ inputs.ignoredReposFlag }}"
         
-        ./app $args -token=${{ env.GITHUB_TOKEN }}
+        ./app $args -gh-token=${{ env.GITHUB_TOKEN }}
         rm -R githubtoplanguages
         rm app
       shell: bash
