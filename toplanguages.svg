@@ -1,5 +1,5 @@
 
-<svg width="300" height="95" viewBox="0 0 300 95" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="descId">
+<svg width="300" height="170" viewBox="0 0 300 170" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="descId">
     <style>
         .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -83,12 +83,78 @@
                 <rect x="0" y="0" width="250" height="8" fill="white" rx="5"/>
             </mask>
             
+                <rect mask="url(#rect-mask)" x="0" y="0" width="110.34769625219847" height="8" fill="#00ADD8"/>
+            
+                <rect mask="url(#rect-mask)" x="110.34769625219847" y="0" width="84.41998935232" height="8" fill="#4F5D95"/>
+            
+                <rect mask="url(#rect-mask)" x="194.76768560451848" y="0" width="23.78832129323852" height="8" fill="#384d54"/>
+            
+                <rect mask="url(#rect-mask)" x="218.556006897757" y="0" width="13.638172841950647" height="8" fill="#e34c26"/>
+            
+                <rect mask="url(#rect-mask)" x="232.19417973970764" y="0" width="13.564427050764381" height="8" fill="#89e051"/>
+            
+                <rect mask="url(#rect-mask)" x="245.75860679047202" y="0" width="4.241393209527956" height="8" fill="#3178c6"/>
+            
 
             <g transform="translate(0, 25)">
                 <g transform="translate(0, 0)">
                     
+                        <g transform="translate(0, 0)">
+                            <g class="stagger" style="animation-delay: 450ms">
+                                <circle cx="5" cy="6" r="5" fill="#00ADD8" />
+                                <text x="15" y="10" class='lang-name'>
+                                    Go 44.14%
+                                </text>
+                            </g>
+                        </g>
+                    
+                        <g transform="translate(0, 25)">
+                            <g class="stagger" style="animation-delay: 600ms">
+                                <circle cx="5" cy="6" r="5" fill="#4F5D95" />
+                                <text x="15" y="10" class='lang-name'>
+                                    PHP 33.77%
+                                </text>
+                            </g>
+                        </g>
+                    
+                        <g transform="translate(0, 50)">
+                            <g class="stagger" style="animation-delay: 750ms">
+                                <circle cx="5" cy="6" r="5" fill="#384d54" />
+                                <text x="15" y="10" class='lang-name'>
+                                    Dockerfile 9.52%
+                                </text>
+                            </g>
+                        </g>
+                    
                 </g>
                 <g transform="translate(150, 0)">
+                    
+                        <g transform="translate(0, 0)">
+                            <g class="stagger" style="animation-delay: 450ms">
+                                <circle cx="5" cy="6" r="5" fill="#e34c26" />
+                                <text x="15" y="10" class='lang-name'>
+                                    HTML 5.46%
+                                </text>
+                            </g>
+                        </g>
+                    
+                        <g transform="translate(0, 25)">
+                            <g class="stagger" style="animation-delay: 600ms">
+                                <circle cx="5" cy="6" r="5" fill="#89e051" />
+                                <text x="15" y="10" class='lang-name'>
+                                    Shell 5.43%
+                                </text>
+                            </g>
+                        </g>
+                    
+                        <g transform="translate(0, 50)">
+                            <g class="stagger" style="animation-delay: 750ms">
+                                <circle cx="5" cy="6" r="5" fill="#3178c6" />
+                                <text x="15" y="10" class='lang-name'>
+                                    TypeScript 1.70%
+                                </text>
+                            </g>
+                        </g>
                     
                 </g>
             </g>
