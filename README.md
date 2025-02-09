@@ -15,6 +15,8 @@ Generate your Top languages of Github
 ![GitHub Release](https://img.shields.io/github/v/release/gouef/githubtoplanguages?label=RC&include_prereleases&filter=*rc*&logoSize=diago)
 ![GitHub Release](https://img.shields.io/github/v/release/gouef/githubtoplanguages?label=Beta&include_prereleases&filter=*beta*&logoSize=diago)
 
+## Introduction
+Generate your Top languages of Github to `toplanguages.svg` (in root of repository). Next just copy raw link of svg and paste to your `Markdown`.
 
 ## Example
 

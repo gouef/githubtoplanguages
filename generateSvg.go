@@ -35,7 +35,7 @@ type LangSvg struct {
 	Delay      int
 }
 
-func generateSvg(languages []*Language) {
+func generateSvg(languages []*Language, output string) string {
 	languageSvg := &LanguageToSvg{Size: 250, All: languages, Height: 95}
 	half := math.Round(float64(len(languages)) / 2)
 	x := 0.0
@@ -80,12 +80,20 @@ func generateSvg(languages []*Language) {
 
 	result := builder.String()
 
-	file, err := os.OpenFile("./toplanguages.svg", os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
+	if output == "" {
+		output = "./toplanguages.svg"
+	} else {
+		output = "./" + output + ".svg"
+	}
+
+	file, err := os.OpenFile(output, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
 	if err != nil {
 		log.Fatalf("Failed to generate svg: %v", err)
 	}
 	defer file.Close()
 	if _, err := file.WriteString(result); err != nil {
-		log.Fatalf("failed to write log entry: %w", err)
+		log.Fatalf("failed to write log entry: %v", err)
 	}
+
+	return result
 }

@@ -6,6 +6,7 @@
 /coverage.txt
 /coverage.*
 /githubtoplanguages
+/test*.svg
 /app
 # Binaries for programs and plugins
 *.exe

@@ -2,9 +2,9 @@ name: Run tests and upload coverage
 
 on:
   workflow_dispatch:
-#  pull_request:
-#    types: [opened, synchronize, edited]
-#  push:
+  pull_request:
+    types: [opened, synchronize, edited]
+  push:
 
 permissions:
   id-token: write

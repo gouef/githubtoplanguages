@@ -18,6 +18,7 @@ func main() {
 	tokenFlag := flag.String("token", "", "Github API token")
 	userFlag := flag.String("user", "", "Github username")
 	limitFlag := flag.Int("limit", 6, "Limit of languages")
+	outputFlag := flag.String("output", "", "Name of file (without .svg")
 	ignoredOrgsFlag := flag.String("ignore-orgs", "", "Comma-separated list of ignored organizations")
 	ignoredReposFlag := flag.String("ignore-repos", "", "Comma-separated list of ignored repositories")
 	flag.Parse()
@@ -38,6 +39,12 @@ func main() {
 
 	if user == "" {
 		log.Fatal("GITHUB_USERNAME is not set")
+	}
+
+	output := *outputFlag
+
+	if output == "" {
+		output = "toplanguages"
 	}
 
 	ignoredOrganizations := explode(",", getPriorityValue(*ignoredOrgsFlag, "GITHUB_IGNORE_ORGANIZATIONS"))
@@ -95,7 +102,7 @@ func main() {
 		lang.Color = colors[lang.Name]
 	}
 
-	generateSvg(resultLanguages)
+	generateSvg(resultLanguages, output)
 
 }
 
