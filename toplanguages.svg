@@ -83,17 +83,17 @@
                 <rect x="0" y="0" width="250" height="8" fill="white" rx="5"/>
             </mask>
             
-                <rect mask="url(#rect-mask)" x="0" y="0" width="114.11862884058513" height="8" fill="#00ADD8"/>
+                <rect mask="url(#rect-mask)" x="0" y="0" width="114.24846145310315" height="8" fill="#00ADD8"/>
             
-                <rect mask="url(#rect-mask)" x="114.11862884058513" y="0" width="82.1404559653534" height="8" fill="#4F5D95"/>
+                <rect mask="url(#rect-mask)" x="114.24846145310315" y="0" width="82.0619719914252" height="8" fill="#4F5D95"/>
             
-                <rect mask="url(#rect-mask)" x="196.25908480593853" y="0" width="23.145982043685702" height="8" fill="#384d54"/>
+                <rect mask="url(#rect-mask)" x="196.31043344452834" y="0" width="23.123866404931206" height="8" fill="#384d54"/>
             
-                <rect mask="url(#rect-mask)" x="219.40506684962423" y="0" width="13.269910886826466" height="8" fill="#e34c26"/>
+                <rect mask="url(#rect-mask)" x="219.43429984945953" y="0" width="13.257231685964584" height="8" fill="#e34c26"/>
             
-                <rect mask="url(#rect-mask)" x="232.6749777364507" y="0" width="13.198156401188175" height="8" fill="#89e051"/>
+                <rect mask="url(#rect-mask)" x="232.69153153542413" y="0" width="13.185545760661316" height="8" fill="#89e051"/>
             
-                <rect mask="url(#rect-mask)" x="245.87313413763889" y="0" width="4.126865862361135" height="8" fill="#3178c6"/>
+                <rect mask="url(#rect-mask)" x="245.87707729608545" y="0" width="4.122922703914543" height="8" fill="#3178c6"/>
             
 
             <g transform="translate(0, 25)">
@@ -103,7 +103,7 @@
                             <g class="stagger" style="animation-delay: 450ms">
                                 <circle cx="5" cy="6" r="5" fill="#00ADD8" />
                                 <text x="15" y="10" class='lang-name'>
-                                    Go 45.65%
+                                    Go 45.70%
                                 </text>
                             </g>
                         </g>
@@ -112,7 +112,7 @@
                             <g class="stagger" style="animation-delay: 600ms">
                                 <circle cx="5" cy="6" r="5" fill="#4F5D95" />
                                 <text x="15" y="10" class='lang-name'>
-                                    PHP 32.86%
+                                    PHP 32.82%
                                 </text>
                             </g>
                         </g>
@@ -121,7 +121,7 @@
                             <g class="stagger" style="animation-delay: 750ms">
                                 <circle cx="5" cy="6" r="5" fill="#384d54" />
                                 <text x="15" y="10" class='lang-name'>
-                                    Dockerfile 9.26%
+                                    Dockerfile 9.25%
                                 </text>
                             </g>
                         </g>
@@ -133,7 +133,7 @@
                             <g class="stagger" style="animation-delay: 450ms">
                                 <circle cx="5" cy="6" r="5" fill="#e34c26" />
                                 <text x="15" y="10" class='lang-name'>
-                                    HTML 5.31%
+                                    HTML 5.30%
                                 </text>
                             </g>
                         </g>
@@ -142,7 +142,7 @@
                             <g class="stagger" style="animation-delay: 600ms">
                                 <circle cx="5" cy="6" r="5" fill="#89e051" />
                                 <text x="15" y="10" class='lang-name'>
-                                    Shell 5.28%
+                                    Shell 5.27%
                                 </text>
                             </g>
                         </g>
