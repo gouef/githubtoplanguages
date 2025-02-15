@@ -83,17 +83,17 @@
                 <rect x="0" y="0" width="250" height="8" fill="white" rx="5"/>
             </mask>
             
-                <rect mask="url(#rect-mask)" x="0" y="0" width="116.03340055567455" height="8" fill="#00ADD8"/>
+                <rect mask="url(#rect-mask)" x="0" y="0" width="116.02950568337647" height="8" fill="#00ADD8"/>
             
-                <rect mask="url(#rect-mask)" x="116.03340055567455" y="0" width="80.9829741089002" height="8" fill="#4F5D95"/>
+                <rect mask="url(#rect-mask)" x="116.02950568337647" y="0" width="80.98532856399407" height="8" fill="#4F5D95"/>
             
-                <rect mask="url(#rect-mask)" x="197.01637466457476" y="0" width="22.819820544452508" height="8" fill="#384d54"/>
+                <rect mask="url(#rect-mask)" x="197.01483424737054" y="0" width="22.820483995545946" height="8" fill="#384d54"/>
             
-                <rect mask="url(#rect-mask)" x="219.83619520902727" y="0" width="13.08291799875763" height="8" fill="#e34c26"/>
+                <rect mask="url(#rect-mask)" x="219.8353182429165" y="0" width="13.083298364424168" height="8" fill="#e34c26"/>
             
-                <rect mask="url(#rect-mask)" x="232.9191132077849" y="0" width="13.012174641122822" height="8" fill="#89e051"/>
+                <rect mask="url(#rect-mask)" x="232.91861660734065" y="0" width="13.012552950035325" height="8" fill="#89e051"/>
             
-                <rect mask="url(#rect-mask)" x="245.93128784890771" y="0" width="4.068712151092306" height="8" fill="#3178c6"/>
+                <rect mask="url(#rect-mask)" x="245.93116955737597" y="0" width="4.068830442624016" height="8" fill="#3178c6"/>
             
 
             <g transform="translate(0, 25)">
@@ -142,7 +142,7 @@
                             <g class="stagger" style="animation-delay: 600ms">
                                 <circle cx="5" cy="6" r="5" fill="#89e051" />
                                 <text x="15" y="10" class='lang-name'>
-                                    Shell 5.20%
+                                    Shell 5.21%
                                 </text>
                             </g>
                         </g>
