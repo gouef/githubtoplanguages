@@ -83,17 +83,17 @@
                 <rect x="0" y="0" width="250" height="8" fill="white" rx="5"/>
             </mask>
             
-                <rect mask="url(#rect-mask)" x="0" y="0" width="121.28000230921292" height="8" fill="#00ADD8"/>
+                <rect mask="url(#rect-mask)" x="0" y="0" width="121.31690724931511" height="8" fill="#00ADD8"/>
             
-                <rect mask="url(#rect-mask)" x="121.28000230921292" y="0" width="77.81139689690202" height="8" fill="#4F5D95"/>
+                <rect mask="url(#rect-mask)" x="121.31690724931511" y="0" width="77.78908781522658" height="8" fill="#4F5D95"/>
             
-                <rect mask="url(#rect-mask)" x="199.09139920611494" y="0" width="21.92611636012175" height="8" fill="#384d54"/>
+                <rect mask="url(#rect-mask)" x="199.10599506454167" y="0" width="21.91982998640003" height="8" fill="#384d54"/>
             
-                <rect mask="url(#rect-mask)" x="221.01751556623668" y="0" width="12.570545058051563" height="8" fill="#e34c26"/>
+                <rect mask="url(#rect-mask)" x="221.0258250509417" y="0" width="12.566940993254006" height="8" fill="#e34c26"/>
             
-                <rect mask="url(#rect-mask)" x="233.58806062428823" y="0" width="12.502572258345058" height="8" fill="#89e051"/>
+                <rect mask="url(#rect-mask)" x="233.5927660441957" y="0" width="12.498987681833288" height="8" fill="#89e051"/>
             
-                <rect mask="url(#rect-mask)" x="246.0906328826333" y="0" width="3.9093671173666777" height="8" fill="#3178c6"/>
+                <rect mask="url(#rect-mask)" x="246.091753726029" y="0" width="3.9082462739709958" height="8" fill="#3178c6"/>
             
 
             <g transform="translate(0, 25)">
@@ -103,7 +103,7 @@
                             <g class="stagger" style="animation-delay: 450ms">
                                 <circle cx="5" cy="6" r="5" fill="#00ADD8" />
                                 <text x="15" y="10" class='lang-name'>
-                                    Go 48.51%
+                                    Go 48.53%
                                 </text>
                             </g>
                         </g>
