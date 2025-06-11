@@ -83,17 +83,17 @@
                 <rect x="0" y="0" width="250" height="8" fill="white" rx="5"/>
             </mask>
             
-                <rect mask="url(#rect-mask)" x="0" y="0" width="120.57472398784486" height="8" fill="#00ADD8"/>
+                <rect mask="url(#rect-mask)" x="0" y="0" width="120.56412489115561" height="8" fill="#00ADD8"/>
             
-                <rect mask="url(#rect-mask)" x="120.57472398784486" y="0" width="82.55670357886916" height="8" fill="#4F5D95"/>
+                <rect mask="url(#rect-mask)" x="120.56412489115561" y="0" width="82.5714226479247" height="8" fill="#4F5D95"/>
             
-                <rect mask="url(#rect-mask)" x="203.13142756671402" y="0" width="19.678928528775593" height="8" fill="#384d54"/>
+                <rect mask="url(#rect-mask)" x="203.13554753908033" y="0" width="19.677198656549322" height="8" fill="#384d54"/>
             
-                <rect mask="url(#rect-mask)" x="222.81035609548962" y="0" width="11.209883690070198" height="8" fill="#e34c26"/>
+                <rect mask="url(#rect-mask)" x="222.81274619562964" y="0" width="11.20889828751503" height="8" fill="#e34c26"/>
             
-                <rect mask="url(#rect-mask)" x="234.02023978555982" y="0" width="11.136070343290118" height="8" fill="#89e051"/>
+                <rect mask="url(#rect-mask)" x="234.02164448314468" y="0" width="11.135091429282248" height="8" fill="#89e051"/>
             
-                <rect mask="url(#rect-mask)" x="245.15631012884995" y="0" width="4.843689871150095" height="8" fill="#427819"/>
+                <rect mask="url(#rect-mask)" x="245.15673591242694" y="0" width="4.843264087573082" height="8" fill="#427819"/>
             
 
             <g transform="translate(0, 25)">
@@ -112,7 +112,7 @@
                             <g class="stagger" style="animation-delay: 600ms">
                                 <circle cx="5" cy="6" r="5" fill="#4F5D95" />
                                 <text x="15" y="10" class='lang-name'>
-                                    PHP 33.02%
+                                    PHP 33.03%
                                 </text>
                             </g>
                         </g>
