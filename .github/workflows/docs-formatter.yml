@@ -1,8 +1,8 @@
 name: Format Documentation
 
 on:
-  schedule:
-    - cron: '0 */12 * * *'
+#  schedule:
+#    - cron: '0 */12 * * *'
   push:
   workflow_dispatch:
 
