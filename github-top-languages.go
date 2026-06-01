@@ -154,7 +154,7 @@ func main() {
 		}
 	}
 
-	resultLanguages := sortLanguages(languages, limit)
+	resultLanguages := sortLanguages(languages, limit, ignoredSize)
 
 	for _, lang := range resultLanguages {
 		lang.Color = colors[lang.Name]
