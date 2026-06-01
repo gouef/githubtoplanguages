@@ -29,6 +29,10 @@ inputs:
     required: true
     default: ""
     description: "Comma-separated list of ignored repositories"
+  withForks:
+    required: false
+    default: "false"
+    description: "Include forked repositories in the analysis (true/false)"
 
 env:
   GITHUB_TOKEN: "As provided by Github Actions"
@@ -69,7 +73,7 @@ runs:
         [ -n "${{ inputs.limit }}" ] && args="$args -limit=${{ inputs.limit }}"
         [ -n "${{ inputs.ignoredOrgsFlag }}" ] && args="$args -ignore-orgs=${{ inputs.ignoredOrgsFlag }}"
         [ -n "${{ inputs.ignoredReposFlag }}" ] && args="$args -ignore-repos=${{ inputs.ignoredReposFlag }}"
-        
+        [ -n "${{ inputs.withForks }}" ] && args="$args -with-forks=${{ inputs.withForks }}"
         ./app $args -gh-token=${{ env.GITHUB_TOKEN }}
         rm -R githubtoplanguages
         rm app

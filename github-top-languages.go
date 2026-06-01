@@ -22,6 +22,8 @@ func main() {
 	outputFlag := flag.String("output", "", "Name of file (without .svg")
 	ignoredOrgsFlag := flag.String("ignore-orgs", "", "Comma-separated list of ignored organizations")
 	ignoredReposFlag := flag.String("ignore-repos", "", "Comma-separated list of ignored repositories")
+	withForksFlag := flag.String("with-forks", "false", "Include forked repositories in the analysis (true/false)")
+
 	flag.Parse()
 
 	token := *tokenFlag
@@ -41,6 +43,7 @@ func main() {
 	if user == "" {
 		log.Fatal("GITHUB_USERNAME is not set")
 	}
+	withForks, _ := strconv.ParseBool(*withForksFlag)
 
 	output := *outputFlag
 
@@ -100,16 +103,19 @@ func main() {
 	}
 
 	// Forks
-	result, err = requests.FetchUser(user, token, true, ignored...)
-	if err != nil {
-		log.Fatalf("Failed to fetch user forks: %v", err)
-	}
-	for _, repoList := range result.Repositories {
-		for _, lang := range repoList.Languages {
-			languages[lang.Name] += lang.Size
-			colors[lang.Name] = lang.Color
+	if withForks {
+		result, err = requests.FetchUser(user, token, true, ignored...)
+		if err != nil {
+			log.Fatalf("Failed to fetch user forks: %v", err)
+		}
+		for _, repoList := range result.Repositories {
+			for _, lang := range repoList.Languages {
+				languages[lang.Name] += lang.Size
+				colors[lang.Name] = lang.Color
+			}
 		}
 	}
+
 	log.Println("Downloading latest language definitions from GitHub Linguist...")
 	extensionMap, err := requests.LoadLinguistLanguages()
 	if err != nil {
