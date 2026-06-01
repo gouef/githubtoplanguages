@@ -18,7 +18,46 @@ type DataUser struct {
 }
 
 type ViewerUser struct {
-	Repositories Repositories `json:"repositories"`
+	Repositories UserRepositories `json:"repositories"`
+	PullRequests UserPullRequests `json:"pullRequests"` // Přidáno pro získání PR nezávisle na repozitářích
+}
+
+type UserRepositories struct {
+	Edges    []UserRepositoryEdge `json:"edges"`
+	PageInfo PageInfo             `json:"pageInfo"`
+}
+
+type UserRepositoryEdge struct {
+	Node UserRepositoryNode `json:"node"`
+}
+
+type UserRepositoryNode struct {
+	Name            string          `json:"name"`
+	NameWithOwner   string          `json:"nameWithOwner"`
+	IsFork          bool            `json:"isFork"`
+	PrimaryLanguage PrimaryLanguage `json:"primaryLanguage"`
+	Languages       Languages       `json:"languages"`
+}
+
+// Struktury pro Pull Requesty a jejich zdrojové repozitáře
+type UserPullRequests struct {
+	Edges    []UserPullRequestEdge `json:"edges"`
+	PageInfo PageInfo              `json:"pageInfo"`
+}
+
+type UserPullRequestEdge struct {
+	Node UserPullRequestNode `json:"node"`
+}
+
+type UserPullRequestNode struct {
+	Title      string             `json:"title"`
+	Repository PRRepositoryDetail `json:"repository"` // Repozitář, do kterého PR směřuje (nebo z něj pochází)
+}
+
+type PRRepositoryDetail struct {
+	Name          string    `json:"name"`
+	NameWithOwner string    `json:"nameWithOwner"`
+	Languages     Languages `json:"languages"`
 }
 
 func FetchUser(loginName, token string, withFork bool, ignored ...string) (*Result, error) {
@@ -28,17 +67,20 @@ func FetchUser(loginName, token string, withFork bool, ignored ...string) (*Resu
 	} else {
 		isForkStr = "false"
 	}
-	query := fmt.Sprintf(`query {
+
+	// Dotaz pro běžné repozitáře a forky (zůstává podobný, ale optimalizovaný)
+	query := fmt.Sprintf(`query($after: String) {
 		  viewer {
 			repositories(first: 100, isFork: %s, affiliations: OWNER, ownerAffiliations: OWNER, after: $after) {
 			  edges {
 				node {
 				  name
 				  nameWithOwner
+				  isFork
 				  primaryLanguage {
 					name
 				  }
-				  languages(first: 3, after: null) {
+				  languages(first: 5, after: null) {
 					edges {
 					  node {
 						name
@@ -51,9 +93,7 @@ func FetchUser(loginName, token string, withFork bool, ignored ...string) (*Resu
 			  } 
 			  pageInfo {
 				hasNextPage
-				hasPreviousPage
 				endCursor
-				startCursor
 			  }
 			}
 		  }
@@ -91,7 +131,11 @@ func FetchUser(loginName, token string, withFork bool, ignored ...string) (*Resu
 			if utils.InArray(r.Node.Name, ignored) {
 				continue
 			}
-			resultRepository := &ResultRepository{Name: r.Node.NameWithOwner}
+			
+			resultRepository := &ResultRepository{
+				Name:   r.Node.NameWithOwner,
+				IsFork: r.Node.IsFork,
+			}
 
 			var languages []*ResultLanguage
 			for _, l := range r.Node.Languages.Edges {
@@ -110,44 +154,92 @@ func FetchUser(loginName, token string, withFork bool, ignored ...string) (*Resu
 	}
 
 	return finalResult, nil
+}
 
-	/*
-	   var result GraphQLUserResponse
+// Nová samostatná funkce pro vytažení repozitářů skrze uživatelovy Pull Requesty
+func FetchUserPRLanguages(token string, ignored ...string) (*Result, error) {
+	query := `query($after: String) {
+		viewer {
+			pullRequests(first: 50, after: $after, states: [OPEN, MERGED]) {
+				edges {
+					node {
+						title
+						repository {
+							name
+							nameWithOwner
+							languages(first: 5) {
+								edges {
+									node {
+										name
+										color
+									}
+									size
+								}
+							}
+						}
+					}
+				}
+				pageInfo {
+					hasNextPage
+					endCursor
+				}
+			}
+		}
+	}`
 
-	   resp, err := Request(token, query)
+	finalResult := &Result{}
+	var cursor interface{} = nil
 
-	   	if err != nil {
-	   		return nil, err
-	   	}
+	for {
+		variables := map[string]interface{}{
+			"after": cursor,
+		}
 
-	   defer resp.Body.Close()
+		resp, err := Request(token, query, variables)
+		if err != nil {
+			return nil, err
+		}
 
-	   	if resp.StatusCode != http.StatusOK {
-	   		bodyBytes, _ := io.ReadAll(resp.Body)
-	   		return nil, fmt.Errorf("GitHub API returned non-200 status: %d, Body: %s", resp.StatusCode, string(bodyBytes))
-	   	}
+		if resp.StatusCode != http.StatusOK {
+			bodyBytes, _ := io.ReadAll(resp.Body)
+			resp.Body.Close()
+			return nil, fmt.Errorf("GitHub API returned non-200 status: %d, Body: %s", resp.StatusCode, string(bodyBytes))
+		}
 
-	   	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
-	   		return nil, err
-	   	}
+		var result GraphQLUserResponse
+		if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+			resp.Body.Close()
+			return nil, err
+		}
+		resp.Body.Close()
 
-	   var result2 = &Result{}
+		prData := result.Data.Viewer.PullRequests
 
-	   	for _, r := range result.Data.Viewer.Repositories.Edges {
-	   		if utils.InArray(r.Node.Name, ignored) {
-	   			continue
-	   		}
-	   		resultRepository := &ResultRepository{Name: r.Node.NameWithOwner}
+		for _, edge := range prData.Edges {
+			repo := edge.Node.Repository
+			if repo.Name == "" || utils.InArray(repo.Name, ignored) {
+				continue
+			}
 
-	   		var languages []*ResultLanguage
-	   		for _, l := range r.Node.Languages.Edges {
-	   			languages = append(languages, &ResultLanguage{Name: l.Node.Name, Size: l.Size, Color: l.Node.Color})
-	   		}
-	   		resultRepository.Languages = languages
+			resultRepository := &ResultRepository{
+				Name:   repo.NameWithOwner,
+				IsPR:   true,
+			}
 
-	   		result2.Repositories = append(result2.Repositories, resultRepository)
-	   	}
+			var languages []*ResultLanguage
+			for _, l := range repo.Languages.Edges {
+				languages = append(languages, &ResultLanguage{Name: l.Node.Name, Size: l.Size, Color: l.Node.Color})
+			}
+			resultRepository.Languages = languages
 
-	   return result2, nil
-	*/
+			finalResult.Repositories = append(finalResult.Repositories, resultRepository)
+		}
+
+		if !prData.PageInfo.HasNextPage {
+			break
+		}
+		cursor = prData.PageInfo.EndCursor
+	}
+
+	return finalResult, nil
 }

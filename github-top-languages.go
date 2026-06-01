@@ -59,6 +59,7 @@ func main() {
 		limit, _ = strconv.Atoi(limitEnv)
 	}
 
+	// Organizations
 	result, err := requests.FetchOrganizations(user, token, ignored...)
 
 	if err != nil {
@@ -78,6 +79,7 @@ func main() {
 		}
 	}
 
+	// User
 	result, err = requests.FetchUser(user, token, false, ignored...)
 
 	if err != nil {
@@ -97,19 +99,24 @@ func main() {
 		}
 	}
 
+	// Forks
 	result, err = requests.FetchUser(user, token, true, ignored...)
-
 	if err != nil {
-		log.Fatalf("Failed to fetch user: %v", err)
+		log.Fatalf("Failed to fetch user forks: %v", err)
+	}
+	for _, repoList := range result.Repositories {
+		for _, lang := range repoList.Languages {
+			languages[lang.Name] += lang.Size
+			colors[lang.Name] = lang.Color
+		}
 	}
 
-	for _, repoList := range result.Repositories {
-		if utils.InArray(repoList.Name, repositories) {
-			continue
-		}
-
-		repositories = append(repositories, repoList.Name)
-
+	//PRs
+	prResult, err := requests.FetchUserPRLanguages(token, ignored...)
+	if err != nil {
+		log.Fatalf("Failed to fetch PR languages: %v", err)
+	}
+	for _, repoList := range prResult.Repositories {
 		for _, lang := range repoList.Languages {
 			languages[lang.Name] += lang.Size
 			colors[lang.Name] = lang.Color
