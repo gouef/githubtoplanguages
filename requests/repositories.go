@@ -3,9 +3,10 @@ package requests
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/gouef/utils"
 	"io"
 	"net/http"
+
+	"github.com/gouef/utils"
 )
 
 type GraphQLUserResponse struct {
@@ -21,7 +22,7 @@ type ViewerUser struct {
 	PageInfo     PageInfo     `json:"pageInfo"`
 }
 
-func FetchUser(loginName, token string, ignored ...string) (*Result, error) {
+func FetchUser(loginName, token string, withFork bool, ignored ...string) (*Result, error) {
 	query := `query {
 		  viewer {
 			repositories(first: 100, isFork: false, affiliations: OWNER, ownerAffiliations: OWNER) {
@@ -52,6 +53,38 @@ func FetchUser(loginName, token string, ignored ...string) (*Result, error) {
 			}
 		  }
 		}`
+	if withFork {
+		query = `query {
+		  viewer {
+			repositories(first: 100, isFork: true, affiliations: OWNER, ownerAffiliations: OWNER) {
+			  edges {
+				node {
+				  name
+				  nameWithOwner
+				  primaryLanguage {
+					name
+				  }
+				  languages(first: 3, after: null) {
+					edges {
+					  node {
+						name
+						color
+					  }
+					  size
+					}
+				  }
+				}
+			  } 
+			  pageInfo {
+				hasNextPage
+				hasPreviousPage
+				endCursor
+				startCursor
+			  }
+			}
+		  }
+		}`
+	}
 
 	var result GraphQLUserResponse
 

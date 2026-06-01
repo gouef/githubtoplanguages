@@ -2,14 +2,15 @@ package main
 
 import (
 	"flag"
-	"github.com/gouef/githubtoplanguages/requests"
-	"github.com/gouef/utils"
-	"github.com/joho/godotenv"
 	"log"
 	"os"
 	"sort"
 	"strconv"
 	"strings"
+
+	"github.com/gouef/githubtoplanguages/requests"
+	"github.com/gouef/utils"
+	"github.com/joho/godotenv"
 )
 
 func main() {
@@ -77,7 +78,26 @@ func main() {
 		}
 	}
 
-	result, err = requests.FetchUser(user, token, ignored...)
+	result, err = requests.FetchUser(user, token, false, ignored...)
+
+	if err != nil {
+		log.Fatalf("Failed to fetch user: %v", err)
+	}
+
+	for _, repoList := range result.Repositories {
+		if utils.InArray(repoList.Name, repositories) {
+			continue
+		}
+
+		repositories = append(repositories, repoList.Name)
+
+		for _, lang := range repoList.Languages {
+			languages[lang.Name] += lang.Size
+			colors[lang.Name] = lang.Color
+		}
+	}
+
+	result, err = requests.FetchUser(user, token, true, ignored...)
 
 	if err != nil {
 		log.Fatalf("Failed to fetch user: %v", err)
