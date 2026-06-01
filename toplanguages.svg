@@ -83,17 +83,17 @@
                 <rect x="0" y="0" width="250" height="8" fill="white" rx="5"/>
             </mask>
             
-                <rect mask="url(#rect-mask)" x="0" y="0" width="117.36622161220338" height="8" fill="#4F5D95"/>
+                <rect mask="url(#rect-mask)" x="0" y="0" width="117.80428810733518" height="8" fill="#4F5D95"/>
             
-                <rect mask="url(#rect-mask)" x="117.36622161220338" y="0" width="35.80328342210031" height="8" fill="#cccccc"/>
+                <rect mask="url(#rect-mask)" x="117.80428810733518" y="0" width="35.80328342210031" height="8" fill="#cccccc"/>
             
-                <rect mask="url(#rect-mask)" x="153.16950503430368" y="0" width="24.050147241763263" height="8" fill="#00ADD8"/>
+                <rect mask="url(#rect-mask)" x="153.6075715294355" y="0" width="24.050147241763263" height="8" fill="#00ADD8"/>
             
-                <rect mask="url(#rect-mask)" x="177.21965227606694" y="0" width="23.041012121487807" height="8" fill="#ff1111"/>
+                <rect mask="url(#rect-mask)" x="177.65771877119874" y="0" width="23.041012121487807" height="8" fill="#85ea2d"/>
             
-                <rect mask="url(#rect-mask)" x="200.26066439755473" y="0" width="13.591433278418451" height="8" fill="#f1e05a"/>
+                <rect mask="url(#rect-mask)" x="200.69873089268654" y="0" width="13.591433278418451" height="8" fill="#f1e05a"/>
             
-                <rect mask="url(#rect-mask)" x="213.8520976759732" y="0" width="36.14790232402681" height="8" fill=""/>
+                <rect mask="url(#rect-mask)" x="214.290164171105" y="0" width="35.70983582889498" height="8" fill=""/>
             
 
             <g transform="translate(0, 25)">
@@ -103,7 +103,7 @@
                             <g class="stagger" style="animation-delay: 450ms">
                                 <circle cx="5" cy="6" r="5" fill="#4F5D95" />
                                 <text x="15" y="10" class='lang-name'>
-                                    PHP 46.95%
+                                    PHP 47.12%
                                 </text>
                             </g>
                         </g>
@@ -131,9 +131,9 @@
                     
                         <g transform="translate(0, 0)">
                             <g class="stagger" style="animation-delay: 450ms">
-                                <circle cx="5" cy="6" r="5" fill="#ff1111" />
+                                <circle cx="5" cy="6" r="5" fill="#85ea2d" />
                                 <text x="15" y="10" class='lang-name'>
-                                    MiniYAML 9.22%
+                                    OASv3-yaml 9.22%
                                 </text>
                             </g>
                         </g>
@@ -151,7 +151,7 @@
                             <g class="stagger" style="animation-delay: 750ms">
                                 <circle cx="5" cy="6" r="5" fill="" />
                                 <text x="15" y="10" class='lang-name'>
-                                    Others 14.46%
+                                    Others 14.28%
                                 </text>
                             </g>
                         </g>
