@@ -142,7 +142,7 @@ func FetchOrganizations(loginName, token string, ignored ...string) (*Result, er
 			}
 			if org.CanAdminister {
 				for _, r := range org.Repositories.Edges {
-					if utils.InArray(r.Node.Name, ignored) {
+					if utils.InArray(r.Node.Name, ignored) || utils.InArray(r.Node.NameWithOwner, ignored) {
 						continue
 					}
 					resultRepository := &ResultRepository{Name: r.Node.NameWithOwner, Organization: r.Node.Name}
