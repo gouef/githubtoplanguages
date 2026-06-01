@@ -133,7 +133,7 @@
                             <g class="stagger" style="animation-delay: 450ms">
                                 <circle cx="5" cy="6" r="5" fill="#85ea2d" />
                                 <text x="15" y="10" class='lang-name'>
-                                    OASv2-yaml 10.29%
+                                    OASv3-yaml 10.29%
                                 </text>
                             </g>
                         </g>
