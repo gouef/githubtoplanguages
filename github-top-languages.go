@@ -79,7 +79,7 @@ func main() {
 		repositories = append(repositories, repoList.Name)
 
 		for _, lang := range repoList.Languages {
-			if utils.InArray(lang.Name, ignoredLanguages) {
+			if shouldIgnoreLanguage(lang.Name, ignoredLanguages) {
 				continue
 			}
 			languages[lang.Name] += lang.Size
@@ -102,7 +102,7 @@ func main() {
 		repositories = append(repositories, repoList.Name)
 
 		for _, lang := range repoList.Languages {
-			if utils.InArray(lang.Name, ignoredLanguages) {
+			if shouldIgnoreLanguage(lang.Name, ignoredLanguages) {
 				continue
 			}
 			languages[lang.Name] += lang.Size
@@ -118,7 +118,7 @@ func main() {
 		}
 		for _, repoList := range result.Repositories {
 			for _, lang := range repoList.Languages {
-				if utils.InArray(lang.Name, ignoredLanguages) {
+				if shouldIgnoreLanguage(lang.Name, ignoredLanguages) {
 					continue
 				}
 				languages[lang.Name] += lang.Size
@@ -140,7 +140,7 @@ func main() {
 	}
 	for _, repoList := range prResult.Repositories {
 		for _, lang := range repoList.Languages {
-			if utils.InArray(lang.Name, ignoredLanguages) {
+			if shouldIgnoreLanguage(lang.Name, ignoredLanguages) {
 				continue
 			}
 			languages[lang.Name] += lang.Size
@@ -156,6 +156,16 @@ func main() {
 
 	generateSvg(resultLanguages, output)
 
+}
+
+func shouldIgnoreLanguage(langName string, ignoredLangs []string) bool {
+	langLower := strings.ToLower(langName)
+	for _, ignored := range ignoredLangs {
+		if langLower == strings.ToLower(ignored) {
+			return true
+		}
+	}
+	return false
 }
 
 type Language struct {
