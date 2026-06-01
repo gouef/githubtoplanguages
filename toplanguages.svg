@@ -1,5 +1,5 @@
 
-<svg width="300" height="170" viewBox="0 0 300 170" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="descId">
+<svg width="300" height="95" viewBox="0 0 300 95" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="descId">
     <style>
         .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -83,78 +83,12 @@
                 <rect x="0" y="0" width="250" height="8" fill="white" rx="5"/>
             </mask>
             
-                <rect mask="url(#rect-mask)" x="0" y="0" width="100.6065024829656" height="8" fill="#555555"/>
-            
-                <rect mask="url(#rect-mask)" x="100.6065024829656" y="0" width="82.75826330986632" height="8" fill="#000080"/>
-            
-                <rect mask="url(#rect-mask)" x="183.36476579283192" y="0" width="32.986711389430674" height="8" fill="#a56de2"/>
-            
-                <rect mask="url(#rect-mask)" x="216.35147718226258" y="0" width="15.883474279361431" height="8" fill="#00ADD8"/>
-            
-                <rect mask="url(#rect-mask)" x="232.234951461624" y="0" width="10.207600824117456" height="8" fill="#4F5D95"/>
-            
-                <rect mask="url(#rect-mask)" x="242.44255228574147" y="0" width="7.557447714258519" height="8" fill="#f34b7d"/>
-            
 
             <g transform="translate(0, 25)">
                 <g transform="translate(0, 0)">
                     
-                        <g transform="translate(0, 0)">
-                            <g class="stagger" style="animation-delay: 450ms">
-                                <circle cx="5" cy="6" r="5" fill="#555555" />
-                                <text x="15" y="10" class='lang-name'>
-                                    C 40.24%
-                                </text>
-                            </g>
-                        </g>
-                    
-                        <g transform="translate(0, 25)">
-                            <g class="stagger" style="animation-delay: 600ms">
-                                <circle cx="5" cy="6" r="5" fill="#000080" />
-                                <text x="15" y="10" class='lang-name'>
-                                    Lua 33.10%
-                                </text>
-                            </g>
-                        </g>
-                    
-                        <g transform="translate(0, 50)">
-                            <g class="stagger" style="animation-delay: 750ms">
-                                <circle cx="5" cy="6" r="5" fill="#a56de2" />
-                                <text x="15" y="10" class='lang-name'>
-                                    Vala 13.19%
-                                </text>
-                            </g>
-                        </g>
-                    
                 </g>
                 <g transform="translate(150, 0)">
-                    
-                        <g transform="translate(0, 0)">
-                            <g class="stagger" style="animation-delay: 450ms">
-                                <circle cx="5" cy="6" r="5" fill="#00ADD8" />
-                                <text x="15" y="10" class='lang-name'>
-                                    Go 6.35%
-                                </text>
-                            </g>
-                        </g>
-                    
-                        <g transform="translate(0, 25)">
-                            <g class="stagger" style="animation-delay: 600ms">
-                                <circle cx="5" cy="6" r="5" fill="#4F5D95" />
-                                <text x="15" y="10" class='lang-name'>
-                                    PHP 4.08%
-                                </text>
-                            </g>
-                        </g>
-                    
-                        <g transform="translate(0, 50)">
-                            <g class="stagger" style="animation-delay: 750ms">
-                                <circle cx="5" cy="6" r="5" fill="#f34b7d" />
-                                <text x="15" y="10" class='lang-name'>
-                                    C&#43;&#43; 3.02%
-                                </text>
-                            </g>
-                        </g>
                     
                 </g>
             </g>
