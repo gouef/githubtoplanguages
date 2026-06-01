@@ -8,11 +8,13 @@ import (
 
 const githubGraphQLAPI = "https://api.github.com/graphql"
 
-func Request(token, query string) (*http.Response, error) {
+func Request(token, query string, variables map[string]interface{}) (*http.Response, error) {
 	payload := struct {
-		Query string `json:"query"`
+		Query     string                 `json:"query"`
+		Variables map[string]interface{} `json:"variables,omitempty"`
 	}{
-		Query: query,
+		Query:     query,
+		Variables: variables,
 	}
 
 	payloadJSON, err := json.Marshal(payload)
