@@ -24,15 +24,15 @@ on:
       description: "Limit of languages"
     ignoredOrgsFlag:
       required: true
-      default: "wowmua"
+      default: "wowmua,EpicGames,Go2speak,gothicuef"
       description: "Comma-separated list of ignored organizations"
     ignoredReposFlag:
       required: true
-      default: "wowmua/Maps"
+      default: "wowmua/Maps,TroiaStudio/blizzard-api"
       description: "Comma-separated list of ignored repositories"
     ignoredLangsFlag:
       required: true
-      default: ""
+      default: "OASv3-yaml,OASv2-yaml,Gettext Catalog,YAML,JSON,MiniYAML"
       description: "Comma-separated list of ignored languages"
     withForks:
       required: false
