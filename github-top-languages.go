@@ -77,6 +77,8 @@ func main() {
 	languages := make(map[string]int)
 	colors := make(map[string]string)
 
+	log.Println("Processing organizations..." + strconv.Itoa(len(result.Repositories)))
+
 	for _, repoList := range result.Repositories {
 		repositories = append(repositories, repoList.Name)
 

@@ -2,9 +2,10 @@ package main
 
 import (
 	"flag"
-	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestGenerateSvg(t *testing.T) {
@@ -39,6 +40,20 @@ func TestGenerateSvg(t *testing.T) {
 		resetFlags()
 		token := os.Getenv("GITHUB_TOKEN")
 		os.Args = []string{"cmd", "-user=JanGalek", "-limit=6", "-ignore-orgs=wowmua", "-ignore-repos=wowmua/Maps", "-gh-token=" + token}
+		main()
+	})
+
+	t.Run("Generate main with Forks", func(t *testing.T) {
+		resetFlags()
+		token := os.Getenv("GITHUB_TOKEN")
+		os.Args = []string{"cmd", "-user=JanGalek", "-limit=6", "-ignore-orgs=wowmua", "-ignore-repos=wowmua/Maps", "-gh-token=" + token, "-with-forks=true"}
+		main()
+	})
+
+	t.Run("Generate main with ignore langs", func(t *testing.T) {
+		resetFlags()
+		token := os.Getenv("GITHUB_TOKEN")
+		os.Args = []string{"cmd", "-user=JanGalek", "-limit=6", "-ignore-orgs=wowmua", "-ignore-repos=wowmua/Maps", "-gh-token=" + token, "-ignore-langs=Go,Python"}
 		main()
 	})
 }

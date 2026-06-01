@@ -33,8 +33,7 @@ type OrganizationNode struct {
 }
 
 type Repositories struct {
-	Edges    []RepositoryEdge `json:"edges"`
-	PageInfo PageInfo         `json:"pageInfo"`
+	Edges []RepositoryEdge `json:"edges"`
 }
 
 type RepositoryEdge struct {
@@ -49,7 +48,7 @@ type RepositoryNode struct {
 }
 
 type PrimaryLanguage struct {
-	Name string `json:"Name"`
+	Name string `json:"name"`
 }
 
 type Languages struct {
@@ -58,20 +57,16 @@ type Languages struct {
 
 type LanguageEdge struct {
 	Node LanguageNode `json:"node"`
-	Size int          `json:"Size"`
+	Size int          `json:"size"`
 }
+
 type LanguageNode struct {
-	Name  string `json:"Name"`
+	Name  string `json:"name"`
 	Color string `json:"color"`
 }
 
-type ResultOrganizations struct {
-	List      map[string][]string
-	Languages map[string]int
-}
-
 func FetchOrganizations(loginName, token string, ignored ...string) (*Result, error) {
-	query := `query {
+	query := `query($after: String) {
 	  viewer {
 		organizations(first: 100, after: $after) {
 		  nodes {
@@ -100,9 +95,7 @@ func FetchOrganizations(loginName, token string, ignored ...string) (*Result, er
 		  }
 		  pageInfo {
 			hasNextPage
-			hasPreviousPage
 			endCursor
-			startCursor
 		  }
 		}
 	  }
@@ -136,6 +129,10 @@ func FetchOrganizations(loginName, token string, ignored ...string) (*Result, er
 
 		orgData := result.Data.Viewer.Organizations
 
+		if len(orgData.Nodes) == 0 {
+			break
+		}
+
 		for _, org := range orgData.Nodes {
 			if utils.InArray(org.Login, ignored) {
 				continue
@@ -145,7 +142,11 @@ func FetchOrganizations(loginName, token string, ignored ...string) (*Result, er
 					if utils.InArray(r.Node.Name, ignored) || utils.InArray(r.Node.NameWithOwner, ignored) {
 						continue
 					}
-					resultRepository := &ResultRepository{Name: r.Node.NameWithOwner, Organization: r.Node.Name}
+
+					resultRepository := &ResultRepository{
+						Name:         r.Node.NameWithOwner,
+						Organization: org.Login,
+					}
 
 					var languages []*ResultLanguage
 					for _, l := range r.Node.Languages.Edges {
@@ -161,6 +162,7 @@ func FetchOrganizations(loginName, token string, ignored ...string) (*Result, er
 		if !orgData.PageInfo.HasNextPage {
 			break
 		}
+
 		cursor = orgData.PageInfo.EndCursor
 	}
 

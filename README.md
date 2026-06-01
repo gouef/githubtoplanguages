@@ -71,6 +71,45 @@ jobs:
 | `withForks`        | `false`              | `false`  | Include forked repositories in the analysis (true/false) |
 
 
+## GitHub Personal Access Token (PAT) Scopes
+
+To successfully analyze repositories, organizations, forks, and Pull Requests, your GitHub Personal Access Token (stored in your repository secrets, e.g., `USER_GITHUB_TOKEN`) must have specific permissions enabled.
+
+Depending on the type of token you choose to generate, configure the following scopes:
+
+### 1. Tokens (classic) — *Recommended for simplicity*
+When creating a classic token via *Settings -> Developer settings -> Personal access tokens -> Tokens (classic)*, check the following boxes:
+
+* **`repo`** (Full control of private and public repositories)
+  * *Why:* Crucial for reading your personal code, tracking down fork configurations, and fetching deeply nested Pull Request files.
+* **`read:org`** (Under the `admin:org` section)
+  * *Why:* Absolutely required for the organization module to function. Without this scope, the GitHub GraphQL API will securely hide your organizations and return `0` results.
+
+---
+
+### 2. Fine-grained tokens — *Recommended for enhanced security*
+If you prefer restricting the token's lifetime and scoping it down to specific target accounts, go to *Tokens (fine-grained)* and configure:
+
+#### **Repository permissions**
+* **Contents:** `Read-only` *(To evaluate source files and calculate total code bytes)*
+* **Metadata:** `Read-only` *(Mandatory for fetching repository definitions and standard properties)*
+* **Pull Requests:** `Read-only` *(To inspect line additions and structures inside your PR history)*
+
+#### **Organization permissions**
+* **Members:** `Read-only` *(To discover which organization jupiters you are a member of)*
+* **Metadata:** `Read-only` *(To access corporate repositories and public schemas)*
+
+---
+
+### ⚠️ Crucial Step for SAML Single Sign-On (SSO)
+If any of your organizations (such as private company groups or specific open-source communities like EpicGames) enforce **SAML SSO**, your token will be blocked by default until you manually authorize it.
+
+1. Go to your GitHub **Personal Access Tokens** settings page.
+2. Find your generated token and click the **Configure SSO** button right next to it.
+3. Locate your organization in the list and click **Authorize**.
+
+*Failure to complete this manual authorization step will cause the API to hide those organizations completely, resulting in empty metrics.*
+
 ## Contributing
 
 Read [Contributing](CONTRIBUTING.md)
