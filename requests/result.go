@@ -9,7 +9,7 @@ type ResultRepository struct {
 	Name         string
 	Languages    []*ResultLanguage
 	IsFork       bool
-	IsPR         bool // Přidáno pro detekci repozitářů z PR
+	IsPR         bool
 	PRCount      int
 }
 

@@ -30,6 +30,10 @@ on:
       required: true
       default: "wowmua/Maps"
       description: "Comma-separated list of ignored repositories"
+    ignoredLangsFlag:
+      required: true
+      default: ""
+      description: "Comma-separated list of ignored languages"
     withForks:
       required: false
       default: "false"

@@ -29,6 +29,10 @@ inputs:
     required: true
     default: ""
     description: "Comma-separated list of ignored repositories"
+  ignoredLangsFlag:
+    required: false
+    default: ""
+    description: "Comma-separated list of ignored languages"
   withForks:
     required: false
     default: "false"
@@ -73,6 +77,7 @@ runs:
         [ -n "${{ inputs.limit }}" ] && args="$args -limit=${{ inputs.limit }}"
         [ -n "${{ inputs.ignoredOrgsFlag }}" ] && args="$args -ignore-orgs=${{ inputs.ignoredOrgsFlag }}"
         [ -n "${{ inputs.ignoredReposFlag }}" ] && args="$args -ignore-repos=${{ inputs.ignoredReposFlag }}"
+        [ -n "${{ inputs.ignoredLangsFlag }}" ] && args="$args -ignore-langs=${{ inputs.ignoredLangsFlag }}"
         [ -n "${{ inputs.withForks }}" ] && args="$args -with-forks=${{ inputs.withForks }}"
         ./app $args -gh-token=${{ env.GITHUB_TOKEN }}
         rm -R githubtoplanguages

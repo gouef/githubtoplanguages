@@ -22,6 +22,7 @@ func main() {
 	outputFlag := flag.String("output", "", "Name of file (without .svg")
 	ignoredOrgsFlag := flag.String("ignore-orgs", "", "Comma-separated list of ignored organizations")
 	ignoredReposFlag := flag.String("ignore-repos", "", "Comma-separated list of ignored repositories")
+	ignoredLangsFlag := flag.String("ignore-langs", "", "Comma-separated list of ignored languages")
 	withForksFlag := flag.String("with-forks", "false", "Include forked repositories in the analysis (true/false)")
 
 	flag.Parse()
@@ -53,6 +54,7 @@ func main() {
 
 	ignoredOrganizations := explode(",", getPriorityValue(*ignoredOrgsFlag, "GITHUB_IGNORE_ORGANIZATIONS"))
 	ignoredRepositories := explode(",", getPriorityValue(*ignoredReposFlag, "GITHUB_IGNORE_REPOS"))
+	ignoredLanguages := explode(",", getPriorityValue(*ignoredLangsFlag, "GITHUB_IGNORE_LANGS"))
 	ignored := append(ignoredOrganizations, ignoredRepositories...)
 
 	limitEnv := os.Getenv("GITHUB_TOP_LIMIT")
@@ -77,6 +79,9 @@ func main() {
 		repositories = append(repositories, repoList.Name)
 
 		for _, lang := range repoList.Languages {
+			if utils.InArray(lang.Name, ignoredLanguages) {
+				continue
+			}
 			languages[lang.Name] += lang.Size
 			colors[lang.Name] = lang.Color
 		}
@@ -97,6 +102,9 @@ func main() {
 		repositories = append(repositories, repoList.Name)
 
 		for _, lang := range repoList.Languages {
+			if utils.InArray(lang.Name, ignoredLanguages) {
+				continue
+			}
 			languages[lang.Name] += lang.Size
 			colors[lang.Name] = lang.Color
 		}
@@ -110,6 +118,9 @@ func main() {
 		}
 		for _, repoList := range result.Repositories {
 			for _, lang := range repoList.Languages {
+				if utils.InArray(lang.Name, ignoredLanguages) {
+					continue
+				}
 				languages[lang.Name] += lang.Size
 				colors[lang.Name] = lang.Color
 			}
@@ -129,6 +140,9 @@ func main() {
 	}
 	for _, repoList := range prResult.Repositories {
 		for _, lang := range repoList.Languages {
+			if utils.InArray(lang.Name, ignoredLanguages) {
+				continue
+			}
 			languages[lang.Name] += lang.Size
 			colors[lang.Name] = lang.Color
 		}

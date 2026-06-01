@@ -85,7 +85,7 @@ func FetchOrganizations(loginName, token string, ignored ...string) (*Result, er
 						primaryLanguage {
 							name
 						}
-						languages(first: 2, after: null) {
+						languages(first: 10, after: null) {
 							edges {
 								node {
 									name
@@ -165,50 +165,4 @@ func FetchOrganizations(loginName, token string, ignored ...string) (*Result, er
 	}
 
 	return finalResult, nil
-
-	/*
-		var result GraphQLResponse
-
-		resp, err := Request(token, query)
-
-		if err != nil {
-			return nil, err
-		}
-		defer resp.Body.Close()
-
-		if resp.StatusCode != http.StatusOK {
-			bodyBytes, _ := io.ReadAll(resp.Body)
-			return nil, fmt.Errorf("GitHub API returned non-200 status: %d, Body: %s", resp.StatusCode, string(bodyBytes))
-		}
-
-		if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
-			return nil, err
-		}
-
-		var result2 = &Result{}
-
-		for _, org := range result.Data.Viewer.Organizations.Nodes {
-			if utils.InArray(org.Login, ignored) {
-				continue
-			}
-			if org.CanAdminister {
-				for _, r := range org.Repositories.Edges {
-					if utils.InArray(r.Node.Name, ignored) {
-						continue
-					}
-					resultRepository := &ResultRepository{Name: r.Node.NameWithOwner, Organization: r.Node.Name}
-
-					var languages []*ResultLanguage
-					for _, l := range r.Node.Languages.Edges {
-						languages = append(languages, &ResultLanguage{Name: l.Node.Name, Size: l.Size, Color: l.Node.Color})
-					}
-					resultRepository.Languages = languages
-
-					result2.Repositories = append(result2.Repositories, resultRepository)
-				}
-			}
-		}
-
-		return result2, nil
-	*/
 }
