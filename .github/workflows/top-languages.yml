@@ -30,6 +30,10 @@ on:
       required: true
       default: "wowmua/Maps"
       description: "Comma-separated list of ignored repositories"
+    withForks:
+      required: false
+      default: "false"
+      description: "Include forked repositories in the analysis (true/false)"
 
 jobs:
   build-and-run:
