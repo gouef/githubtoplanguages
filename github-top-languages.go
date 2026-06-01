@@ -81,6 +81,9 @@ func main() {
 		repositories = append(repositories, repoList.Name)
 
 		for _, lang := range repoList.Languages {
+    if isImageLanguage(lang.Name) {
+            continue 
+        }
 			if shouldIgnoreLanguage(lang.Name, ignoredLanguages) {
 				ignoredSize += lang.Size
 				continue
@@ -105,6 +108,9 @@ func main() {
 		repositories = append(repositories, repoList.Name)
 
 		for _, lang := range repoList.Languages {
+    if isImageLanguage(lang.Name) {
+            continue 
+        }
 			if shouldIgnoreLanguage(lang.Name, ignoredLanguages) {
 				ignoredSize += lang.Size
 				continue
@@ -122,6 +128,9 @@ func main() {
 		}
 		for _, repoList := range result.Repositories {
 			for _, lang := range repoList.Languages {
+     if isImageLanguage(lang.Name) {
+            continue 
+        }
 				if shouldIgnoreLanguage(lang.Name, ignoredLanguages) {
 					ignoredSize += lang.Size
 					continue
@@ -145,6 +154,9 @@ func main() {
 	}
 	for _, repoList := range prResult.Repositories {
 		for _, lang := range repoList.Languages {
+    if isImageLanguage(lang.Name) {
+            continue 
+        }
 			if shouldIgnoreLanguage(lang.Name, ignoredLanguages) {
 				ignoredSize += lang.Size
 				continue
@@ -163,6 +175,13 @@ func main() {
 	generateSvg(resultLanguages, output)
 
 }
+
+
+func isImageLanguage(langName string) bool {
+	langLower := strings.ToLower(langName)
+	return langLower == "svg" || langLower == "png" || langLower == "image" || langLower == "jpg"
+}
+
 
 func shouldIgnoreLanguage(langName string, ignoredLangs []string) bool {
 	langLower := strings.ToLower(langName)
