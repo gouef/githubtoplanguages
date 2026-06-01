@@ -110,9 +110,14 @@ func main() {
 			colors[lang.Name] = lang.Color
 		}
 	}
+	log.Println("Downloading latest language definitions from GitHub Linguist...")
+	extensionMap, err := requests.LoadLinguistLanguages()
+	if err != nil {
+		log.Fatalf("Failed to load dynamic languages: %v", err)
+	}
 
 	//PRs
-	prResult, err := requests.FetchUserPRLanguages(token, ignored...)
+	prResult, err := requests.FetchUserPRLanguages(token, extensionMap, ignored...)
 	if err != nil {
 		log.Fatalf("Failed to fetch PR languages: %v", err)
 	}

@@ -5,10 +5,14 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"path/filepath"
+	"strings"
 
 	"github.com/gouef/utils"
+	"gopkg.in/yaml.v3" // Nezapomeňte spustit: go get gopkg.in/yaml.v3
 )
 
+// Společná odpověď, která dokáže pojmout data z FetchUser i FetchUserPRLanguages
 type GraphQLUserResponse struct {
 	Data DataUser `json:"data"`
 }
@@ -19,7 +23,7 @@ type DataUser struct {
 
 type ViewerUser struct {
 	Repositories UserRepositories `json:"repositories"`
-	PullRequests UserPullRequests `json:"pullRequests"` // Přidáno pro získání PR nezávisle na repozitářích
+	PullRequests UserPullRequests `json:"pullRequests"` // Přidáno pro PR request
 }
 
 type UserRepositories struct {
@@ -39,7 +43,8 @@ type UserRepositoryNode struct {
 	Languages       Languages       `json:"languages"`
 }
 
-// Struktury pro Pull Requesty a jejich zdrojové repozitáře
+// --- STRUKTURY PRO PULL REQUESTY A JEJICH SOUBORY ---
+
 type UserPullRequests struct {
 	Edges    []UserPullRequestEdge `json:"edges"`
 	PageInfo PageInfo              `json:"pageInfo"`
@@ -50,16 +55,87 @@ type UserPullRequestEdge struct {
 }
 
 type UserPullRequestNode struct {
+	ID         string             `json:"id"`
 	Title      string             `json:"title"`
-	Repository PRRepositoryDetail `json:"repository"` // Repozitář, do kterého PR směřuje (nebo z něj pochází)
+	Repository PRRepositoryDetail `json:"repository"`
+	Files      PRFiles            `json:"files"` // Přidáno mapování pro soubory v PR
 }
 
 type PRRepositoryDetail struct {
-	Name          string    `json:"name"`
-	NameWithOwner string    `json:"nameWithOwner"`
-	Languages     Languages `json:"languages"`
+	Name          string `json:"name"`
+	NameWithOwner string `json:"nameWithOwner"`
 }
 
+type PRFiles struct {
+	Nodes    []PRFileNode `json:"nodes"`
+	PageInfo PageInfo     `json:"pageInfo"`
+}
+
+type PRFileNode struct {
+	Path      string `json:"path"`
+	Additions int    `json:"additions"`
+}
+
+// --- STRUKTURY PRO LINGUIST YAML ---
+
+type LinguistLanguage struct {
+	Color      string   `yaml:"color"`
+	Extensions []string `yaml:"extensions"`
+}
+
+type GraphQLPRFilesResponse struct {
+	Data struct {
+		Node struct {
+			Files PRFiles `json:"files"`
+		} `json:"node"`
+	} `json:"data"`
+}
+
+// --- FUNKCE ---
+
+// Načte číselník jazyků přímo z repozitáře GitHubu
+func LoadLinguistLanguages() (map[string]struct{ Name, Color string }, error) {
+	url := "https://raw.githubusercontent.com/github-linguist/linguist/master/lib/linguist/languages.yml"
+
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("failed to download linguist languages, status: %d", resp.StatusCode)
+	}
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var rawData map[string]LinguistLanguage
+	if err := yaml.Unmarshal(body, &rawData); err != nil {
+		return nil, err
+	}
+
+	extensionMap := make(map[string]struct{ Name, Color string })
+	for langName, langInfo := range rawData {
+		color := langInfo.Color
+		if color == "" {
+			color = "#cccccc"
+		}
+
+		for _, ext := range langInfo.Extensions {
+			extensionMap[strings.ToLower(ext)] = struct{ Name, Color string }{
+				Name:  langName,
+				Color: color,
+			}
+		}
+	}
+
+	return extensionMap, nil
+}
+
+// Načítá repozitáře/forky uživatele
 func FetchUser(loginName, token string, withFork bool, ignored ...string) (*Result, error) {
 	var isForkStr string
 	if withFork {
@@ -68,7 +144,6 @@ func FetchUser(loginName, token string, withFork bool, ignored ...string) (*Resu
 		isForkStr = "false"
 	}
 
-	// Dotaz pro běžné repozitáře a forky (zůstává podobný, ale optimalizovaný)
 	query := fmt.Sprintf(`query($after: String) {
 		  viewer {
 			repositories(first: 100, isFork: %s, affiliations: OWNER, ownerAffiliations: OWNER, after: $after) {
@@ -131,7 +206,7 @@ func FetchUser(loginName, token string, withFork bool, ignored ...string) (*Resu
 			if utils.InArray(r.Node.Name, ignored) {
 				continue
 			}
-			
+
 			resultRepository := &ResultRepository{
 				Name:   r.Node.NameWithOwner,
 				IsFork: r.Node.IsFork,
@@ -156,25 +231,28 @@ func FetchUser(loginName, token string, withFork bool, ignored ...string) (*Resu
 	return finalResult, nil
 }
 
-// Nová samostatná funkce pro vytažení repozitářů skrze uživatelovy Pull Requesty
-func FetchUserPRLanguages(token string, ignored ...string) (*Result, error) {
-	query := `query($after: String) {
+// Načítá řádky z konkrétních souborů uvnitř Pull Requestů
+func FetchUserPRLanguages(token string, extensionMap map[string]struct{ Name, Color string }, ignored ...string) (*Result, error) {
+	// Hlavní dotaz na PR (stále bere 50 PR najednou a prvních 100 souborů)
+	mainQuery := `query($after: String) {
 		viewer {
 			pullRequests(first: 50, after: $after, states: [OPEN, MERGED]) {
 				edges {
 					node {
+						id
 						title
 						repository {
 							name
 							nameWithOwner
-							languages(first: 5) {
-								edges {
-									node {
-										name
-										color
-									}
-									size
-								}
+						}
+						files(first: 100) {
+							nodes {
+								path
+								additions
+							}
+							pageInfo {
+								hasNextPage
+								endCursor
 							}
 						}
 					}
@@ -187,15 +265,33 @@ func FetchUserPRLanguages(token string, ignored ...string) (*Result, error) {
 		}
 	}`
 
+	// Pomocný dotaz pro případ, že PR má více než 100 souborů
+	filePaginationQuery := `query($prId: ID!, $fileCursor: String) {
+		node(id: $prId) {
+			... on PullRequest {
+				files(first: 100, after: $fileCursor) {
+					nodes {
+						path
+						additions
+					}
+					pageInfo {
+						hasNextPage
+						endCursor
+					}
+				}
+			}
+		}
+	}`
+
 	finalResult := &Result{}
-	var cursor interface{} = nil
+	var prCursor interface{} = nil
 
 	for {
 		variables := map[string]interface{}{
-			"after": cursor,
+			"after": prCursor,
 		}
 
-		resp, err := Request(token, query, variables)
+		resp, err := Request(token, mainQuery, variables)
 		if err != nil {
 			return nil, err
 		}
@@ -216,29 +312,85 @@ func FetchUserPRLanguages(token string, ignored ...string) (*Result, error) {
 		prData := result.Data.Viewer.PullRequests
 
 		for _, edge := range prData.Edges {
-			repo := edge.Node.Repository
+			prNode := edge.Node
+			repo := prNode.Repository
 			if repo.Name == "" || utils.InArray(repo.Name, ignored) {
 				continue
 			}
 
-			resultRepository := &ResultRepository{
-				Name:   repo.NameWithOwner,
-				IsPR:   true,
+			// Do tohoto řezu shromáždíme úplně všechny soubory z PR (i z dalších stránek)
+			allFiles := append([]PRFileNode{}, prNode.Files.Nodes...)
+			currentFilesPageInfo := prNode.Files.PageInfo
+
+			// VNITŘNÍ CYKLUS: Pokud má toto konkrétní PR další soubory, dotážeme se na ně
+			for currentFilesPageInfo.HasNextPage {
+				fileVariables := map[string]interface{}{
+					"prId":       prNode.ID,
+					"fileCursor": currentFilesPageInfo.EndCursor,
+				}
+
+				fileResp, err := Request(token, filePaginationQuery, fileVariables)
+				if err != nil {
+					return nil, err
+				}
+
+				if fileResp.StatusCode != http.StatusOK {
+					fileResp.Body.Close()
+					break // V případě chyby dočítání souborů zpracujeme to, čo máme
+				}
+
+				var fileResult GraphQLPRFilesResponse
+				if err := json.NewDecoder(fileResp.Body).Decode(&fileResult); err != nil {
+					fileResp.Body.Close()
+					return nil, err
+				}
+				fileResp.Body.Close()
+
+				// Přidáme nově načtené soubory a aktualizujeme pageInfo pro další krok
+				allFiles = append(allFiles, fileResult.Data.Node.Files.Nodes...)
+				currentFilesPageInfo = fileResult.Data.Node.Files.PageInfo
 			}
 
-			var languages []*ResultLanguage
-			for _, l := range repo.Languages.Edges {
-				languages = append(languages, &ResultLanguage{Name: l.Node.Name, Size: l.Size, Color: l.Node.Color})
-			}
-			resultRepository.Languages = languages
+			// Agregace jazyků na základě ÚPLNÉHO seznamu souborů
+			prLanguagesMap := make(map[string]*ResultLanguage)
 
-			finalResult.Repositories = append(finalResult.Repositories, resultRepository)
+			for _, file := range allFiles {
+				if file.Additions == 0 {
+					continue
+				}
+
+				ext := strings.ToLower(filepath.Ext(file.Path))
+
+				if langInfo, ok := extensionMap[ext]; ok {
+					if _, exists := prLanguagesMap[langInfo.Name]; !exists {
+						prLanguagesMap[langInfo.Name] = &ResultLanguage{
+							Name:  langInfo.Name,
+							Color: langInfo.Color,
+							Size:  0,
+						}
+					}
+					prLanguagesMap[langInfo.Name].Size += file.Additions
+				}
+			}
+
+			if len(prLanguagesMap) > 0 {
+				resultRepository := &ResultRepository{
+					Name: repo.NameWithOwner,
+					IsPR: true,
+				}
+
+				for _, lang := range prLanguagesMap {
+					resultRepository.Languages = append(resultRepository.Languages, lang)
+				}
+
+				finalResult.Repositories = append(finalResult.Repositories, resultRepository)
+			}
 		}
 
 		if !prData.PageInfo.HasNextPage {
 			break
 		}
-		cursor = prData.PageInfo.EndCursor
+		prCursor = prData.PageInfo.EndCursor
 	}
 
 	return finalResult, nil
