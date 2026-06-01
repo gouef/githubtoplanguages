@@ -54,5 +54,6 @@ jobs:
           limit: 6
           ignoredOrgsFlag: "wowmua"
           ignoredReposFlag: "wowmua/Maps"
+          ignoredLangsFlag: ""
         env:
           GITHUB_TOKEN: ${{ secrets.USER_GITHUB_TOKEN }}

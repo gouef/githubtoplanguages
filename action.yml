@@ -72,14 +72,14 @@ runs:
         GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
     - name: Run the Go binary
       run: |
-        args=""
-        [ -n "${{ inputs.user }}" ] && args="$args -user=${{ inputs.user }}"
-        [ -n "${{ inputs.limit }}" ] && args="$args -limit=${{ inputs.limit }}"
-        [ -n "${{ inputs.ignoredOrgsFlag }}" ] && args="$args -ignore-orgs=${{ inputs.ignoredOrgsFlag }}"
-        [ -n "${{ inputs.ignoredReposFlag }}" ] && args="$args -ignore-repos=${{ inputs.ignoredReposFlag }}"
-        [ -n "${{ inputs.ignoredLangsFlag }}" ] && args="$args -ignore-langs=${{ inputs.ignoredLangsFlag }}"
-        [ -n "${{ inputs.withForks }}" ] && args="$args -with-forks=${{ inputs.withForks }}"
-        ./app $args -gh-token=${{ env.GITHUB_TOKEN }}
+        args=()
+        [ -n "${{ inputs.user }}" ] && args+=("-user=${{ inputs.user }}")
+        [ -n "${{ inputs.limit }}" ] && args+=("-limit=${{ inputs.limit }}")
+        [ -n "${{ inputs.ignoredOrgsFlag }}" ] && args+=("-ignore-orgs=${{ inputs.ignoredOrgsFlag }}")
+        [ -n "${{ inputs.ignoredReposFlag }}" ] && args+=("-ignore-repos=${{ inputs.ignoredReposFlag }}")
+        [ -n "${{ inputs.ignoredLangsFlag }}" ] && args+=("-ignore-langs=${{ inputs.ignoredLangsFlag }}")
+        [ -n "${{ inputs.withForks }}" ] && args+=("-with-forks=${{ inputs.withForks }}")
+        ./app "${args[@]}" -gh-token=${{ env.GITHUB_TOKEN }}
         rm -R githubtoplanguages
         rm app
       shell: bash
