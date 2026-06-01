@@ -64,6 +64,8 @@ func main() {
 		limit, _ = strconv.Atoi(limitEnv)
 	}
 
+	var ignoredSize int
+
 	// Organizations
 	result, err := requests.FetchOrganizations(user, token, ignored...)
 
@@ -80,6 +82,7 @@ func main() {
 
 		for _, lang := range repoList.Languages {
 			if shouldIgnoreLanguage(lang.Name, ignoredLanguages) {
+				ignoredSize += lang.Size
 				continue
 			}
 			languages[lang.Name] += lang.Size
@@ -103,6 +106,7 @@ func main() {
 
 		for _, lang := range repoList.Languages {
 			if shouldIgnoreLanguage(lang.Name, ignoredLanguages) {
+				ignoredSize += lang.Size
 				continue
 			}
 			languages[lang.Name] += lang.Size
@@ -119,6 +123,7 @@ func main() {
 		for _, repoList := range result.Repositories {
 			for _, lang := range repoList.Languages {
 				if shouldIgnoreLanguage(lang.Name, ignoredLanguages) {
+					ignoredSize += lang.Size
 					continue
 				}
 				languages[lang.Name] += lang.Size
@@ -141,6 +146,7 @@ func main() {
 	for _, repoList := range prResult.Repositories {
 		for _, lang := range repoList.Languages {
 			if shouldIgnoreLanguage(lang.Name, ignoredLanguages) {
+				ignoredSize += lang.Size
 				continue
 			}
 			languages[lang.Name] += lang.Size
@@ -175,41 +181,61 @@ type Language struct {
 	Percentage float64
 }
 
-func sortLanguages(languages map[string]int, limit int) []*Language {
+func sortLanguages(languages map[string]int, limit int, ignoredSize int) []*Language {
 	type kv struct {
 		Key   string
 		Value int
 	}
 
 	var sorted []kv
+	var totalSize int
+
 	for k, v := range languages {
 		sorted = append(sorted, kv{k, v})
+		totalSize += v
 	}
+	totalSize += ignoredSize
 
 	sort.Slice(sorted, func(i, j int) bool {
 		return sorted[i].Value > sorted[j].Value
 	})
 
-	if limit > len(sorted) {
-		limit = len(sorted)
+	hasOthers := ignoredSize > 0 || len(sorted) > limit
+
+	mainLimit := limit
+	if hasOthers && mainLimit > 1 {
+		mainLimit = limit - 1
 	}
 
-	sortedMap := make(map[string]int, limit)
-
-	var languagesSize int
-	for i := 0; i < limit; i++ {
-		sortedMap[sorted[i].Key] = sorted[i].Value
-		languagesSize += sorted[i].Value
+	if mainLimit > len(sorted) {
+		mainLimit = len(sorted)
 	}
+
 	result := make([]*Language, 0)
 
-	for key, size := range sortedMap {
-		result = append(result, &Language{Name: key, Size: size, Percentage: (float64(size) / float64(languagesSize)) * 100})
+	for i := 0; i < mainLimit; i++ {
+		size := sorted[i].Value
+		result = append(result, &Language{
+			Name:       sorted[i].Key,
+			Size:       size,
+			Percentage: (float64(size) / float64(totalSize)) * 100,
+		})
 	}
 
-	sort.Slice(result, func(i, j int) bool {
-		return result[i].Percentage > result[j].Percentage
-	})
+	var othersSize int
+	for i := mainLimit; i < len(sorted); i++ {
+		othersSize += sorted[i].Value
+	}
+
+	othersSize += ignoredSize
+
+	if othersSize > 0 {
+		result = append(result, &Language{
+			Name:       "Others",
+			Size:       othersSize,
+			Percentage: (float64(othersSize) / float64(totalSize)) * 100,
+		})
+	}
 
 	return result
 }
