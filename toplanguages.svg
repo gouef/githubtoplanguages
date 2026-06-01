@@ -91,7 +91,7 @@
             
                 <rect mask="url(#rect-mask)" x="233.15186289780615" y="0" width="7.598805915939934" height="8" fill="#00ADD8"/>
             
-                <rect mask="url(#rect-mask)" x="240.75066881374607" y="0" width="6.5299370168861115" height="8" fill="#85ea2d"/>
+                <rect mask="url(#rect-mask)" x="240.75066881374607" y="0" width="6.5299370168861115" height="8" fill="#ff1111"/>
             
                 <rect mask="url(#rect-mask)" x="247.2806058306322" y="0" width="2.719394169367798" height="8" fill="#00ADD8"/>
             
@@ -140,9 +140,9 @@
                     
                         <g transform="translate(0, 25)">
                             <g class="stagger" style="animation-delay: 600ms">
-                                <circle cx="5" cy="6" r="5" fill="#85ea2d" />
+                                <circle cx="5" cy="6" r="5" fill="#ff1111" />
                                 <text x="15" y="10" class='lang-name'>
-                                    OASv3-yaml 2.61%
+                                    MiniYAML 2.61%
                                 </text>
                             </g>
                         </g>
