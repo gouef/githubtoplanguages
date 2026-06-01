@@ -1,4 +1,4 @@
-.PHONY: install tests coverage build
+.PHONY: install tests coverage build run
 
 install:
 	go mod tidy && go mod vendor
@@ -9,3 +9,5 @@ coverage:
 	go test -v -covermode=set ./... -coverprofile=coverage.txt && go tool cover -html=coverage.txt -o coverage.html && xdg-open coverage.html
 build:
 	go build .
+run:
+	go run .

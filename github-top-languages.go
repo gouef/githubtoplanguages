@@ -46,6 +46,10 @@ func main() {
 	}
 	withForks, _ := strconv.ParseBool(*withForksFlag)
 
+	if os.Getenv("GITHUB_WITH_FORKS") != "" {
+		withForks = os.Getenv("GITHUB_WITH_FORKS") == "true"
+	}
+
 	output := *outputFlag
 
 	if output == "" {
