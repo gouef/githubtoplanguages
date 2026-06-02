@@ -64,17 +64,17 @@
                  <rect x="0" y="0" width="450" height="8" fill="white" rx="5"/>
             </mask>
             
-                <rect mask="url(#rect-mask)" x="0" y="0" width="291.7519036781753" height="8" fill="#f34b7d"/>
+                <rect mask="url(#rect-mask)" x="0" y="0" width="291.7177485911761" height="8" fill="#f34b7d"/>
             
-                <rect mask="url(#rect-mask)" x="291.7519036781753" y="0" width="101.91945493878352" height="8" fill="#555555"/>
+                <rect mask="url(#rect-mask)" x="291.7177485911761" y="0" width="101.9075233359166" height="8" fill="#555555"/>
             
-                <rect mask="url(#rect-mask)" x="393.67135861695886" y="0" width="16.677140554891544" height="8" fill="#00ADD8"/>
+                <rect mask="url(#rect-mask)" x="393.6252719270927" y="0" width="16.7278692040504" height="8" fill="#00ADD8"/>
             
-                <rect mask="url(#rect-mask)" x="410.3484991718504" y="0" width="15.601763063616152" height="8" fill="#4F5D95"/>
+                <rect mask="url(#rect-mask)" x="410.3531411311431" y="0" width="15.599936581704425" height="8" fill="#4F5D95"/>
             
-                <rect mask="url(#rect-mask)" x="425.95026223546654" y="0" width="5.552923500471242" height="8" fill="#f1e05a"/>
+                <rect mask="url(#rect-mask)" x="425.9530777128475" y="0" width="5.552273425586152" height="8" fill="#f1e05a"/>
             
-                <rect mask="url(#rect-mask)" x="431.5031857359378" y="0" width="18.4968142640622" height="8" fill="#d4d4d4"/>
+                <rect mask="url(#rect-mask)" x="431.5053511384337" y="0" width="18.494648861566333" height="8" fill="#d4d4d4"/>
             
 
             <g transform="translate(0, 25)">
@@ -102,7 +102,7 @@
                             <g class="stagger" style="animation-delay: 750ms">
                                 <circle cx="5" cy="6" r="5" fill="#00ADD8" />
                                 <text x="15" y="10" class='lang-name'>
-                                    Go 3.71%
+                                    Go 3.72%
                                 </text>
                             </g>
                         </g>
@@ -149,7 +149,7 @@
 
         <g transform="translate(0, 20)">
             <text x="78" y="30" fill="#2eb872" font-family="Segoe UI, Ubuntu, sans-serif" font-weight="bold" font-size="22px" text-anchor="middle">
-                413
+                1.6K
             </text>
             <text x="78" y="55" fill="#a4b1cd" font-family="Segoe UI, Ubuntu, sans-serif" font-size="12px" text-anchor="middle">
                 Total Contributions
@@ -179,13 +179,13 @@
 
         <g transform="translate(313, 20)">
             <text x="78" y="30" fill="#2eb872" font-family="Segoe UI, Ubuntu, sans-serif" font-weight="bold" font-size="22px" text-anchor="middle">
-                5
+                19
             </text>
             <text x="78" y="55" fill="#a4b1cd" font-family="Segoe UI, Ubuntu, sans-serif" font-size="12px" text-anchor="middle">
                 Longest Streak
             </text>
             <text x="78" y="75" fill="#ffffff" opacity="0.6" font-family="Segoe UI, Ubuntu, sans-serif" font-size="10px" text-anchor="middle">
-                May 20 - May 24
+                Feb  1 - Feb 19
             </text>
         </g>
     </g>
