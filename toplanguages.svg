@@ -70,11 +70,11 @@
             
                 <rect mask="url(#rect-mask)" x="393.6252719270927" y="0" width="16.7278692040504" height="8" fill="#00ADD8"/>
             
-                <rect mask="url(#rect-mask)" x="410.3531411311431" y="0" width="15.599936581704425" height="8" fill="#4F5D95"/>
+                <rect mask="url(#rect-mask)" x="410.3531411311431" y="0" width="15.578033537313104" height="8" fill="#4F5D95"/>
             
-                <rect mask="url(#rect-mask)" x="425.9530777128475" y="0" width="5.552273425586152" height="8" fill="#f1e05a"/>
+                <rect mask="url(#rect-mask)" x="425.9311746684562" y="0" width="5.552273425586152" height="8" fill="#f1e05a"/>
             
-                <rect mask="url(#rect-mask)" x="431.5053511384337" y="0" width="18.494648861566333" height="8" fill="#d4d4d4"/>
+                <rect mask="url(#rect-mask)" x="431.4834480940424" y="0" width="18.51655190595765" height="8" fill="#d4d4d4"/>
             
 
             <g transform="translate(0, 25)">
@@ -115,7 +115,7 @@
                             <g class="stagger" style="animation-delay: 450ms">
                                 <circle cx="5" cy="6" r="5" fill="#4F5D95" />
                                 <text x="15" y="10" class='lang-name'>
-                                    PHP 3.47%
+                                    PHP 3.46%
                                 </text>
                             </g>
                         </g>
