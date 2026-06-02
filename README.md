@@ -99,8 +99,8 @@ If you prefer restricting the token's lifetime and scoping it down to specific t
 * **Members:** `Read-only` *(To discover which organization jupiters you are a member of)*
 * **Metadata:** `Read-only` *(To access corporate repositories and public schemas)*
 
-* **Account permissions:**
-  * **Unassigned user data / Profile:** `Read-only` *(Required to fetch the user contribution calendar and calculate streaks)*
+#### **Account permissions:**
+* **Unassigned user data / Profile:** `Read-only` *(Required to fetch the user contribution calendar and calculate streaks)*
 
 ---
 
