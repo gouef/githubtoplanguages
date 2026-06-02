@@ -8,6 +8,8 @@ import (
 	"math"
 	"os"
 	"strings"
+
+	"github.com/gouef/githubtoplanguages/requests"
 )
 
 //go:embed svgTemplate.gohtml
@@ -20,6 +22,7 @@ type LanguageToSvg struct {
 	Size   int
 	Sizes  []LanguageSize
 	Height int
+	Streak *requests.StreakStats
 }
 
 type LanguageSize struct {
@@ -35,8 +38,8 @@ type LangSvg struct {
 	Delay      int
 }
 
-func generateSvg(languages []*Language, output string) string {
-	languageSvg := &LanguageToSvg{Size: 250, All: languages, Height: 95}
+func generateSvg(languages []*Language, output string, streak *requests.StreakStats) string {
+	languageSvg := &LanguageToSvg{Size: 450, All: languages, Height: 95, Streak: streak}
 	half := math.Round(float64(len(languages)) / 2)
 	x := 0.0
 
@@ -64,8 +67,25 @@ func generateSvg(languages []*Language, output string) string {
 	} else {
 		languageSvg.Height += offsetR
 	}
+
+	if languageSvg.Streak != nil {
+		languageSvg.Height += 150
+	}
+
 	content := SvgTemplate
-	tp := template.New("svg")
+	funcMap := template.FuncMap{
+		"subtract": func(a, b int) int {
+			return a - b
+		},
+		"formatCount": func(count int) string {
+			if count >= 1000 {
+				return fmt.Sprintf("%.1fK", float64(count)/1000.0)
+			}
+			return fmt.Sprintf("%d", count)
+		},
+	}
+
+	tp := template.New("svg").Funcs(funcMap)
 	tpl, err := tp.Parse(content)
 	if err != nil {
 		log.Fatalf("Failed to generate svg: %v", err)

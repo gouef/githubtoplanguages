@@ -1,5 +1,5 @@
 {{define "svg"}}
-<svg width="300" height="{{.Height}}" viewBox="0 0 300 {{.Height}}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="descId">
+<svg width="490" height="{{.Height}}" viewBox="0 0 490 {{.Height}}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="descId">
     <style>
         .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -12,20 +12,12 @@
         }
 
         @keyframes slideInAnimation {
-            from {
-                width: 0;
-            }
-            to {
-                width: calc(100%-100px);
-            }
+            from { width: 0; }
+            to { width: calc(100%-100px); }
         }
         @keyframes growWidthAnimation {
-            from {
-                width: 0;
-            }
-            to {
-                width: 100%;
-            }
+            from { width: 0; }
+            to { width: 100%; }
         }
         .stat {
             font: 600 14px 'Segoe UI', Ubuntu, "Helvetica Neue", Sans-Serif; fill: #fffefe;
@@ -50,44 +42,33 @@
             animation: growWidthAnimation 0.6s ease-in-out forwards;
         }
 
-
-
         /* Animations */
         @keyframes scaleInAnimation {
-            from {
-                transform: translate(-5px, 5px) scale(0);
-            }
-            to {
-                transform: translate(-5px, 5px) scale(1);
-            }
+            from { transform: translate(-5px, 5px) scale(0); }
+            to { transform: translate(-5px, 5px) scale(1); }
         }
         @keyframes fadeInAnimation {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
-    <rect x="0.5" y="0.5" rx="4.5" height="99%" stroke="#e4e2e2" width="299" fill="#273849" stroke-opacity="0"/>
-    <g transform="translate(25, 35)">
-        <g transform="translate(0, 0)">
-            <text x="0" y="0" class="header">Most Used Languages</text>
-        </g>
+    
+    <rect x="0.5" y="0.5" rx="4.5" height="99%" stroke="#e4e2e2" width="489" fill="#273849" stroke-opacity="0"/>
+    
+    <g transform="translate(245, 35)">
+        <text x="0" y="0" class="header" text-anchor="middle">Most Used Languages</text>
     </g>
 
     <g transform="translate(0, 55)">
-        <svg x="25">
-            <mask id="rect-mask">
-                <rect x="0" y="0" width="{{.Size}}" height="8" fill="white" rx="5"/>
+        <svg x="20"> <mask id="rect-mask">
+                 <rect x="0" y="0" width="{{.Size}}" height="8" fill="white" rx="5"/>
             </mask>
             {{range .Sizes}}
                 <rect mask="url(#rect-mask)" x="{{.X}}" y="0" width="{{.Size}}" height="8" fill="{{.Language.Color}}"/>
             {{end}}
 
             <g transform="translate(0, 25)">
-                <g transform="translate(0, 0)">
+                <g transform="translate(5, 0)">
                     {{range .Left}}
                         <g transform="translate(0, {{.Offset}})">
                             <g class="stagger" style="animation-delay: {{.Delay}}ms">
@@ -99,7 +80,8 @@
                         </g>
                     {{end}}
                 </g>
-                <g transform="translate(150, 0)">
+                
+                <g transform="translate(235, 0)">
                     {{range .Right}}
                         <g transform="translate(0, {{.Offset}})">
                             <g class="stagger" style="animation-delay: {{.Delay}}ms">
@@ -114,5 +96,53 @@
             </g>
         </svg>
     </g>
+
+{{if .Streak}}
+    <g transform="translate(10, {{subtract .Height 140}})">
+        <rect width="470" height="120" rx="6" fill="#1f2d3d" stroke="#2e3f51" stroke-width="1"/>
+
+        <g transform="translate(0, 20)">
+            <text x="78" y="30" fill="#2eb872" font-family="Segoe UI, Ubuntu, sans-serif" font-weight="bold" font-size="22px" text-anchor="middle">
+                {{formatCount .Streak.TotalContributions}}
+            </text>
+            <text x="78" y="55" fill="#a4b1cd" font-family="Segoe UI, Ubuntu, sans-serif" font-size="12px" text-anchor="middle">
+                Total Contributions
+            </text>
+            <text x="78" y="75" fill="#ffffff" opacity="0.6" font-family="Segoe UI, Ubuntu, sans-serif" font-size="10px" text-anchor="middle">
+                Jul 4, 2015 - Present
+            </text>
+        </g>
+
+        <line x1="156" y1="20" x2="156" y2="100" stroke="#4b5d73" stroke-width="1"/>
+
+        <g transform="translate(156, 15)">
+            <path d="M79,-3 C82,4 76,8 76,12 C76,16 79,18 82,18 C85,18 87,15 86,10 C91,18 84,25 77,25 C70,25 68,18 73,12 C70,7 74,1 79,-3 Z" fill="#2eb872"/>
+            
+            <text x="79" y="54" fill="#2eb872" font-family="Segoe UI, Ubuntu, sans-serif" font-weight="bold" font-size="22px" text-anchor="middle">
+                {{.Streak.CurrentStreak}}
+            </text>
+            <text x="79" y="74" fill="#2eb872" font-family="Segoe UI, Ubuntu, sans-serif" font-weight="bold" font-size="12px" text-anchor="middle">
+                Current Streak
+            </text>
+            <text x="79" y="94" fill="#ffffff" opacity="0.6" font-family="Segoe UI, Ubuntu, sans-serif" font-size="10px" text-anchor="middle">
+                {{.Streak.CurrentStart}} - {{.Streak.CurrentEnd}}
+            </text>
+        </g>
+
+        <line x1="313" y1="20" x2="313" y2="100" stroke="#4b5d73" stroke-width="1"/>
+
+        <g transform="translate(313, 20)">
+            <text x="78" y="30" fill="#2eb872" font-family="Segoe UI, Ubuntu, sans-serif" font-weight="bold" font-size="22px" text-anchor="middle">
+                {{.Streak.LongestStreak}}
+            </text>
+            <text x="78" y="55" fill="#a4b1cd" font-family="Segoe UI, Ubuntu, sans-serif" font-size="12px" text-anchor="middle">
+                Longest Streak
+            </text>
+            <text x="78" y="75" fill="#ffffff" opacity="0.6" font-family="Segoe UI, Ubuntu, sans-serif" font-size="10px" text-anchor="middle">
+                {{.Streak.LongestStart}} - {{.Streak.LongestEnd}}
+            </text>
+        </g>
+    </g>
+{{end}}
 </svg>
 {{end}}

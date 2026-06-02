@@ -175,10 +175,20 @@ func main() {
 	resultLanguages := sortLanguages(languages, limit, ignoredSize)
 
 	for _, lang := range resultLanguages {
+		if lang.Name == "Others" {
+			lang.Color = "#d4d4d4"
+			continue
+		}
 		lang.Color = colors[lang.Name]
 	}
 
-	generateSvg(resultLanguages, output)
+	streakStats, err := requests.FetchContributionStats(user, token)
+	if err != nil {
+		log.Printf("Warning: Failed to fetch contribution streaks: %v", err)
+		streakStats = &requests.StreakStats{}
+	}
+
+	generateSvg(resultLanguages, output, streakStats)
 
 }
 
@@ -257,6 +267,7 @@ func sortLanguages(languages map[string]int, limit int, ignoredSize int) []*Lang
 			Name:       "Others",
 			Size:       othersSize,
 			Percentage: (float64(othersSize) / float64(totalSize)) * 100,
+			Color:      "#d4d4d4",
 		})
 	}
 
