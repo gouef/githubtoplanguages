@@ -45,11 +45,11 @@
         
             <rect mask="url(#rect-mask)" x="393.6842284844532" y="0" width="16.663048579130045" height="8" fill="#00ADD8"/>
         
-            <rect mask="url(#rect-mask)" x="410.3472770635832" y="0" width="15.58036679001131" height="8" fill="#4F5D95"/>
+            <rect mask="url(#rect-mask)" x="410.3472770635832" y="0" width="15.60227311500524" height="8" fill="#4F5D95"/>
         
-            <rect mask="url(#rect-mask)" x="425.9276438535945" y="0" width="5.553105036130601" height="8" fill="#f1e05a"/>
+            <rect mask="url(#rect-mask)" x="425.9495501785884" y="0" width="5.553105036130601" height="8" fill="#f1e05a"/>
         
-            <rect mask="url(#rect-mask)" x="431.4807488897251" y="0" width="18.519251110274855" height="8" fill="#d4d4d4"/>
+            <rect mask="url(#rect-mask)" x="431.502655214719" y="0" width="18.49734478528093" height="8" fill="#d4d4d4"/>
         
 
         <g transform="translate(5, 25)">
@@ -80,7 +80,7 @@
                     
                         <g transform="translate(0, 0)" class="stagger" style="animation-delay: 450ms">
                             <circle cx="5" cy="6" r="5" fill="#4F5D95" />
-                            <text x="15" y="10" class='lang-name'>PHP 3.46%</text>
+                            <text x="15" y="10" class='lang-name'>PHP 3.47%</text>
                         </g>
                     
                         <g transform="translate(0, 22)" class="stagger" style="animation-delay: 550ms">
@@ -90,7 +90,7 @@
                     
                         <g transform="translate(0, 44)" class="stagger" style="animation-delay: 650ms">
                             <circle cx="5" cy="6" r="5" fill="#d4d4d4" />
-                            <text x="15" y="10" class='lang-name'>Others 4.12%</text>
+                            <text x="15" y="10" class='lang-name'>Others 4.11%</text>
                         </g>
                     
                 </g>
@@ -101,7 +101,7 @@
                     
                         <g transform="translate(0, 2)" class="stagger" style="animation-delay: 0ms">
                             <text x="0" y="10" class="stat-label">Total Commits:</text>
-                            <text x="115" y="10" class="stat-value">432</text>
+                            <text x="115" y="10" class="stat-value">435</text>
                         </g>
                     
                         <g transform="translate(0, 24)" class="stagger" style="animation-delay: 100ms">
