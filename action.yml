@@ -19,7 +19,7 @@ inputs:
     description: "Github UserName"
   limit:
     required: true
-    default: 6
+    default: 8
     description: "Limit of languages"
   ignoredOrgsFlag:
     required: true

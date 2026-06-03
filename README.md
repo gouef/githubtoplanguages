@@ -67,7 +67,7 @@ jobs:
 | `botName`          | `Jan Galek`          | `false`  | Set bot name for contributors                                                                             |
 | `botEmail`         | `ghome.cz@gmail.com` | `false`  | Set bot email address for contributors                                                                    |
 | `user`             | ``                   | `true`   | Github UserName                                                                                           |
-| `limit`            | `6`                  | `true`   | Limit of languages                                                                                        |
+| `limit`            | `8`                  | `true`   | Limit of languages                                                                                        |
 | `ignoredOrgsFlag`  | ``                   | `true`   | Comma-separated list of ignored organizations                                                             |
 | `ignoredReposFlag` | ``                   | `true`   | Comma-separated list of ignored repositories                                                              |
 | `ignoredLangsFlag` | ``                   | `false`  | Comma-separated list of ignored languages                                                                 |
