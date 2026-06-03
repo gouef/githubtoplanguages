@@ -6,27 +6,14 @@
             fill: #41b883;
             animation: fadeInAnimation 0.8s ease-in-out forwards;
         }
-        @supports(-moz-appearance: auto) {
-            /* Selector detects Firefox */
-            .header { font-size: 15.5px; }
+        .stat-label {
+            font: 600 12px 'Segoe UI', Ubuntu, Sans-Serif;
+            fill: #fffefe;
         }
-
-        @keyframes slideInAnimation {
-            from { width: 0; }
-            to { width: calc(100%-100px); }
+        .stat-value {
+            font: 700 12px 'Segoe UI', Ubuntu, Sans-Serif;
+            fill: #41b883;
         }
-        @keyframes growWidthAnimation {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-        .stat {
-            font: 600 14px 'Segoe UI', Ubuntu, "Helvetica Neue", Sans-Serif; fill: #fffefe;
-        }
-        @supports(-moz-appearance: auto) {
-            /* Selector detects Firefox */
-            .stat { font-size:12px; }
-        }
-        .bold { font-weight: 700 }
         .lang-name {
             font: 400 11px "Segoe UI", Ubuntu, Sans-Serif;
             fill: #fffefe;
@@ -34,18 +21,6 @@
         .stagger {
             opacity: 0;
             animation: fadeInAnimation 0.3s ease-in-out forwards;
-        }
-        #rect-mask rect{
-            animation: slideInAnimation 1s ease-in-out forwards;
-        }
-        .lang-progress{
-            animation: growWidthAnimation 0.6s ease-in-out forwards;
-        }
-
-        /* Animations */
-        @keyframes scaleInAnimation {
-            from { transform: translate(-5px, 5px) scale(0); }
-            to { transform: translate(-5px, 5px) scale(1); }
         }
         @keyframes fadeInAnimation {
             from { opacity: 0; }
@@ -56,41 +31,82 @@
     <rect x="0.5" y="0.5" rx="4.5" height="99%" stroke="#e4e2e2" width="489" fill="#273849" stroke-opacity="0"/>
     
     <g transform="translate(245, 35)">
-        <text x="0" y="0" class="header" text-anchor="middle">Most Used Languages</text>
+        <text x="0" y="0" class="header" text-anchor="middle">GitHub Advanced Stats</text>
     </g>
 
     <g transform="translate(0, 55)">
-        <svg x="20"> <mask id="rect-mask">
-                 <rect x="0" y="0" width="{{.Size}}" height="8" fill="white" rx="5"/>
+        <svg x="20">
+			<mask id="rect-mask">
+                 <rect x="0" y="0" width="450" height="8" fill="white" rx="5"/>
             </mask>
             {{range .Sizes}}
                 <rect mask="url(#rect-mask)" x="{{.X}}" y="0" width="{{.Size}}" height="8" fill="{{.Language.Color}}"/>
             {{end}}
 
-            <g transform="translate(0, 25)">
-                <g transform="translate(5, 0)">
-                    {{range .Left}}
-                        <g transform="translate(0, {{.Offset}})">
-                            <g class="stagger" style="animation-delay: {{.Delay}}ms">
-                                <circle cx="5" cy="6" r="5" fill="{{.Language.Color}}" />
-                                <text x="15" y="10" class='lang-name'>
-                                    {{.Language.Name}} {{.Percentage}}%
-                                </text>
+            <g transform="translate(5, 25)">
+                
+                <g transform="translate(0, 0)">
+                    <g transform="translate(0, 0)">
+                        {{range .Left}}
+                            <g transform="translate(0, {{.Offset}})">
+                                <g class="stagger" style="animation-delay: {{.Delay}}ms">
+                                    <circle cx="5" cy="6" r="5" fill="{{.Language.Color}}" />
+                                    <text x="15" y="10" class='lang-name'>
+                                        {{.Language.Name}} {{.Percentage}}%
+                                    </text>
+                                </g>
                             </g>
-                        </g>
-                    {{end}}
+                        {{end}}
+                    </g>
+                    
+                    <g transform="translate(115, 0)">
+                        {{range .Right}}
+                            <g transform="translate(0, {{.Offset}})">
+                                <g class="stagger" style="animation-delay: {{.Delay}}ms">
+                                    <circle cx="5" cy="6" r="5" fill="{{.Language.Color}}" />
+                                    <text x="15" y="10" class='lang-name'>
+                                        {{.Language.Name}} {{.Percentage}}%
+                                    </text>
+                                </g>
+                            </g>
+                        {{end}}
+                    </g>
                 </g>
                 
-                <g transform="translate(235, 0)">
-                    {{range .Right}}
-                        <g transform="translate(0, {{.Offset}})">
-                            <g class="stagger" style="animation-delay: {{.Delay}}ms">
-                                <circle cx="5" cy="6" r="5" fill="{{.Language.Color}}" />
-                                <text x="15" y="10" class='lang-name'>
-                                    {{.Language.Name}} {{.Percentage}}%
-                                </text>
-                            </g>
-                        </g>
+                <g transform="translate(260, 2)">
+                    {{if .Stats}}
+                    <g transform="translate(0, 0)" class="stagger" style="animation-delay: 100ms">
+                        <text x="0" y="10" class="stat-label">Total Commits:</text>
+                        <text x="115" y="10" class="stat-value">{{formatCount .Stats.TotalCommits}}</text>
+                    </g>
+                    <g transform="translate(0, 22)" class="stagger" style="animation-delay: 200ms">
+                        <text x="0" y="10" class="stat-label">Merged PRs:</text>
+                        <text x="115" y="10" class="stat-value">{{formatCount .Stats.MergedPRs}}</text>
+                    </g>
+                    <g transform="translate(0, 44)" class="stagger" style="animation-delay: 300ms">
+                        <text x="0" y="10" class="stat-label">Code Reviews:</text>
+                        <text x="115" y="10" class="stat-value">{{formatCount .Stats.TotalReviews}}</text>
+                    </g>
+                    <g transform="translate(0, 66)" class="stagger" style="animation-delay: 400ms">
+                        <text x="0" y="10" class="stat-label">Total Issues:</text>
+                        <text x="115" y="10" class="stat-value">{{formatCount .Stats.TotalIssues}}</text>
+                    </g>
+                    <g transform="translate(0, 88)" class="stagger" style="animation-delay: 550ms">
+                        <text x="0" y="10" class="stat-label">Total Stars:</text>
+                        <text x="115" y="10" class="stat-value">{{formatCount .Stats.TotalStars}}</text>
+                    </g>
+                    <g transform="translate(0, 88)" class="stagger" style="animation-delay: 500ms">
+                        <text x="0" y="10" class="stat-label">Total Stars:</text>
+                        <text x="115" y="10" class="stat-value">{{formatCount .Stats.TotalStars}}</text>
+                    </g>
+                    <g transform="translate(0, 110)" class="stagger" style="animation-delay: 600ms">
+                        <text x="0" y="10" class="stat-label">Followers:</text>
+                        <text x="115" y="10" class="stat-value">{{formatCount .Stats.Followers}}</text>
+                    </g>
+                    <g transform="translate(0, 132)" class="stagger" style="animation-delay: 700ms">
+                        <text x="0" y="10" class="stat-label">Total Repos:</text>
+                        <text x="115" y="10" class="stat-value">{{formatCount .Stats.TotalRepos}}</text>
+                    </g>
                     {{end}}
                 </g>
             </g>
@@ -109,7 +125,7 @@
                 Total Contributions
             </text>
             <text x="78" y="75" fill="#ffffff" opacity="0.6" font-family="Segoe UI, Ubuntu, sans-serif" font-size="10px" text-anchor="middle">
-                Jul 4, 2015 - Present
+                {{.Streak.AccountCreated}} - Present
             </text>
         </g>
 
@@ -117,7 +133,6 @@
 
         <g transform="translate(156, 15)">
             <path d="M79,32 C84.8,32 89.5,28.5 89.5,22.3 C89.5,19.7 88.6,15.3 85.1,11.8 C85.5,14.4 82.9,15.3 82.9,15.3 C82.5,11.8 79,5.7 73.8,4.8 C74.4,8.3 74.6,11.8 70.3,15.3 C68.1,17 66.8,20 66.8,23.1 C66.8,28.5 71.5,32 79,32 M79,30.2 C76.1,30.2 73.8,28.5 73.8,25.4 C73.8,24.1 74.2,21.9 76,20.2 C75.8,21.9 77.3,22.8 77.3,22.8 C76.6,20.6 78.2,17.1 80.8,16.7 C80.5,18.4 80.4,20.2 82.6,21.9 C83.7,22.8 84.3,24.3 84.3,25.8 C84.3,28.5 81.9,30.2 79,30.2" fill="#2eb872"/>
-            
             <text x="79" y="54" fill="#2eb872" font-family="Segoe UI, Ubuntu, sans-serif" font-weight="bold" font-size="22px" text-anchor="middle">
                 {{.Streak.CurrentStreak}}
             </text>

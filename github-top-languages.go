@@ -197,7 +197,13 @@ func main() {
 		}
 	}
 
-	generateSvg(resultLanguages, output, streakStats)
+	globalStats, err := requests.FetchGlobalStats(user, token)
+	if err != nil {
+		log.Printf("Warning: Failed to fetch global stats: %v", err)
+		globalStats = &requests.GlobalStats{}
+	}
+
+	generateSvg(resultLanguages, output, streakStats, globalStats)
 
 }
 

@@ -23,6 +23,7 @@ type LanguageToSvg struct {
 	Sizes  []LanguageSize
 	Height int
 	Streak *requests.StreakStats
+	Stats  *requests.GlobalStats
 }
 
 type LanguageSize struct {
@@ -38,8 +39,10 @@ type LangSvg struct {
 	Delay      int
 }
 
-func generateSvg(languages []*Language, output string, streak *requests.StreakStats) string {
-	languageSvg := &LanguageToSvg{Size: 450, All: languages, Height: 95, Streak: streak}
+func generateSvg(languages []*Language, output string, streak *requests.StreakStats, stats *requests.GlobalStats) string {
+
+	panelHeight := 95
+	languageSvg := &LanguageToSvg{Size: 450, All: languages, Height: panelHeight, Streak: streak, Stats: stats}
 	half := math.Round(float64(len(languages)) / 2)
 	x := 0.0
 
@@ -62,20 +65,33 @@ func generateSvg(languages []*Language, output string, streak *requests.StreakSt
 		x += size
 	}
 
-	if offsetL > offsetR {
-		languageSvg.Height += offsetL
+	maxLangOffset := offsetL
+	if offsetR > offsetL {
+		maxLangOffset = offsetR
+	}
+
+	statsListHeight := 155
+
+	if offsetL > statsListHeight {
+		languageSvg.Height = panelHeight + maxLangOffset
 	} else {
-		languageSvg.Height += offsetR
+		languageSvg.Height = panelHeight + statsListHeight
 	}
 
 	if languageSvg.Streak != nil {
-		languageSvg.Height += 150
+		languageSvg.Height += 130
 	}
 
 	content := SvgTemplate
 	funcMap := template.FuncMap{
 		"subtract": func(a, b int) int {
 			return a - b
+		},
+		"multiply": func(a, b int) int {
+			return a * b
+		},
+		"formatPercent": func(f float64) string {
+			return fmt.Sprintf("%.2f", f)
 		},
 		"formatCount": func(count int) string {
 			if count >= 1000 {
