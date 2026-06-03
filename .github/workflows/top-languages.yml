@@ -58,7 +58,7 @@ jobs:
           botName: "Jan Galek"
           botEmail: "ghome.cz@gmail.com"
           user: "JanGalek"
-          limit: 6
+          limit: 12
           ignoredOrgsFlag: "wowmua"
           ignoredReposFlag: "wowmua/Maps"
           ignoredLangsFlag: ""
