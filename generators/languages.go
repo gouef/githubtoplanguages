@@ -46,11 +46,11 @@ func NewLanguagesSection(languages []*Language, barWidth int) *LanguagesSection 
 
 		if i < half {
 			section.Left = append(section.Left, &LangSvg{Language: lang, Offset: offsetL, Percentage: fmt.Sprintf("%.2f", lang.Percentage), Delay: delayL})
-			offsetL += 22
+			offsetL += 25
 			delayL += 100
 		} else {
 			section.Right = append(section.Right, &LangSvg{Language: lang, Offset: offsetR, Percentage: fmt.Sprintf("%.2f", lang.Percentage), Delay: delayR})
-			offsetR += 22
+			offsetR += 25
 			delayR += 100
 		}
 	}

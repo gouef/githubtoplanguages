@@ -48,8 +48,6 @@ func main() {
 		log.Fatal("GITHUB_USERNAME is not set")
 	}
 
-	log.Printf("Show stats: %s", getPriorityValue(*showStatsFlag, "GITHUB_SHOW_STATS"))
-
 	withForks, _ := strconv.ParseBool(getPriorityValue(*withForksFlag, "GITHUB_WITH_FORKS"))
 	withStreak, _ := strconv.ParseBool(getPriorityValue(*withStreakFlag, "GITHUB_WITH_STREAK"))
 	showStats, _ := strconv.ParseBool(getPriorityValue(*showStatsFlag, "GITHUB_SHOW_STATS"))
