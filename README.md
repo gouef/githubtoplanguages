@@ -53,6 +53,7 @@ jobs:
           ignoredReposFlag: "wowmua/Maps"
           ignoredLangsFlag: ""
           withForks: "false"
+          withStreak: "true"
         env:
           GITHUB_TOKEN: ${{ secrets.USER_GITHUB_TOKEN }}
 ```
@@ -69,6 +70,7 @@ jobs:
 | `ignoredReposFlag` | ``                   | `true`   | Comma-separated list of ignored repositories             |
 | `ignoredLangsFlag` | ``                   | `false`  | Comma-separated list of ignored languages                |
 | `withForks`        | `false`              | `false`  | Include forked repositories in the analysis (true/false) |
+| `withStreak`       | `true`               | `false`  | Include streak statistics of your github (true/false)    |
 
 
 ## GitHub Personal Access Token (PAT) Scopes

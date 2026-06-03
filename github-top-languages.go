@@ -24,6 +24,7 @@ func main() {
 	ignoredReposFlag := flag.String("ignore-repos", "", "Comma-separated list of ignored repositories")
 	ignoredLangsFlag := flag.String("ignore-langs", "", "Comma-separated list of ignored languages")
 	withForksFlag := flag.String("with-forks", "false", "Include forked repositories in the analysis (true/false)")
+	withStreakFlag := flag.String("with-streak", "true", "Include streak statistics of your github account (true/false)")
 
 	flag.Parse()
 
@@ -45,9 +46,14 @@ func main() {
 		log.Fatal("GITHUB_USERNAME is not set")
 	}
 	withForks, _ := strconv.ParseBool(*withForksFlag)
+	withStreak, _ := strconv.ParseBool(*withStreakFlag)
 
 	if os.Getenv("GITHUB_WITH_FORKS") != "" {
 		withForks = os.Getenv("GITHUB_WITH_FORKS") == "true"
+	}
+
+	if os.Getenv("GITHUB_WITH_STREAK") != "" {
+		withStreak = os.Getenv("GITHUB_WITH_STREAK") == "true"
 	}
 
 	output := *outputFlag
@@ -182,10 +188,13 @@ func main() {
 		lang.Color = colors[lang.Name]
 	}
 
-	streakStats, err := requests.FetchContributionStats(user, token)
-	if err != nil {
-		log.Printf("Warning: Failed to fetch contribution streaks: %v", err)
-		streakStats = &requests.StreakStats{}
+	var streakStats *requests.StreakStats = nil
+	if withStreak {
+		streakStats, err = requests.FetchContributionStats(user, token)
+		if err != nil {
+			log.Printf("Warning: Failed to fetch contribution streaks: %v", err)
+			streakStats = &requests.StreakStats{}
+		}
 	}
 
 	generateSvg(resultLanguages, output, streakStats)

@@ -37,6 +37,10 @@ inputs:
     required: false
     default: "false"
     description: "Include forked repositories in the analysis (true/false)"
+  withStreak:
+    required: false
+    default: "true"
+    description: "Include streak statistics of your github account (true/false)"
 
 env:
   GITHUB_TOKEN: "As provided by Github Actions"
@@ -79,6 +83,7 @@ runs:
         [ -n "${{ inputs.ignoredReposFlag }}" ] && args+=("-ignore-repos=${{ inputs.ignoredReposFlag }}")
         [ -n "${{ inputs.ignoredLangsFlag }}" ] && args+=("-ignore-langs=${{ inputs.ignoredLangsFlag }}")
         [ -n "${{ inputs.withForks }}" ] && args+=("-with-forks=${{ inputs.withForks }}")
+        [ -n "${{ inputs.withStreak }}" ] && args+=("-with-streak=${{ inputs.withStreak }}")
         ./app "${args[@]}" -gh-token=${{ env.GITHUB_TOKEN }}
         rm -R githubtoplanguages
         rm app
