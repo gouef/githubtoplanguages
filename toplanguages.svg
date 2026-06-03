@@ -1,5 +1,5 @@
 
-<svg width="490" height="380" viewBox="0 0 490 380" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="descId">
+<svg width="490" height="381" viewBox="0 0 490 381" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="descId">
     <style>
         .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -34,137 +34,117 @@
         <text x="0" y="0" class="header" text-anchor="middle">GitHub Advanced Stats</text>
     </g>
 
-    <g transform="translate(0, 55)">
-        <svg x="20">
-			<mask id="rect-mask">
-                 <rect x="0" y="0" width="450" height="8" fill="white" rx="5"/>
-            </mask>
-            
-                <rect mask="url(#rect-mask)" x="0" y="0" width="291.6225700742879" height="8" fill="#f34b7d"/>
-            
-                <rect mask="url(#rect-mask)" x="291.6225700742879" y="0" width="101.87427404965376" height="8" fill="#555555"/>
-            
-                <rect mask="url(#rect-mask)" x="393.4968441239417" y="0" width="16.81189792458519" height="8" fill="#00ADD8"/>
-            
-                <rect mask="url(#rect-mask)" x="410.3087420485269" y="0" width="15.594846802852892" height="8" fill="#4F5D95"/>
-            
-                <rect mask="url(#rect-mask)" x="425.90358885137977" y="0" width="5.550461889769228" height="8" fill="#f1e05a"/>
-            
-                <rect mask="url(#rect-mask)" x="431.454050741149" y="0" width="18.54594925885103" height="8" fill="#d4d4d4"/>
-            
+    <g transform="translate(20, 55)">
+        <mask id="rect-mask">
+             <rect x="0" y="0" width="450" height="8" fill="white" rx="5"/>
+        </mask>
+        
+            <rect mask="url(#rect-mask)" x="0" y="0" width="291.76144160431437" height="8" fill="#f34b7d"/>
+        
+            <rect mask="url(#rect-mask)" x="291.76144160431437" y="0" width="101.92278688013879" height="8" fill="#555555"/>
+        
+            <rect mask="url(#rect-mask)" x="393.6842284844532" y="0" width="16.663048579130045" height="8" fill="#00ADD8"/>
+        
+            <rect mask="url(#rect-mask)" x="410.3472770635832" y="0" width="15.58036679001131" height="8" fill="#4F5D95"/>
+        
+            <rect mask="url(#rect-mask)" x="425.9276438535945" y="0" width="5.553105036130601" height="8" fill="#f1e05a"/>
+        
+            <rect mask="url(#rect-mask)" x="431.4807488897251" y="0" width="18.519251110274855" height="8" fill="#d4d4d4"/>
+        
 
-            <g transform="translate(5, 25)">
-                
+        <g transform="translate(5, 25)">
+            
+            <g transform="translate(0, 0)">
                 <g transform="translate(0, 0)">
-                    <g transform="translate(0, 0)">
-                        
-                            <g transform="translate(0, 0)">
-                                <g class="stagger" style="animation-delay: 450ms">
-                                    <circle cx="5" cy="6" r="5" fill="#f34b7d" />
-                                    <text x="15" y="10" class='lang-name'>
-                                        C&#43;&#43; 64.81%
-                                    </text>
-                                </g>
-                            </g>
-                        
-                            <g transform="translate(0, 25)">
-                                <g class="stagger" style="animation-delay: 600ms">
-                                    <circle cx="5" cy="6" r="5" fill="#555555" />
-                                    <text x="15" y="10" class='lang-name'>
-                                        C 22.64%
-                                    </text>
-                                </g>
-                            </g>
-                        
-                            <g transform="translate(0, 50)">
-                                <g class="stagger" style="animation-delay: 750ms">
-                                    <circle cx="5" cy="6" r="5" fill="#00ADD8" />
-                                    <text x="15" y="10" class='lang-name'>
-                                        Go 3.74%
-                                    </text>
-                                </g>
-                            </g>
-                        
-                    </g>
                     
-                    <g transform="translate(115, 0)">
-                        
-                            <g transform="translate(0, 0)">
-                                <g class="stagger" style="animation-delay: 450ms">
-                                    <circle cx="5" cy="6" r="5" fill="#4F5D95" />
-                                    <text x="15" y="10" class='lang-name'>
-                                        PHP 3.47%
-                                    </text>
-                                </g>
-                            </g>
-                        
-                            <g transform="translate(0, 25)">
-                                <g class="stagger" style="animation-delay: 600ms">
-                                    <circle cx="5" cy="6" r="5" fill="#f1e05a" />
-                                    <text x="15" y="10" class='lang-name'>
-                                        JavaScript 1.23%
-                                    </text>
-                                </g>
-                            </g>
-                        
-                            <g transform="translate(0, 50)">
-                                <g class="stagger" style="animation-delay: 750ms">
-                                    <circle cx="5" cy="6" r="5" fill="#d4d4d4" />
-                                    <text x="15" y="10" class='lang-name'>
-                                        Others 4.12%
-                                    </text>
-                                </g>
-                            </g>
-                        
-                    </g>
+                        <g transform="translate(0, 0)" class="stagger" style="animation-delay: 450ms">
+                            <circle cx="5" cy="6" r="5" fill="#f34b7d" />
+                            <text x="15" y="10" class='lang-name'>C&#43;&#43; 64.84%</text>
+                        </g>
+                    
+                        <g transform="translate(0, 22)" class="stagger" style="animation-delay: 550ms">
+                            <circle cx="5" cy="6" r="5" fill="#555555" />
+                            <text x="15" y="10" class='lang-name'>C 22.65%</text>
+                        </g>
+                    
+                        <g transform="translate(0, 44)" class="stagger" style="animation-delay: 650ms">
+                            <circle cx="5" cy="6" r="5" fill="#00ADD8" />
+                            <text x="15" y="10" class='lang-name'>Go 3.70%</text>
+                        </g>
+                    
                 </g>
                 
-                <g transform="translate(260, 2)">
+                
+                    <g transform="translate(115, 0)">
+                
                     
-                    <g transform="translate(0, 0)" class="stagger" style="animation-delay: 100ms">
-                        <text x="0" y="10" class="stat-label">Total Commits:</text>
-                        <text x="115" y="10" class="stat-value">426</text>
-                    </g>
-                    <g transform="translate(0, 22)" class="stagger" style="animation-delay: 200ms">
-                        <text x="0" y="10" class="stat-label">Merged PRs:</text>
-                        <text x="115" y="10" class="stat-value">136</text>
-                    </g>
-                    <g transform="translate(0, 44)" class="stagger" style="animation-delay: 300ms">
-                        <text x="0" y="10" class="stat-label">Code Reviews:</text>
-                        <text x="115" y="10" class="stat-value">1</text>
-                    </g>
-                    <g transform="translate(0, 66)" class="stagger" style="animation-delay: 400ms">
-                        <text x="0" y="10" class="stat-label">Total Issues:</text>
-                        <text x="115" y="10" class="stat-value">107</text>
-                    </g>
-                    <g transform="translate(0, 88)" class="stagger" style="animation-delay: 550ms">
-                        <text x="0" y="10" class="stat-label">Total Stars:</text>
-                        <text x="115" y="10" class="stat-value">6</text>
-                    </g>
-                    <g transform="translate(0, 88)" class="stagger" style="animation-delay: 500ms">
-                        <text x="0" y="10" class="stat-label">Total Stars:</text>
-                        <text x="115" y="10" class="stat-value">6</text>
-                    </g>
-                    <g transform="translate(0, 110)" class="stagger" style="animation-delay: 600ms">
-                        <text x="0" y="10" class="stat-label">Followers:</text>
-                        <text x="115" y="10" class="stat-value">9</text>
-                    </g>
-                    <g transform="translate(0, 132)" class="stagger" style="animation-delay: 700ms">
-                        <text x="0" y="10" class="stat-label">Total Repos:</text>
-                        <text x="115" y="10" class="stat-value">14</text>
-                    </g>
+                        <g transform="translate(0, 0)" class="stagger" style="animation-delay: 450ms">
+                            <circle cx="5" cy="6" r="5" fill="#4F5D95" />
+                            <text x="15" y="10" class='lang-name'>PHP 3.46%</text>
+                        </g>
+                    
+                        <g transform="translate(0, 22)" class="stagger" style="animation-delay: 550ms">
+                            <circle cx="5" cy="6" r="5" fill="#f1e05a" />
+                            <text x="15" y="10" class='lang-name'>JavaScript 1.23%</text>
+                        </g>
+                    
+                        <g transform="translate(0, 44)" class="stagger" style="animation-delay: 650ms">
+                            <circle cx="5" cy="6" r="5" fill="#d4d4d4" />
+                            <text x="15" y="10" class='lang-name'>Others 4.12%</text>
+                        </g>
                     
                 </g>
             </g>
-        </svg>
+            
+            <g transform="translate(260, 2)">
+                
+                    
+                        <g transform="translate(0, 2)" class="stagger" style="animation-delay: 0ms">
+                            <text x="0" y="10" class="stat-label">Total Commits:</text>
+                            <text x="115" y="10" class="stat-value">432</text>
+                        </g>
+                    
+                        <g transform="translate(0, 24)" class="stagger" style="animation-delay: 100ms">
+                            <text x="0" y="10" class="stat-label">Merged PRs:</text>
+                            <text x="115" y="10" class="stat-value">136</text>
+                        </g>
+                    
+                        <g transform="translate(0, 46)" class="stagger" style="animation-delay: 200ms">
+                            <text x="0" y="10" class="stat-label">Code Reviews:</text>
+                            <text x="115" y="10" class="stat-value">1</text>
+                        </g>
+                    
+                        <g transform="translate(0, 68)" class="stagger" style="animation-delay: 300ms">
+                            <text x="0" y="10" class="stat-label">Total Issues:</text>
+                            <text x="115" y="10" class="stat-value">107</text>
+                        </g>
+                    
+                        <g transform="translate(0, 90)" class="stagger" style="animation-delay: 400ms">
+                            <text x="0" y="10" class="stat-label">Total Stars:</text>
+                            <text x="115" y="10" class="stat-value">6</text>
+                        </g>
+                    
+                        <g transform="translate(0, 112)" class="stagger" style="animation-delay: 500ms">
+                            <text x="0" y="10" class="stat-label">Total Repositories:</text>
+                            <text x="115" y="10" class="stat-value">14</text>
+                        </g>
+                    
+                        <g transform="translate(0, 134)" class="stagger" style="animation-delay: 600ms">
+                            <text x="0" y="10" class="stat-label">Followers:</text>
+                            <text x="115" y="10" class="stat-value">9</text>
+                        </g>
+                    
+                
+            </g>
+        </g>
     </g>
 
 
-    <g transform="translate(10, 240)">
+    <g transform="translate(10, 246)">
         <rect width="470" height="120" rx="6" fill="#1f2d3d" stroke="#2e3f51" stroke-width="1"/>
 
         <g transform="translate(0, 20)">
-            <text x="78" y="30" fill="#2eb872" font-family="Segoe UI, Ubuntu, sans-serif" font-weight="bold" font-size="22px" text-anchor="middle">
+			<text x="78" y="30" fill="#2eb872" font-family="Segoe UI, Ubuntu, sans-serif" font-weight="bold" font-size="22px" text-anchor="middle">
                 1.6K
             </text>
             <text x="78" y="55" fill="#a4b1cd" font-family="Segoe UI, Ubuntu, sans-serif" font-size="12px" text-anchor="middle">
