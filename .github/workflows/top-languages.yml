@@ -38,6 +38,14 @@ on:
       required: false
       default: "false"
       description: "Include forked repositories in the analysis (true/false)"
+    showStats:
+      required: false
+      default: "true"
+      description: "Include statistics of your github account (true/false)"
+    statsFeatures:
+      required: false
+      default: ""
+      description: "Comma-separated list of statistics features to include (commits,prs,reviews,issues,stars,repos,followers)
 
 jobs:
   build-and-run:

@@ -41,6 +41,14 @@ inputs:
     required: false
     default: "true"
     description: "Include streak statistics of your github account (true/false)"
+  showStats:
+    required: false
+    default: "true"
+    description: "Include statistics of your github account (true/false)"
+  statsFeatures:
+    required: false
+    default: ""
+    description: "Comma-separated list of statistics features to include (commits,prs,reviews,issues,stars,repos,followers)
 
 env:
   GITHUB_TOKEN: "As provided by Github Actions"
@@ -84,6 +92,8 @@ runs:
         [ -n "${{ inputs.ignoredLangsFlag }}" ] && args+=("-ignore-langs=${{ inputs.ignoredLangsFlag }}")
         [ -n "${{ inputs.withForks }}" ] && args+=("-with-forks=${{ inputs.withForks }}")
         [ -n "${{ inputs.withStreak }}" ] && args+=("-with-streak=${{ inputs.withStreak }}")
+        [ -n "${{ inputs.showStats }}" ] && args+=("-show-stats=${{ inputs.showStats }}")
+        [ -n "${{ inputs.statsFeatures }}" ] && args+=("-stats-features=${{ inputs.statsFeatures }}")
         ./app "${args[@]}" -gh-token=${{ env.GITHUB_TOKEN }}
         rm -R githubtoplanguages
         rm app

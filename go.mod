@@ -15,5 +15,4 @@ require (
 )
 
 replace github.com/gouef/githubtoplanguages/requests => ./requests
-
-replace github.com/gouef/githubtoplanguages/requests/organizations => ./requests/organizations
+replace github.com/gouef/githubtoplanguages/generators => ./generators

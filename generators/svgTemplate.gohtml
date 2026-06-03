@@ -1,0 +1,131 @@
+{{define "svg"}}
+<svg width="490" height="{{.Height}}" viewBox="0 0 490 {{.Height}}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="descId">
+    <style>
+        .header {
+            font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
+            fill: #41b883;
+            animation: fadeInAnimation 0.8s ease-in-out forwards;
+        }
+        .stat-label {
+            font: 600 12px 'Segoe UI', Ubuntu, Sans-Serif;
+            fill: #fffefe;
+        }
+        .stat-value {
+            font: 700 12px 'Segoe UI', Ubuntu, Sans-Serif;
+            fill: #41b883;
+        }
+        .lang-name {
+            font: 400 11px "Segoe UI", Ubuntu, Sans-Serif;
+            fill: #fffefe;
+        }
+        .stagger {
+            opacity: 0;
+            animation: fadeInAnimation 0.3s ease-in-out forwards;
+        }
+        @keyframes fadeInAnimation {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+    
+    <rect x="0.5" y="0.5" rx="4.5" height="99%" stroke="#e4e2e2" width="489" fill="#273849" stroke-opacity="0"/>
+    
+    <g transform="translate(245, 35)">
+        <text x="0" y="0" class="header" text-anchor="middle">GitHub Advanced Stats</text>
+    </g>
+
+    <g transform="translate(20, 55)">
+        <mask id="rect-mask">
+             <rect x="0" y="0" width="450" height="8" fill="white" rx="5"/>
+        </mask>
+        {{range .Languages.Sizes}}
+            <rect mask="url(#rect-mask)" x="{{.X}}" y="0" width="{{.Size}}" height="8" fill="{{.Language.Color}}"/>
+        {{end}}
+
+        <g transform="translate(5, 25)">
+            
+            <g transform="translate(0, 0)">
+                <g transform="translate(0, 0)">
+                    {{range .Languages.Left}}
+                        <g transform="translate(0, {{.Offset}})" class="stagger" style="animation-delay: {{.Delay}}ms">
+                            <circle cx="5" cy="6" r="5" fill="{{.Language.Color}}" />
+                            <text x="15" y="10" class='lang-name'>{{.Language.Name}} {{.Percentage}}%</text>
+                        </g>
+                    {{end}}
+                </g>
+                
+                {{if .Stats.Items}}
+                    <g transform="translate(115, 0)">
+                {{else}}
+                    <g transform="translate(235, 0)">
+                {{end}}
+                    {{range .Languages.Right}}
+                        <g transform="translate(0, {{.Offset}})" class="stagger" style="animation-delay: {{.Delay}}ms">
+                            <circle cx="5" cy="6" r="5" fill="{{.Language.Color}}" />
+                            <text x="15" y="10" class='lang-name'>{{.Language.Name}} {{.Percentage}}%</text>
+                        </g>
+                    {{end}}
+                </g>
+            </g>
+            
+            <g transform="translate(260, 2)">
+                {{if .Stats.Items}}
+                    {{range $index, $stat := .Stats.Items}}
+                        <g transform="translate(0, {{$stat.Y}})" class="stagger" style="animation-delay: {{multiply $index 100}}ms">
+                            <text x="0" y="10" class="stat-label">{{$stat.Label}}</text>
+                            <text x="115" y="10" class="stat-value">{{$stat.Value}}</text>
+                        </g>
+                    {{end}}
+                {{end}}
+            </g>
+        </g>
+    </g>
+
+{{if .Streaks.Data}}
+    <g transform="translate(10, {{subtract .Height 135}})">
+        <rect width="470" height="120" rx="6" fill="#1f2d3d" stroke="#2e3f51" stroke-width="1"/>
+
+        <g transform="translate(0, 20)">
+			<text x="78" y="30" fill="#2eb872" font-family="Segoe UI, Ubuntu, sans-serif" font-weight="bold" font-size="22px" text-anchor="middle">
+                {{formatCount .Streaks.Data.TotalContributions}}
+            </text>
+            <text x="78" y="55" fill="#a4b1cd" font-family="Segoe UI, Ubuntu, sans-serif" font-size="12px" text-anchor="middle">
+                Total Contributions
+            </text>
+            <text x="78" y="75" fill="#ffffff" opacity="0.6" font-family="Segoe UI, Ubuntu, sans-serif" font-size="10px" text-anchor="middle">
+                {{.Streaks.Data.AccountCreated}} - Present
+            </text>
+        </g>
+
+        <line x1="156" y1="20" x2="156" y2="100" stroke="#4b5d73" stroke-width="1"/>
+
+        <g transform="translate(156, 15)">
+            <path d="M79,32 C84.8,32 89.5,28.5 89.5,22.3 C89.5,19.7 88.6,15.3 85.1,11.8 C85.5,14.4 82.9,15.3 82.9,15.3 C82.5,11.8 79,5.7 73.8,4.8 C74.4,8.3 74.6,11.8 70.3,15.3 C68.1,17 66.8,20 66.8,23.1 C66.8,28.5 71.5,32 79,32 M79,30.2 C76.1,30.2 73.8,28.5 73.8,25.4 C73.8,24.1 74.2,21.9 76,20.2 C75.8,21.9 77.3,22.8 77.3,22.8 C76.6,20.6 78.2,17.1 80.8,16.7 C80.5,18.4 80.4,20.2 82.6,21.9 C83.7,22.8 84.3,24.3 84.3,25.8 C84.3,28.5 81.9,30.2 79,30.2" fill="#2eb872"/>
+            <text x="79" y="54" fill="#2eb872" font-family="Segoe UI, Ubuntu, sans-serif" font-weight="bold" font-size="22px" text-anchor="middle">
+                {{.Streaks.Data.CurrentStreak}}
+            </text>
+            <text x="79" y="74" fill="#2eb872" font-family="Segoe UI, Ubuntu, sans-serif" font-weight="bold" font-size="12px" text-anchor="middle">
+                Current Streak
+            </text>
+            <text x="79" y="94" fill="#ffffff" opacity="0.6" font-family="Segoe UI, Ubuntu, sans-serif" font-size="10px" text-anchor="middle">
+                {{.Streaks.Data.CurrentStart}} - {{.Streaks.Data.CurrentEnd}}
+            </text>
+        </g>
+
+        <line x1="313" y1="20" x2="313" y2="100" stroke="#4b5d73" stroke-width="1"/>
+
+        <g transform="translate(313, 20)">
+            <text x="78" y="30" fill="#2eb872" font-family="Segoe UI, Ubuntu, sans-serif" font-weight="bold" font-size="22px" text-anchor="middle">
+                {{.Streaks.Data.LongestStreak}}
+            </text>
+            <text x="78" y="55" fill="#a4b1cd" font-family="Segoe UI, Ubuntu, sans-serif" font-size="12px" text-anchor="middle">
+                Longest Streak
+            </text>
+            <text x="78" y="75" fill="#ffffff" opacity="0.6" font-family="Segoe UI, Ubuntu, sans-serif" font-size="10px" text-anchor="middle">
+                {{.Streaks.Data.LongestStart}} - {{.Streaks.Data.LongestEnd}}
+            </text>
+        </g>
+    </g>
+{{end}}
+</svg>
+{{end}}

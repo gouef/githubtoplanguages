@@ -54,23 +54,27 @@ jobs:
           ignoredLangsFlag: ""
           withForks: "false"
           withStreak: "true"
+          showStats: "true"
+          statsFeatures: "commits,prs,reviews,issues,stars,repos,followers"
         env:
           GITHUB_TOKEN: ${{ secrets.USER_GITHUB_TOKEN }}
 ```
 
 ## Action inputs
 
-| Input              | Default              | Required | Description                                              |
-|--------------------|----------------------|----------|----------------------------------------------------------|
-| `botName`          | `Jan Galek`          | `false`  | Set bot name for contributors                            |
-| `botEmail`         | `ghome.cz@gmail.com` | `false`  | Set bot email address for contributors                   |
-| `user`             | ``                   | `true`   | Github UserName                                          |
-| `limit`            | `6`                  | `true`   | Limit of languages                                       |
-| `ignoredOrgsFlag`  | ``                   | `true`   | Comma-separated list of ignored organizations            |
-| `ignoredReposFlag` | ``                   | `true`   | Comma-separated list of ignored repositories             |
-| `ignoredLangsFlag` | ``                   | `false`  | Comma-separated list of ignored languages                |
-| `withForks`        | `false`              | `false`  | Include forked repositories in the analysis (true/false) |
-| `withStreak`       | `true`               | `false`  | Include streak statistics of your github (true/false)    |
+| Input              | Default              | Required | Description                                                                                               |
+|--------------------|----------------------|----------|-----------------------------------------------------------------------------------------------------------|
+| `botName`          | `Jan Galek`          | `false`  | Set bot name for contributors                                                                             |
+| `botEmail`         | `ghome.cz@gmail.com` | `false`  | Set bot email address for contributors                                                                    |
+| `user`             | ``                   | `true`   | Github UserName                                                                                           |
+| `limit`            | `6`                  | `true`   | Limit of languages                                                                                        |
+| `ignoredOrgsFlag`  | ``                   | `true`   | Comma-separated list of ignored organizations                                                             |
+| `ignoredReposFlag` | ``                   | `true`   | Comma-separated list of ignored repositories                                                              |
+| `ignoredLangsFlag` | ``                   | `false`  | Comma-separated list of ignored languages                                                                 |
+| `withForks`        | `false`              | `false`  | Include forked repositories in the analysis (true/false)                                                  |
+| `withStreak`       | `true`               | `false`  | Include streak statistics of your github (true/false)                                                     |
+| `showStats`        | `true`               | `false`  | Include statistics of your github account (true/false)                                                    |
+| `statsFeatures`    | ``                   | `false`  | Comma-separated list of statistics features to include (commits,prs,reviews,issues,stars,repos,followers) |
 
 
 ## GitHub Personal Access Token (PAT) Scopes
