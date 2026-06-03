@@ -9,7 +9,6 @@ on:
       required: false
       default: "Jan Galek"
       description: "Set bot name for contributors"
-
     botEmail:
       required: false
       default: "ghome.cz@gmail.com"
