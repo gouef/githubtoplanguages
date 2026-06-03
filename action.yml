@@ -93,7 +93,7 @@ runs:
         [ -n "${{ inputs.withForks }}" ] && args+=("-with-forks=${{ inputs.withForks }}")
         [ -n "${{ inputs.withStreak }}" ] && args+=("-with-streak=${{ inputs.withStreak }}")
         [ -n "${{ inputs.showStats }}" ] && args+=("-show-stats=${{ inputs.showStats }}")
-        [ -n "${{ inputs.statsFeatures }}" ] && args+=("-stats-features=${{ inputs.statsFeatures }}")
+        [ -n "${{ inputs.statsFeatures }}" ] && args+=("-stats=${{ inputs.statsFeatures }}")
         ./app "${args[@]}" -gh-token=${{ env.GITHUB_TOKEN }}
         rm -R githubtoplanguages
         rm app
