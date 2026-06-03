@@ -64,17 +64,17 @@
                  <rect x="0" y="0" width="450" height="8" fill="white" rx="5"/>
             </mask>
             
-                <rect mask="url(#rect-mask)" x="0" y="0" width="291.7086622166839" height="8" fill="#f34b7d"/>
+                <rect mask="url(#rect-mask)" x="0" y="0" width="291.70856606759946" height="8" fill="#f34b7d"/>
             
-                <rect mask="url(#rect-mask)" x="291.7086622166839" y="0" width="101.9043491378259" height="8" fill="#555555"/>
+                <rect mask="url(#rect-mask)" x="291.70856606759946" y="0" width="101.90431554948542" height="8" fill="#555555"/>
             
-                <rect mask="url(#rect-mask)" x="393.6130113545098" y="0" width="16.73370133550024" height="8" fill="#00ADD8"/>
+                <rect mask="url(#rect-mask)" x="393.6128816170849" y="0" width="16.733844142908172" height="8" fill="#00ADD8"/>
             
-                <rect mask="url(#rect-mask)" x="410.34671269001007" y="0" width="15.599450677550424" height="8" fill="#4F5D95"/>
+                <rect mask="url(#rect-mask)" x="410.3467257599931" y="0" width="15.577543180929494" height="8" fill="#4F5D95"/>
             
-                <rect mask="url(#rect-mask)" x="425.9461633675605" y="0" width="5.552100484324018" height="8" fill="#f1e05a"/>
+                <rect mask="url(#rect-mask)" x="425.92426894092256" y="0" width="5.552098654315357" height="8" fill="#f1e05a"/>
             
-                <rect mask="url(#rect-mask)" x="431.4982638518845" y="0" width="18.50173614811556" height="8" fill="#d4d4d4"/>
+                <rect mask="url(#rect-mask)" x="431.4763675952379" y="0" width="18.52363240476211" height="8" fill="#d4d4d4"/>
             
 
             <g transform="translate(0, 25)">
@@ -115,7 +115,7 @@
                             <g class="stagger" style="animation-delay: 450ms">
                                 <circle cx="5" cy="6" r="5" fill="#4F5D95" />
                                 <text x="15" y="10" class='lang-name'>
-                                    PHP 3.47%
+                                    PHP 3.46%
                                 </text>
                             </g>
                         </g>
@@ -133,7 +133,7 @@
                             <g class="stagger" style="animation-delay: 750ms">
                                 <circle cx="5" cy="6" r="5" fill="#d4d4d4" />
                                 <text x="15" y="10" class='lang-name'>
-                                    Others 4.11%
+                                    Others 4.12%
                                 </text>
                             </g>
                         </g>
@@ -171,7 +171,7 @@
                 Current Streak
             </text>
             <text x="79" y="94" fill="#ffffff" opacity="0.6" font-family="Segoe UI, Ubuntu, sans-serif" font-size="10px" text-anchor="middle">
-                Jun  1 - Jun  3
+                Jun  1, 2026 - Jun  3, 2026
             </text>
         </g>
 
@@ -185,7 +185,7 @@
                 Longest Streak
             </text>
             <text x="78" y="75" fill="#ffffff" opacity="0.6" font-family="Segoe UI, Ubuntu, sans-serif" font-size="10px" text-anchor="middle">
-                Feb  1 - Feb 19
+                Feb  1, 2025 - Feb 19, 2025
             </text>
         </g>
     </g>
