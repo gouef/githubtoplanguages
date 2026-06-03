@@ -44,7 +44,7 @@ on:
     statsFeatures:
       required: false
       default: ""
-      description: "Comma-separated list of statistics features to include (commits,prs,reviews,issues,stars,repos,followers)
+      description: "Comma-separated list of statistics features to include (commits,prs,reviews,issues,stars,repos,followers)"
 
 jobs:
   build-and-run:
