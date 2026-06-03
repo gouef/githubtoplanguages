@@ -48,7 +48,7 @@ inputs:
   statsFeatures:
     required: false
     default: ""
-    description: "Comma-separated list of statistics features to include (commits,prs,reviews,issues,stars,repos,followers)
+    description: "Comma-separated list of statistics features to include (commits,prs,reviews,issues,stars,repos,followers)"
 
 env:
   GITHUB_TOKEN: "As provided by Github Actions"
