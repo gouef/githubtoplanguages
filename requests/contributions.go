@@ -220,5 +220,5 @@ func formatDateBounds(dateStr string) string {
 	if err != nil {
 		return dateStr
 	}
-	return t.Format("Jan _2")
+	return t.Format("Jan _2, 2006")
 }
