@@ -18,7 +18,7 @@ func main() {
 
 	tokenFlag := flag.String("gh-token", "", "Github API token")
 	userFlag := flag.String("user", "", "Github username")
-	limitFlag := flag.Int("limit", 6, "Limit of languages")
+	limitFlag := flag.Int("limit", 12, "Limit of languages")
 	outputFlag := flag.String("output", "", "Name of file (without .svg")
 	ignoredOrgsFlag := flag.String("ignore-orgs", "", "Comma-separated list of ignored organizations")
 	ignoredReposFlag := flag.String("ignore-repos", "", "Comma-separated list of ignored repositories")
