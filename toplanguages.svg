@@ -45,23 +45,23 @@
         
             <rect mask="url(#rect-mask)" x="392.6465325060281" y="0" width="16.61703105540164" height="8" fill="#00ADD8"/>
         
-            <rect mask="url(#rect-mask)" x="409.26356356142975" y="0" width="15.56114772847894" height="8" fill="#4F5D95"/>
+            <rect mask="url(#rect-mask)" x="409.26356356142975" y="0" width="15.539299145461202" height="8" fill="#4F5D95"/>
         
-            <rect mask="url(#rect-mask)" x="424.8247112899087" y="0" width="5.53846783619514" height="8" fill="#f1e05a"/>
+            <rect mask="url(#rect-mask)" x="424.80286270689095" y="0" width="5.53846783619514" height="8" fill="#f1e05a"/>
         
-            <rect mask="url(#rect-mask)" x="430.36317912610383" y="0" width="4.7095533107343615" height="8" fill="#663399"/>
+            <rect mask="url(#rect-mask)" x="430.3413305430861" y="0" width="4.7095533107343615" height="8" fill="#663399"/>
         
-            <rect mask="url(#rect-mask)" x="435.0727324368382" y="0" width="2.537592084489079" height="8" fill="#cccccc"/>
+            <rect mask="url(#rect-mask)" x="435.05088385382044" y="0" width="2.537592084489079" height="8" fill="#cccccc"/>
         
-            <rect mask="url(#rect-mask)" x="437.61032452132724" y="0" width="2.376218351680864" height="8" fill="#384d54"/>
+            <rect mask="url(#rect-mask)" x="437.5884759383095" y="0" width="2.376218351680864" height="8" fill="#384d54"/>
         
-            <rect mask="url(#rect-mask)" x="439.9865428730081" y="0" width="1.6002977369482119" height="8" fill="#e34c26"/>
+            <rect mask="url(#rect-mask)" x="439.96469428999035" y="0" width="1.6002977369482119" height="8" fill="#e34c26"/>
         
-            <rect mask="url(#rect-mask)" x="441.5868406099563" y="0" width="1.4563584829137448" height="8" fill="#00ADD8"/>
+            <rect mask="url(#rect-mask)" x="441.56499202693857" y="0" width="1.4563584829137448" height="8" fill="#00ADD8"/>
         
-            <rect mask="url(#rect-mask)" x="443.04319909287005" y="0" width="1.324601170200681" height="8" fill="#89e051"/>
+            <rect mask="url(#rect-mask)" x="443.0213505098523" y="0" width="1.324601170200681" height="8" fill="#89e051"/>
         
-            <rect mask="url(#rect-mask)" x="444.36780026307076" y="0" width="5.632199736929251" height="8" fill="#d4d4d4"/>
+            <rect mask="url(#rect-mask)" x="444.345951680053" y="0" width="5.654048319946988" height="8" fill="#d4d4d4"/>
         
 
         <g transform="translate(5, 25)">
@@ -86,7 +86,7 @@
                     
                         <g transform="translate(0, 75)" class="stagger" style="animation-delay: 750ms">
                             <circle cx="5" cy="6" r="5" fill="#4F5D95" />
-                            <text x="15" y="10" class='lang-name'>PHP 3.46%</text>
+                            <text x="15" y="10" class='lang-name'>PHP 3.45%</text>
                         </g>
                     
                         <g transform="translate(0, 100)" class="stagger" style="animation-delay: 850ms">
@@ -132,7 +132,7 @@
                     
                         <g transform="translate(0, 125)" class="stagger" style="animation-delay: 950ms">
                             <circle cx="5" cy="6" r="5" fill="#d4d4d4" />
-                            <text x="15" y="10" class='lang-name'>Others 1.25%</text>
+                            <text x="15" y="10" class='lang-name'>Others 1.26%</text>
                         </g>
                     
                 </g>
@@ -143,7 +143,7 @@
                     
                         <g transform="translate(0, 2)" class="stagger" style="animation-delay: 0ms">
                             <text x="0" y="10" class="stat-label">Total Commits:</text>
-                            <text x="115" y="10" class="stat-value">507</text>
+                            <text x="115" y="10" class="stat-value">511</text>
                         </g>
                     
                         <g transform="translate(0, 24)" class="stagger" style="animation-delay: 100ms">
