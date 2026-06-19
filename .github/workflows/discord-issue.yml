@@ -11,13 +11,13 @@ jobs:
       - name: Send notification to Discord
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL_ISSUE }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+          AUTHOR: ${{ github.actor }}
         run: |
           STATUS="${{ github.event.action == 'opened' && '📢 **New Issue**' || '✅ **Issue Closed**' }}"
           ISSUE_TYPE="${{ github.event_name }}"
-          ISSUE_TITLE="${{ github.event.issue.title || github.event.pull_request.title }}"
-          ISSUE_URL="${{ github.event.issue.html_url || github.event.pull_request.html_url }}"
-          AUTHOR="${{ github.actor }}"
-          
+
           curl -H "Content-Type: application/json" \
             -X POST \
             -d "{\"username\": \"GitHub Bot\", \"content\": \"${STATUS} created by **${AUTHOR}**: **${ISSUE_TITLE}**\n🔗 ${ISSUE_URL}\"}" \
