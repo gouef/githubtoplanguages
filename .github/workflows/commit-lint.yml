@@ -19,6 +19,9 @@ on:
       - test/**
       - bugfix/**
 
+permissions:
+  contents: read
+
 jobs:
   lint-commits:
     runs-on: ubuntu-latest
