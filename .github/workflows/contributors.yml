@@ -15,6 +15,10 @@ on:
       - test/**
       - bugfix/**
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   generate-contributors:
     runs-on: ubuntu-latest
