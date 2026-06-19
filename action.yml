@@ -109,7 +109,7 @@ runs:
         else
           git add .
           git commit -m "[Update] Generate github top language"
-          git pull && git push origin HEAD:${{ github.event.repository.default_branch }}
+          git pull origin ${{ github.event.repository.default_branch }} && git push origin HEAD:${{ github.event.repository.default_branch }}
         fi
       shell: bash
       env:
