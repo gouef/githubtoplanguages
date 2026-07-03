@@ -45,23 +45,23 @@
         
             <rect mask="url(#rect-mask)" x="391.7075286402828" y="0" width="16.57729186224324" height="8" fill="#00ADD8"/>
         
-            <rect mask="url(#rect-mask)" x="408.28482050252603" y="0" width="15.502137319848144" height="8" fill="#4F5D95"/>
+            <rect mask="url(#rect-mask)" x="408.28482050252603" y="0" width="15.523933652553664" height="8" fill="#4F5D95"/>
         
-            <rect mask="url(#rect-mask)" x="423.7869578223742" y="0" width="5.52522273588749" height="8" fill="#f1e05a"/>
+            <rect mask="url(#rect-mask)" x="423.80875415507967" y="0" width="5.52522273588749" height="8" fill="#f1e05a"/>
         
-            <rect mask="url(#rect-mask)" x="429.3121805582617" y="0" width="4.698561146831513" height="8" fill="#663399"/>
+            <rect mask="url(#rect-mask)" x="429.33397689096716" y="0" width="4.698561146831513" height="8" fill="#663399"/>
         
-            <rect mask="url(#rect-mask)" x="434.0107417050932" y="0" width="3.2871871020816235" height="8" fill="#cccccc"/>
+            <rect mask="url(#rect-mask)" x="434.0325380377987" y="0" width="3.2871871020816235" height="8" fill="#cccccc"/>
         
-            <rect mask="url(#rect-mask)" x="437.29792880717486" y="0" width="2.3705356879276858" height="8" fill="#384d54"/>
+            <rect mask="url(#rect-mask)" x="437.31972513988035" y="0" width="2.3705356879276858" height="8" fill="#384d54"/>
         
-            <rect mask="url(#rect-mask)" x="439.66846449510257" y="0" width="1.5964706669579403" height="8" fill="#e34c26"/>
+            <rect mask="url(#rect-mask)" x="439.69026082780806" y="0" width="1.5964706669579403" height="8" fill="#e34c26"/>
         
-            <rect mask="url(#rect-mask)" x="441.2649351620605" y="0" width="1.4528756398675098" height="8" fill="#00ADD8"/>
+            <rect mask="url(#rect-mask)" x="441.286731494766" y="0" width="1.4528756398675098" height="8" fill="#00ADD8"/>
         
-            <rect mask="url(#rect-mask)" x="442.717810801928" y="0" width="1.3222944502502396" height="8" fill="#89e051"/>
+            <rect mask="url(#rect-mask)" x="442.7396071346335" y="0" width="1.3222944502502396" height="8" fill="#89e051"/>
         
-            <rect mask="url(#rect-mask)" x="444.04010525217825" y="0" width="5.959894747821842" height="8" fill="#d4d4d4"/>
+            <rect mask="url(#rect-mask)" x="444.06190158488374" y="0" width="5.938098415116323" height="8" fill="#d4d4d4"/>
         
 
         <g transform="translate(5, 25)">
@@ -86,7 +86,7 @@
                     
                         <g transform="translate(0, 75)" class="stagger" style="animation-delay: 750ms">
                             <circle cx="5" cy="6" r="5" fill="#4F5D95" />
-                            <text x="15" y="10" class='lang-name'>PHP 3.44%</text>
+                            <text x="15" y="10" class='lang-name'>PHP 3.45%</text>
                         </g>
                     
                         <g transform="translate(0, 100)" class="stagger" style="animation-delay: 850ms">
@@ -202,13 +202,13 @@
         <g transform="translate(156, 15)">
             <path d="M79,32 C84.8,32 89.5,28.5 89.5,22.3 C89.5,19.7 88.6,15.3 85.1,11.8 C85.5,14.4 82.9,15.3 82.9,15.3 C82.5,11.8 79,5.7 73.8,4.8 C74.4,8.3 74.6,11.8 70.3,15.3 C68.1,17 66.8,20 66.8,23.1 C66.8,28.5 71.5,32 79,32 M79,30.2 C76.1,30.2 73.8,28.5 73.8,25.4 C73.8,24.1 74.2,21.9 76,20.2 C75.8,21.9 77.3,22.8 77.3,22.8 C76.6,20.6 78.2,17.1 80.8,16.7 C80.5,18.4 80.4,20.2 82.6,21.9 C83.7,22.8 84.3,24.3 84.3,25.8 C84.3,28.5 81.9,30.2 79,30.2" fill="#2eb872"/>
             <text x="79" y="54" fill="#2eb872" font-family="Segoe UI, Ubuntu, sans-serif" font-weight="bold" font-size="22px" text-anchor="middle">
-                32
+                33
             </text>
             <text x="79" y="74" fill="#2eb872" font-family="Segoe UI, Ubuntu, sans-serif" font-weight="bold" font-size="12px" text-anchor="middle">
                 Current Streak
             </text>
             <text x="79" y="94" fill="#ffffff" opacity="0.6" font-family="Segoe UI, Ubuntu, sans-serif" font-size="10px" text-anchor="middle">
-                Jun  1, 2026 - Jul  2, 2026
+                Jun  1, 2026 - Jul  3, 2026
             </text>
         </g>
 
@@ -216,13 +216,13 @@
 
         <g transform="translate(313, 20)">
             <text x="78" y="30" fill="#2eb872" font-family="Segoe UI, Ubuntu, sans-serif" font-weight="bold" font-size="22px" text-anchor="middle">
-                32
+                33
             </text>
             <text x="78" y="55" fill="#a4b1cd" font-family="Segoe UI, Ubuntu, sans-serif" font-size="12px" text-anchor="middle">
                 Longest Streak
             </text>
             <text x="78" y="75" fill="#ffffff" opacity="0.6" font-family="Segoe UI, Ubuntu, sans-serif" font-size="10px" text-anchor="middle">
-                Jun  1, 2026 - Jul  2, 2026
+                Jun  1, 2026 - Jul  3, 2026
             </text>
         </g>
     </g>
