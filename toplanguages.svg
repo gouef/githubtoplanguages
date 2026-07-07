@@ -39,29 +39,29 @@
              <rect x="0" y="0" width="450" height="8" fill="white" rx="5"/>
         </mask>
         
-            <rect mask="url(#rect-mask)" x="0" y="0" width="289.48045896906024" height="8" fill="#f34b7d"/>
+            <rect mask="url(#rect-mask)" x="0" y="0" width="289.47334192320534" height="8" fill="#f34b7d"/>
         
-            <rect mask="url(#rect-mask)" x="289.48045896906024" y="0" width="101.12595743711182" height="8" fill="#555555"/>
+            <rect mask="url(#rect-mask)" x="289.47334192320534" y="0" width="101.12347119649039" height="8" fill="#555555"/>
         
-            <rect mask="url(#rect-mask)" x="390.60641640617206" y="0" width="16.53069214806031" height="8" fill="#00ADD8"/>
+            <rect mask="url(#rect-mask)" x="390.59681311969575" y="0" width="16.530285731356223" height="8" fill="#00ADD8"/>
         
-            <rect mask="url(#rect-mask)" x="407.1371085542324" y="0" width="15.480294988457302" height="8" fill="#4F5D95"/>
+            <rect mask="url(#rect-mask)" x="407.127098851052" y="0" width="15.458179868779492" height="8" fill="#4F5D95"/>
         
-            <rect mask="url(#rect-mask)" x="422.61740354268966" y="0" width="5.509691019221766" height="8" fill="#f1e05a"/>
+            <rect mask="url(#rect-mask)" x="422.5852787198315" y="0" width="5.50955556025583" height="8" fill="#f1e05a"/>
         
-            <rect mask="url(#rect-mask)" x="428.1270945619114" y="0" width="4.685353223104714" height="8" fill="#663399"/>
+            <rect mask="url(#rect-mask)" x="428.0948342800873" y="0" width="4.685238030964097" height="8" fill="#663399"/>
         
-            <rect mask="url(#rect-mask)" x="432.8124477850161" y="0" width="3.2779466314006607" height="8" fill="#cccccc"/>
+            <rect mask="url(#rect-mask)" x="432.7800723110514" y="0" width="3.2778660411716385" height="8" fill="#cccccc"/>
         
-            <rect mask="url(#rect-mask)" x="436.09039441641676" y="0" width="2.363871976723477" height="8" fill="#384d54"/>
+            <rect mask="url(#rect-mask)" x="436.05793835222306" y="0" width="2.3638138595527582" height="8" fill="#384d54"/>
         
-            <rect mask="url(#rect-mask)" x="438.45426639314024" y="0" width="1.8942131038055545" height="8" fill="#89e051"/>
+            <rect mask="url(#rect-mask)" x="438.4217522117758" y="0" width="1.8958837083388844" height="8" fill="#89e051"/>
         
-            <rect mask="url(#rect-mask)" x="440.3484794969458" y="0" width="1.5919828967358867" height="8" fill="#e34c26"/>
+            <rect mask="url(#rect-mask)" x="440.3176359201147" y="0" width="1.5919437569082218" height="8" fill="#e34c26"/>
         
-            <rect mask="url(#rect-mask)" x="441.9404623936817" y="0" width="1.4487915234675703" height="8" fill="#00ADD8"/>
+            <rect mask="url(#rect-mask)" x="441.9095796770229" y="0" width="1.4487559040832998" height="8" fill="#00ADD8"/>
         
-            <rect mask="url(#rect-mask)" x="443.38925391714923" y="0" width="6.610746082850654" height="8" fill="#d4d4d4"/>
+            <rect mask="url(#rect-mask)" x="443.35833558110625" y="0" width="6.641664418893852" height="8" fill="#d4d4d4"/>
         
 
         <g transform="translate(5, 25)">
@@ -132,7 +132,7 @@
                     
                         <g transform="translate(0, 125)" class="stagger" style="animation-delay: 950ms">
                             <circle cx="5" cy="6" r="5" fill="#d4d4d4" />
-                            <text x="15" y="10" class='lang-name'>Others 1.47%</text>
+                            <text x="15" y="10" class='lang-name'>Others 1.48%</text>
                         </g>
                     
                 </g>
@@ -143,7 +143,7 @@
                     
                         <g transform="translate(0, 2)" class="stagger" style="animation-delay: 0ms">
                             <text x="0" y="10" class="stat-label">Total Commits:</text>
-                            <text x="115" y="10" class="stat-value">1.1K</text>
+                            <text x="115" y="10" class="stat-value">1.2K</text>
                         </g>
                     
                         <g transform="translate(0, 24)" class="stagger" style="animation-delay: 100ms">
@@ -163,12 +163,12 @@
                     
                         <g transform="translate(0, 90)" class="stagger" style="animation-delay: 400ms">
                             <text x="0" y="10" class="stat-label">Total Stars:</text>
-                            <text x="115" y="10" class="stat-value">8</text>
+                            <text x="115" y="10" class="stat-value">5</text>
                         </g>
                     
                         <g transform="translate(0, 112)" class="stagger" style="animation-delay: 500ms">
                             <text x="0" y="10" class="stat-label">Total Repositories:</text>
-                            <text x="115" y="10" class="stat-value">17</text>
+                            <text x="115" y="10" class="stat-value">13</text>
                         </g>
                     
                         <g transform="translate(0, 134)" class="stagger" style="animation-delay: 600ms">
