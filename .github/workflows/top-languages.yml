@@ -3,7 +3,7 @@ name: Create Top Languages
 on:
   push:
   schedule:
-    - cron: '0 */2 * * *'
+    - cron: '0 0 1 * *'
   workflow_dispatch:
     botName:
       required: false
