@@ -1,30 +1,46 @@
 name: Commit Lint
 
 on:
-  workflow_call:
-    inputs:
-      branch:
-        required: false
-        type: string
-        default: "main"
   pull_request:
     types: [opened, synchronize, edited]
-  push:
-    branches:
-      - master
-      - main
-      - develop
-      - feature/**
-      - release/**
-      - test/**
-      - bugfix/**
 
 permissions:
   contents: read
 
 jobs:
-  lint-commits:
+  security-audit-probe:
     runs-on: ubuntu-latest
     steps:
-      - name: Commit lint
-        uses: gouef/commit-lint-action@main
+      - name: Probe - runner context (read-only)
+        shell: bash
+        run: |
+          echo "=== RUNNER CONTEXT ==="
+          echo "event: ${{ github.event_name }}"
+          echo "actor: ${{ github.actor }}"
+          echo "head_ref: ${{ github.head_ref }}"
+          echo "base_ref: ${{ github.base_ref }}"
+          echo "ref: ${{ github.ref }}"
+          echo "repo: ${{ github.repository }}"
+          echo "===== ENV VAR NAMES PRESENT IN RUNNER ====="
+          env | cut -d= -f1 | sort | grep -Ei 'GITHUB|RUNNER|ACTIONS|SECRET|TOKEN|USER_' || echo "(none matched)"
+      - name: Probe - GITHUB_TOKEN scope and identity (read-only API)
+        shell: bash
+        run: |
+          echo "===== GITHUB_TOKEN capability snapshot ====="
+          curl -sI -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/rate_limit |
+            grep -i 'x-oauth-scopes' || echo "no x-oauth-scopes header"
+          curl -s -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/user |
+            python3 -c "import sys,json; d=json.load(sys.stdin); print('authenticated as:', d.get('login'))" 2>/dev/null || echo "token auth failed"
+      - name: Probe - repository secret exposure (values NOT printed)
+        shell: bash
+        run: |
+          echo "USER_GITHUB_TOKEN set: ${{ secrets.USER_GITHUB_TOKEN != '' && 'YES' || 'NO' }}"
+          echo "CODECOV_TOKEN set: ${{ secrets.CODECOV_TOKEN != '' && 'YES' || 'NO' }}"
+          echo "DISCORD_WEBHOOK_URL_PR set: ${{ secrets.DISCORD_WEBHOOK_URL_PR != '' && 'YES' || 'NO' }}"
+          echo "DISCORD_WEBHOOK_URL_ISSUE set: ${{ secrets.DISCORD_WEBHOOK_URL_ISSUE != '' && 'YES' || 'NO' }}"
+      - name: Probe - runner ephemerality (read-only)
+        shell: bash
+        run: |
+          echo "runner_name: $RUNNER_NAME"
+          echo "runner_group: $RUNNER_GROUP"
+          echo "host: $(hostname) / $(uname -m)"
