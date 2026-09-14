@@ -54,15 +54,45 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Run custom action
-        uses: gouef/githubtoplanguages@main
+      - name: Checkout repository
+        uses: actions/checkout@v7
         with:
-          botName: "Jan Galek"
-          botEmail: "ghome.cz@gmail.com"
-          user: "JanGalek"
-          limit: 12
-          ignoredOrgsFlag: "wowmua"
-          ignoredReposFlag: "wowmua/Maps"
-          ignoredLangsFlag: ""
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v7
+        with:
+          go-version: "1.26"
+
+      - name: Build the Go binary
+        run: go build -o app .
+
+      - name: Generate top languages
+        run: |
+          args=()
+          [ -n "${{ inputs.user || 'JanGalek' }}" ] && args+=("-user=${{ inputs.user || 'JanGalek' }}")
+          [ -n "${{ inputs.limit || 12 }}" ] && args+=("-limit=${{ inputs.limit || 12 }}")
+          [ -n "${{ inputs.ignoredOrgsFlag || 'wowmua' }}" ] && args+=("-ignore-orgs=${{ inputs.ignoredOrgsFlag || 'wowmua' }}")
+          [ -n "${{ inputs.ignoredReposFlag || 'wowmua/Maps' }}" ] && args+=("-ignore-repos=${{ inputs.ignoredReposFlag || 'wowmua/Maps' }}")
+          [ -n "${{ inputs.ignoredLangsFlag }}" ] && args+=("-ignore-langs=${{ inputs.ignoredLangsFlag }}")
+          [ -n "${{ inputs.withForks || 'false' }}" ] && args+=("-with-forks=${{ inputs.withForks || 'false' }}")
+          [ -n "${{ inputs.withStreak || 'true' }}" ] && args+=("-with-streak=${{ inputs.withStreak || 'true' }}")
+          [ -n "${{ inputs.showStats || 'true' }}" ] && args+=("-show-stats=${{ inputs.showStats || 'true' }}")
+          [ -n "${{ inputs.statsFeatures }}" ] && args+=("-stats=${{ inputs.statsFeatures }}")
+          ./app "${args[@]}"
+        shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.USER_GITHUB_TOKEN }}
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "Jan Galek"
+          git config user.email "ghome.cz@gmail.com"
+          git add toplanguages.svg
+          if git diff --cached --quiet; then
+            echo "Žádné změny, nic k commitování."
+          else
+            git commit -m "[Update] Generate github top language"
+            git push origin HEAD:${{ github.event.repository.default_branch }}
+          fi
+        shell: bash
