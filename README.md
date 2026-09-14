@@ -43,7 +43,7 @@ jobs:
       contents: write
     steps:
       - name: Run custom action
-        uses: gouef/githubtoplanguages@v1.1.7
+        uses: gouef/githubtoplanguages@v1.1.8
         with:
           botName: "Jan Galek"
           botEmail: "ghome.cz@gmail.com"

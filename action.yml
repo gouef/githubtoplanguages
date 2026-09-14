@@ -62,9 +62,12 @@ runs:
         fetch-depth: 0
     - name: Set up Git
       run: |
-        git config --global user.name "${{ inputs.botName }}"
-        git config --global user.email "${{ inputs.botEmail }}"
+        git config --global user.name "$BOT_NAME"
+        git config --global user.email "$BOT_EMAIL"
       shell: bash
+      env:
+        BOT_NAME: ${{ inputs.botName }}
+        BOT_EMAIL: ${{ inputs.botEmail }}
 
     - name: Set up Go
       uses: actions/setup-go@v7
@@ -85,21 +88,30 @@ runs:
     - name: Run the Go binary
       run: |
         args=()
-        [ -n "${{ inputs.user }}" ] && args+=("-user=${{ inputs.user }}")
-        [ -n "${{ inputs.limit }}" ] && args+=("-limit=${{ inputs.limit }}")
-        [ -n "${{ inputs.ignoredOrgsFlag }}" ] && args+=("-ignore-orgs=${{ inputs.ignoredOrgsFlag }}")
-        [ -n "${{ inputs.ignoredReposFlag }}" ] && args+=("-ignore-repos=${{ inputs.ignoredReposFlag }}")
-        [ -n "${{ inputs.ignoredLangsFlag }}" ] && args+=("-ignore-langs=${{ inputs.ignoredLangsFlag }}")
-        [ -n "${{ inputs.withForks }}" ] && args+=("-with-forks=${{ inputs.withForks }}")
-        [ -n "${{ inputs.withStreak }}" ] && args+=("-with-streak=${{ inputs.withStreak }}")
-        [ -n "${{ inputs.showStats }}" ] && args+=("-show-stats=${{ inputs.showStats }}")
-        [ -n "${{ inputs.statsFeatures }}" ] && args+=("-stats=${{ inputs.statsFeatures }}")
-        ./app "${args[@]}" -gh-token=${{ env.GITHUB_TOKEN }}
+        [ -n "$USER_NAME" ] && args+=("-user=$USER_NAME")
+        [ -n "$LANGUAGE_LIMIT" ] && args+=("-limit=$LANGUAGE_LIMIT")
+        [ -n "$IGNORED_ORGS" ] && args+=("-ignore-orgs=$IGNORED_ORGS")
+        [ -n "$IGNORED_REPOS" ] && args+=("-ignore-repos=$IGNORED_REPOS")
+        [ -n "$IGNORED_LANGUAGES" ] && args+=("-ignore-langs=$IGNORED_LANGUAGES")
+        [ -n "$WITH_FORKS" ] && args+=("-with-forks=$WITH_FORKS")
+        [ -n "$WITH_STREAK" ] && args+=("-with-streak=$WITH_STREAK")
+        [ -n "$SHOW_STATS" ] && args+=("-show-stats=$SHOW_STATS")
+        [ -n "$STATS_FEATURES" ] && args+=("-stats=$STATS_FEATURES")
+        ./app "${args[@]}" "-gh-token=$GITHUB_TOKEN"
         rm -R githubtoplanguages
         rm app
       shell: bash
       env:
         GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+        USER_NAME: ${{ inputs.user }}
+        LANGUAGE_LIMIT: ${{ inputs.limit }}
+        IGNORED_ORGS: ${{ inputs.ignoredOrgsFlag }}
+        IGNORED_REPOS: ${{ inputs.ignoredReposFlag }}
+        IGNORED_LANGUAGES: ${{ inputs.ignoredLangsFlag }}
+        WITH_FORKS: ${{ inputs.withForks }}
+        WITH_STREAK: ${{ inputs.withStreak }}
+        SHOW_STATS: ${{ inputs.showStats }}
+        STATS_FEATURES: ${{ inputs.statsFeatures }}
 
     - name: Commit and push changes
       run: |
@@ -109,8 +121,9 @@ runs:
         else
           git add .
           git commit -m "[Update] Generate github top language"
-          git pull origin ${{ github.event.repository.default_branch }} && git push origin HEAD:${{ github.event.repository.default_branch }}
+          git pull origin "$DEFAULT_BRANCH" && git push origin "HEAD:$DEFAULT_BRANCH"
         fi
       shell: bash
       env:
         GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+        DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
